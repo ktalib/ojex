@@ -1,0 +1,157 @@
+@font-face {
+  font-family: "Basement Grotesque Exp";
+  src: url("../basementFont/BasementGrotesque-BlackExpanded.eot");
+  src: local("Basement Grotesque Black Expanded"),
+    local("BasementGrotesque-BlackExpanded"),
+    url("../basementFont/BasementGrotesque-BlackExpanded.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-BlackExpanded.woff2") format("woff2"),
+    url("../basementFont/BasementGrotesque-BlackExpanded.woff") format("woff"),
+    url("../basementFont/BasementGrotesque-BlackExpanded.ttf")
+      format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque Exp";
+  src: url("../basementFont/BasementGrotesque-RegularExpanded.eot");
+  src: local("Basement Grotesque Regular Expanded"),
+    local("BasementGrotesque-RegularExpanded"),
+    url("../basementFont/BasementGrotesque-RegularExpanded.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-RegularExpanded.woff2")
+      format("woff2"),
+    url("../basementFont/BasementGrotesque-RegularExpanded.woff") format("woff"),
+    url("../basementFont/BasementGrotesque-RegularExpanded.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque Norm";
+  src: url("../basementFont/BasementGrotesque-Black.eot");
+  src: local("Basement Grotesque Black"), local("BasementGrotesque-Black"),
+    url("../basementFont/BasementGrotesque-Black.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-Black.woff2") format("woff2"),
+    url("../basementFont/BasementGrotesque-Black.woff") format("woff"),
+    url("../basementFont/BasementGrotesque-Black.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque Exp";
+  src: url("../basementFont/BasementGrotesque-BoldExpanded.eot");
+  src: local("Basement Grotesque Bold Expanded"),
+    local("BasementGrotesque-BoldExpanded"),
+    url("../basementFont/BasementGrotesque-BoldExpanded.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-BoldExpanded.woff2") format("woff2"),
+    url("../basementFont/BasementGrotesque-BoldExpanded.woff") format("woff"),
+    url("../basementFont/BasementGrotesque-BoldExpanded.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque XCond";
+  src: url("../basementFont/BasementGrotesque-BoldExtraCondensed.eot");
+  src: local("Basement Grotesque Bold Extra Condensed"),
+    local("BasementGrotesque-BoldExtraCondensed"),
+    url("../basementFont/BasementGrotesque-BoldExtraCondensed.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-BoldExtraCondensed.woff2")
+      format("woff2"),
+    url("../basementFont/BasementGrotesque-BoldExtraCondensed.woff")
+      format("woff"),
+    url("../basementFont/BasementGrotesque-BoldExtraCondensed.ttf")
+      format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque Norm";
+  src: url("../basementFont/BasementGrotesque-Regular.eot");
+  src: local("Basement Grotesque Regular"), local("BasementGrotesque-Regular"),
+    url("../basementFont/BasementGrotesque-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-Regular.woff2") format("woff2"),
+    url("../basementFont/BasementGrotesque-Regular.woff") format("woff"),
+    url("../basementFont/BasementGrotesque-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque Norm";
+  src: url("../basementFont/BasementGrotesque-Bold.eot");
+  src: local("Basement Grotesque Bold"), local("BasementGrotesque-Bold"),
+    url("../basementFont/BasementGrotesque-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-Bold.woff2") format("woff2"),
+    url("../basementFont/BasementGrotesque-Bold.woff") format("woff"),
+    url("../basementFont/BasementGrotesque-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque XCond";
+  src: url("../basementFont/BasementGrotesque-BlackExtraCondensed.eot");
+  src: local("Basement Grotesque Black Extra Condensed"),
+    local("BasementGrotesque-BlackExtraCondensed"),
+    url("../basementFont/BasementGrotesque-BlackExtraCondensed.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-BlackExtraCondensed.woff2")
+      format("woff2"),
+    url("../basementFont/BasementGrotesque-BlackExtraCondensed.woff")
+      format("woff"),
+    url("../basementFont/BasementGrotesque-BlackExtraCondensed.ttf")
+      format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque XCond";
+  src: url("../basementFont/BasementGrotesque-RegularExtraCondensed.eot");
+  src: local("Basement Grotesque Regular Extra Condensed"),
+    local("BasementGrotesque-RegularExtraCondensed"),
+    url("../basementFont/BasementGrotesque-RegularExtraCondensed.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-RegularExtraCondensed.woff2")
+      format("woff2"),
+    url("../basementFont/BasementGrotesque-RegularExtraCondensed.woff")
+      format("woff"),
+    url("../basementFont/BasementGrotesque-RegularExtraCondensed.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basement Grotesque Norm Med";
+  src: url("../basementFont/BasementGrotesque-Medium.eot");
+  src: local("Basement Grotesque Medium"), local("BasementGrotesque-Medium"),
+    url("../basementFont/BasementGrotesque-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("../basementFont/BasementGrotesque-Medium.woff2") format("woff2"),
+    url("../basementFont/BasementGrotesque-Medium.woff") format("woff"),
+    url("../basementFont/BasementGrotesque-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

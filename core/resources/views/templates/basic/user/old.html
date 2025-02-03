@@ -1,0 +1,443 @@
+<main class="p-2 sm:px-2 flex-1 overflow-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
+        <!-- Example cards -->
+
+
+
+        <div class="p-4 bg-black rounded-lg shadow">
+
+            <div>
+
+
+                <div class="grid justify-items-stretch">
+                    <div>
+                        <h3 class="text-sm text-gray-400">Total Balance</h3>
+                        <p class="text-2xl font-semibold">$0.00</p>
+                    </div>
+
+
+                </div>
+
+                <div class="grid justify-items-end">
+                    <div>
+                        <button class="p-2 hover:bg-gray-800 rounded-lg" id="profile-tab"
+                            data-tabs-target="#profile" type="button" role="tab" aria-controls="profile"
+                            aria-selected="false">
+                            <i class="ri-file-list-line text-gray-400"></i>
+                        </button>
+                        <button class="p-2 hover:bg-gray-800 rounded-lg" id="dashboard-tab"
+                            data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
+                            aria-selected="false">
+                            <i class="ri-smartphone-line text-gray-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class=" " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                    <h2 class="text-base font-medium text-white">Top Assets</h2>
+
+
+                    <a href="#" class="text-base font-medium text-blue-300 grid justify-items-end">View all
+                        assets</a>
+
+
+                    <div class="space-y-4">
+                        <!-- Bitcoin -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-[#F7931A]/10 flex items-center justify-center">
+                                    <i class="ri-bit-coin-fill text-[#F7931A]"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white">Bitcoin</div>
+                                    <div class="text-sm text-gray-500">BTC</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-white">$0.00</div>
+                                <div class="text-sm text-gray-500">0.0000 BTC</div>
+                            </div>
+                        </div>
+
+                        <!-- Ethereum -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-[#627EEA]/10 flex items-center justify-center">
+                                    <i class="ri-ethereum-fill text-[#627EEA]"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white">Ethereum</div>
+                                    <div class="text-sm text-gray-500">ETH</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-white">$0.00</div>
+                                <div class="text-sm text-gray-500">0.0000 ETH</div>
+                            </div>
+                        </div>
+
+                        <!-- USD -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-[#2775CA]/10 flex items-center justify-center">
+                                    <i class="ri-money-dollar-circle-fill text-[#2775CA]"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white">United States Dollars</div>
+                                    <div class="text-sm text-gray-500">USD</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-white">$0.00</div>
+                                <div class="text-sm text-gray-500">0.0000 USD</div>
+                            </div>
+                        </div>
+
+                        <!-- Apple -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+                                    <i class="ri-apple-fill text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white">Apple</div>
+                                    <div class="text-sm text-gray-500">AAPL</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-white">$0.00</div>
+                                <div class="text-sm text-gray-500">0.0000 AAPL</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="hidden" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+            <h2 class="text-lg font-medium text-white mb-4">Account Summary</h2>
+
+            <div class="space-y-4">
+                <!-- Total Deposits -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="text-gray-400">
+                            <i class="ri-wallet-3-line text-lg"></i>
+                        </div>
+                        <span class="text-gray-400">Total Deposits</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-white">$0.00</span>
+                        <button
+                            class="px-4 py-1.5 text-sm bg-gray-800 text-gray-300 rounded hover:bg-gray-700 transition-colors">
+                            Deposit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Total Withdrawals -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="text-gray-400">
+                            <i class="ri-arrow-left-circle-line text-lg"></i>
+                        </div>
+                        <span class="text-gray-400">Total Withdrawals</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-white">$0.00</span>
+                        <button
+                            class="px-4 py-1.5 text-sm bg-gray-800 text-gray-300 rounded hover:bg-gray-700 transition-colors">
+                            Withdraw
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Total Profits -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="text-gray-400">
+                            <i class="ri-line-chart-line text-lg"></i>
+                        </div>
+                        <span class="text-gray-400">Total Profits</span>
+                    </div>
+                    <div>
+                        <span class="text-white">$0.00</span>
+                    </div>
+                </div>
+
+                <!-- Verification Status -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="text-gray-400">
+                            <i class="ri-shield-check-line text-lg"></i>
+                        </div>
+                        <span class="text-gray-400">Verification</span>
+                    </div>
+                    <div>
+                        <span class="text-red-500 text-sm">Your account is not verified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="p-4 bg-black rounded-lg shadow">
+            <div>
+                <!-- Categories Card -->
+                <div class="rounded-lg border border-gray-800 bg-gray-950 p-4">
+                    <h3 class="text-sm text-gray-400 mb-2">Categories</h3>
+                    <p class="text-sm">
+                        No categories yet.
+                        <a href="#" class="text-blue-400 hover:text-blue-300">Deposit now</a>
+                        to see your portfolio breakdown.
+                    </p>
+                </div>
+
+                <!-- Trading Progress Card -->
+                <div>
+                    <h3 class="text-sm text-gray-400 mb-2">Trading progress</h3>
+                    <div class="relative h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="absolute top-0 left-0 h-full w-0 bg-emerald-500 rounded-full"></div>
+                    </div>
+                    <div class="text-right mt-1">
+                        <span class="text-sm text-gray-400">0%</span>
+                    </div>
+                </div>
+
+                <!-- Signal Strength Card -->
+                <div>
+                    <h3 class="text-sm text-gray-400 mb-2">Signal strength</h3>
+                    <div class="flex gap-1">
+                        <!-- 15 red bars -->
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                    </div>
+                    <div class="text-right mt-1">
+                        <span class="text-sm text-red-500">0%</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <!-- <div class="p-2 bg-black rounded-lg shadow w-100 ">
+            <div  >
+            <div class="tradingview-widget-container" style="height:100%;width:100%">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                "autosize": true,
+                "symbol": "BINANCE:BTCUSDT",
+                "interval": "D",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "hide_top_toolbar": true,
+                "allow_symbol_change": true,
+                "calendar": false,
+                "support_host": "https://www.tradingview.com"
+              }
+                </script>
+              </div>   
+        </div> 
+    </div>
+        <div class="rounded-lg border border-gray-800 bg-gray-950 p-4">
+            <div class="flex gap-2 mb-6">
+                <button class="flex-1 bg-emerald-500 hover:bg-emerald-600 py-2 rounded-md text-white">Buy</button>
+                <button class="flex-1 border border-gray-700 hover:bg-gray-800 py-2 rounded-md">Sell</button>
+                <button class="flex-1 border border-gray-700 hover:bg-gray-800 py-2 rounded-md">Convert</button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm text-gray-400 mb-2 block">Type:</label>
+                    <select class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
+                        <option>Crypto</option>
+                        <option>Stocks</option>
+                        <option>Forex</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="text-sm text-gray-400 mb-2 block">Amount:</label>
+                    <input type="number" value="100" class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
+                </div>
+
+                <div>
+                    <label class="text-sm text-gray-400 mb-2 block">Duration:</label>
+                    <select class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
+                        <option>2 minutes</option>
+                        <option>5 minutes</option>
+                        <option>10 minutes</option>
+                    </select>
+                </div>
+
+                <button class="w-full bg-emerald-500 hover:bg-emerald-600 py-3 rounded-md text-white font-medium">
+                    Buy
+                </button>
+            </div>
+        </div>  -->
+
+
+        <!-- <div class="p-4 bg-gray-800 rounded-lg shadow">
+              
+        </div> 
+        
+        <div class="p-4 bg-gray-800 rounded-lg shadow">
+              
+        </div>    -->
+
+
+    </div>
+    <div class="p-1 space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-1">
+            <!-- Chart and Trades Section -->
+            <div class="lg:col-span-2 space-y-2">
+                <!-- Trading Chart -->
+                <div class="rounded-lg border border-gray-800 bg-black p-4 w-100">
+                    <div>
+
+                        <!-- TradingView Widget BEGIN -->
+                        <div class="tradingview-widget-container" style="height:10px;width: 6640px">
+                            <div class="tradingview-widget-container__widget"
+                                style="height:calc(100% - 32px);width:2345px"></div>
+                            <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/"
+                                    rel="noopener nofollow" target="_blank"><span class="blue-text">Track all
+                                        markets on TradingView</span></a></div>
+                            <script type="text/javascript"
+                                src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+                                async>
+                                    {
+
+                                        "height": "610",
+                                            "symbol": "BINANCE:BTCUSDT",
+                                                "interval": "D",
+                                                    "timezone": "Etc/UTC",
+                                                        "theme": "dark",
+                                                            "style": "1",
+                                                                "locale": "en",
+                                                                    "hide_top_toolbar": true,
+                                                                        "allow_symbol_change": true,
+                                                                            "calendar": false,
+                                                                                "support_host": "https://www.tradingview.com"
+                                    }
+                                </script>
+                        </div>
+                        <!-- TradingView Widget END -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Trading Panel -->
+            <div class="rounded-lg border border-gray-800 bg-black p-6">
+                <div class="flex gap-0 mb-6">
+                    <button
+                        class="flex-1 bg-emerald-500 hover:bg-emerald-600 py-2 rounded-md text-white">Buy</button>
+                    <button class="flex-1   hover:bg-gray-800 py-2 rounded-md">Sell</button>
+                    <button class="flex-1   hover:bg-gray-800 py-2 rounded-md">Convert</button>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Type:</label>
+                        <select class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
+                            <option>Crypto</option>
+                            <option>Stocks</option>
+                            <option>Forex</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Amount:</label>
+                        <input type="number" value="100"
+                            class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
+                    </div>
+
+
+
+
+
+                    <div class="flex gap-15 mb-6">
+
+                        <label class="text-sm text-gray-400">Stop Loss:</label>
+
+
+
+                        <label class="text-sm text-gray-400 mb-2 block">Take Profit:</label>
+
+
+
+                    </div>
+
+                    <div class="flex gap-2 mb-6">
+
+
+                        <input type="number" value="6800"
+                            class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
+
+
+
+                        <input type="number" value="32100"
+                            class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
+
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Duration:</label>
+                        <select class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
+                            <option>2 minutes</option>
+                            <option>5 minutes</option>
+                            <option>10 minutes</option>
+
+
+                        </select>
+                    </div>
+
+                    <button
+                        class="w-full bg-emerald-500 hover:bg-emerald-600 py-3 rounded-md text-white font-medium">
+                        Buy
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Trades Section -->
+
+        <div class="rounded-lg border border-gray-800 bg-black p-4">
+
+
+            <div>
+                <h2 class="text-lg font-semibold mb-4">Trades</h2>
+                <div class="space-x-2 mb-4">
+                    <button class="px-4 py-2 text-sm bg-blue-500 text-white rounded-md">Open</button>
+                    <button class="px-4 py-2 text-sm text-gray-400 hover:text-white">Closed</button>
+                </div>
+                <div class="text-gray-400 text-sm">No open trades yet.</div>
+            </div>
+        </div>
+    </div>
+</main>

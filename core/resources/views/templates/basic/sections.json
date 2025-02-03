@@ -1,0 +1,371 @@
+{
+    "banner": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Banner Section",
+        "content": {
+            "images": {
+                "image_one": {
+                    "size": "75x75"
+                },
+                "image_two": {
+                    "size": "75x75"
+                },
+                "image_three": {
+                    "size": "75x75"
+                },
+                "image_four": {
+                    "size": "75x75"
+                }
+            },
+            "title": "text",
+            "heading": "text",
+            "subheading": "text",
+            "button_one_text": "text",
+            "button_one_url": "text",
+            "button_two_text": "text",
+            "button_two_url": "text",
+            "button_two_icon": "icon"
+        }
+    },
+    "brand": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Brand Section",
+        "content": {
+            "title": "text"
+        },
+        "element": {
+            "images": {
+                "image": {
+                    "size": "130x30"
+                }
+            },
+            "modal": true
+        }
+    },
+
+    "how_it_work": {
+        "builder": true,
+        "no_selection": false,
+        "name": "How It Work Section",
+        "content": {
+            "title": "text",
+            "heading": "text",
+            "subheading": "text",
+            "button_text": "text",
+            "button_url": "text"
+        },
+        "element": {
+            "heading": "text",
+            "subheading": "textarea",
+            "icon": "icon",
+            "modal": true
+        }
+    },
+    "counter": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Counter Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "title": "text",
+            "counter_digit": "text",
+            "symbol": "text",
+            "modal": true
+        }
+    },
+    "pricing": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Pricing Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+
+    "why_choose_us": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Why Choose Us Section",
+        "content": {
+            "title": "text",
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "heading": "text",
+            "subheading": "text",
+            "icon": "icon",
+            "modal": true
+        }
+    },
+    "highlights": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Highlights Section",
+        "content": {
+            "title": "text",
+            "heading": "text"
+        },
+        "element": {
+            "heading": "text",
+            "subheading": "text",
+            "modal": true
+        }
+    },
+
+    "payouts": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Payouts Section",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "475x400"
+                }
+            },
+            "title": "text",
+            "heading": "text",
+            "description": "textarea",
+            "button_text": "text",
+            "button_url": "text"
+        }
+    },
+
+    "faq": {
+        "builder": true,
+        "no_selection": false,
+        "name": "FAQ Section",
+        "content": {
+            "title": "text",
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "question": "text",
+            "answer": "textarea",
+            "modal": true
+        }
+    },
+
+    "testimonial": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Testimonial Section",
+        "content": {
+            "title": "text",
+            "heading": "text"
+        },
+        "element": {
+            "images": {
+                "image": {
+                    "size": "60x60"
+                }
+            },
+            "name": "text",
+            "designation": "text",
+            "quote": "textarea",
+            "select": {
+                "name": "rating",
+                "options": {
+                    "1": "1 Star",
+                    "2": "2 Star",
+                    "3": "3 Star",
+                    "4": "4 Star",
+                    "5": "5 Star"
+                }
+            },
+            "modal": true
+        }
+    },
+
+    "cta": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Cta Section",
+        "content": {
+            "heading": "text",
+            "button_one_text": "text",
+            "button_one_url": "text",
+            "button_two_text": "text",
+            "button_two_url": "text"
+        }
+    },
+    "footer": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Footer Section",
+        "content": {
+            "details": "text"
+        }
+    },
+
+    "social_icon": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Social Icons",
+        "element": {
+            "social_icon": "icon",
+            "url": "text",
+            "modal": false
+        }
+    },
+
+    "about": {
+        "builder": true,
+        "no_selection": false,
+        "name": "About Section",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "620x660"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "button_text": "text",
+            "button_url": "text"
+        }
+    },
+
+    "achievement": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Achievement Section",
+        "content": {
+            "title": "text",
+            "heading": "text",
+            "subheading": "text",
+            "review_title": "text",
+            "select": {
+                "name": "rating",
+                "options": {
+                    "1": "1 Star",
+                    "2": "2 Star",
+                    "3": "3 Star",
+                    "4": "4 Star",
+                    "5": "5 Star"
+                }
+            }
+        },
+        "element": {
+            "heading": "text",
+            "description": "textarea",
+            "modal": true
+        }
+    },
+
+    "scrolling_ticker": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Scrolling Ticker Section"
+    },
+
+    "contact": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Contact Page",
+        "content": {
+            "title": "text",
+            "description": "text",
+            "map_url": "text"
+        },
+        "element": {
+            "icon": "icon",
+            "heading": "text",
+            "subheading": "text",
+            "content": "text",
+            "select": {
+                "name": "contact_type",
+                "options": {
+                    "mailto": "E-mail",
+                    "tel": "Phone",
+                    "skype": "Skype",
+                    "none": "None"
+                }
+            },
+            "modal": true
+        }
+    },
+    "login": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Login Page",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "1100x900"
+                }
+            },
+            "title": "text"
+
+        }
+    },
+    "register": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Register Page",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "1100x900"
+                }
+            },
+            "title": "text"
+        }
+    },
+
+    "policy_pages": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Policy Pages",
+        "element": {
+            "title": "text",
+            "slug": "title",
+            "details": "textarea-nic",
+            "modal": false
+        }
+    },
+    "subscribe": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Subscribe Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "button_text": "text"
+        }
+    },
+    "kyc": {
+        "builder": true,
+        "no_selection": true,
+        "name": "KYC Content",
+        "content": {
+            "required": "text",
+            "pending": "text",
+            "reject": "text"
+        }
+    },
+    "register_disable": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Registration Disable",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "280x280"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "button_name": "text",
+            "button_url": "text"
+        }
+    }
+}
