@@ -166,3 +166,4 @@ Route::get('/trade', [UserAssetController::class, 'trade'])->name('trade.index')
 Route::get('/signals', [UserAssetController::class, 'Signal'])->name('user.signals.index');
 Route::post('/purchase', [UserAssetController::class, 'purchase'])->name('signals.purchase');
 Route::get('/subscribers', [UserAssetController::class, 'subscribers'])->name('subscribers.index');
+Route::post('/buy', [UserAssetController::class, 'buy'])->name('subscribers.buy');

@@ -137,10 +137,35 @@ class UserAssetController extends Controller
 //Implement subscribers  function here
  public function subscribers()
     {
-        $pageTitle = 'Subscribers';
-        $Subscription = Subscriptions::get();
-        $subscribers = Subscribers::get();
-        return view('Template::user.subscribers', compact('pageTitle', 'subscribers'));
+      
+        $pageTitle = 'Subscriptions';
+        $subscriptions = DB::table('subscriptions')->get();
+        $subscribers = DB::table('user_subscriptions')->get();
+        return view('Template::user.subscribers', compact('pageTitle', 'subscriptions', 'subscribers'));
+    }
+    public function buy(Request $request)
+    {
+        $request->validate([
+            'subscription_id' => 'required|integer',
+        ]);
+  
+             // `id`, `name`, `user_id`, `amount`, 
+            //`duration_days`, `roi`, 
+
+        $User_Subscrition = Subscriptions::where('id', $request->subscription_id)->firstOrFail();
+        $user_id = auth()->id();
+        $subscribers = new Subscribers();
+        $subscribers->user_id = $user_id;
+        $subscribers->subscription_id = $User_Subscrition->id;
+        $subscribers->amount = $User_Subscrition->amount;
+        $subscribers->roi = $User_Subscrition->roi;
+        $subscribers->duration_days = $User_Subscrition->duration_days;
+        $subscribers->save();
+        $user = auth()->user();
+        $user->balance -= $User_Subscrition->amount;
+        $user->save();
+        $notify[] = ['success', 'Subscription purchased successfully'];
+        return back()->withNotify($notify);
     }
 
 }

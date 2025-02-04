@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Monitor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .notification-badge {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .transaction-card:hover {
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <h3 class="text-xl font-bold mb-4">Login</h3>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" id="username" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+            <div class="flex justify-end">
+                <button onclick="login()" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-indigo-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                    </svg>
+                    <span class="font-bold text-xl">Credit Guard Pro</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="relative" onclick="toggleNotifications()">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <span class="notification-badge absolute -top-1 -right-1 bg-red-500 rounded-full h-4 w-4 flex items-center justify-center text-xs">3</span>
+                    </button>
+                    <div class="relative" onclick="toggleUserMenu()">
+                        <button class="flex items-center space-x-2">
+                            <div class="h-8 w-8 rounded-full bg-indigo-800 flex items-center justify-center">JD</div>
+                            <span>John Doe</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Dashboard Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-semibold">Card Status</h3>
+                    <span id="cardStatus" class="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">Active</span>
+                </div>
+                <div class="mt-4">
+                    <p class="text-gray-600">Card ending in</p>
+                    <p class="text-2xl font-bold">•••• 4589</p>
+                    <p class="text-sm text-gray-500 mt-2">Expires: 12/25</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span>Today's Spending</span>
+                        <span class="font-bold">$345.20</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Weekly Average</span>
+                        <span class="font-bold">$1,242.50</span>
+                    </div>
+                </div>
+                <canvas id="spendingChart" class="mt-4" height="100"></canvas>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">Security Status</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span>2FA Status</span>
+                        <span class="text-green-600">Enabled</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span>Last Login</span>
+                        <span>2 hours ago</span>
+                    </div>
+                    <div class="flex items-center justify-between"></div>
+                        <span>Location Services</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" checked class="sr-only peer" onchange="toggleLocationServices()">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Card Section -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-bold mb-6">Add New Card</h2>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Card Number</label>
+                <input type="text" id="newCardNumber" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Expiry Date</label>
+                <input type="text" id="newCardExpiry" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+            <div class="flex justify-end">
+                <button onclick="addCard()" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Add Card</button>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-bold mb-6">Recent Transactions</h2>
+            <div class="space-y-4" id="transactionsList"></div>
+                <!-- Transactions will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Fraud Alert Modal -->
+        <div id="fraudAlertModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                <h3 class="text-xl font-bold text-red-600 mb-4">⚠️ Suspicious Activity Detected</h3>
+                <p class="mb-4">We've detected unusual activity on your card:</p>
+                <div class="bg-gray-50 p-4 rounded mb-4">
+                    <p><strong>Amount:</strong> <span id="suspiciousAmount">N499.99</span></p>
+                    <p><strong>Location:</strong> <span id="suspiciousLocation">Lagos</span></p>
+                    <p><strong>Merchant:</strong> <span id="suspiciousMerchant">Unknown Vendor</span></p>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button onclick="handleFraudAlert('legitimate')" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">It's Legitimate</button>
+                    <button onclick="handleFraudAlert('fraud')" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Report Fraud</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const username = 'admin';
+        const password = 'password';
+
+        function login() {
+            const enteredUsername = document.getElementById('username').value;
+            const enteredPassword = document.getElementById('password').value;
+            if (enteredUsername === username && enteredPassword === password) {
+                document.getElementById('loginModal').classList.add('hidden');
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        // Initialize spending chart
+        const ctx = document.getElementById('spendingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Daily Spending',
+                    data: [300, 450, 320, 580, 400, 220, 345],
+                    borderColor: 'rgb(79, 70, 229)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Sample transactions data
+        const transactions = [
+            { id: 1, amount: 99.99, merchant: "Netflix", date: "Today, 2:30 PM", type: "Entertainment", status: "completed" },
+            { id: 2, amount: 499.99, merchant: "Unknown Vendor", date: "Today, 1:15 PM", type: "Suspicious", status: "pending" },
+            { id: 3, amount: 25.50, merchant: "Starbucks", date: "Yesterday", type: "Food & Drink", status: "completed" },
+        ];
+
+        // Populate transactions
+        function renderTransactions() {
+            const transactionsList = document.getElementById('transactionsList');
+            transactionsList.innerHTML = transactions.map(t => `
+                <div class="transaction-card flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                            <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-medium">${t.merchant}</p>
+                            <p class="text-sm text-gray-500">${t.date}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-medium">N${t.amount}</p>
+                        <span class="text-sm ${t.status === 'completed' ? 'text-green-600' : 'text-yellow-600'}">${t.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Toggle functions
+        function toggleNotifications() {
+            // Implementation for notifications panel
+            console.log('Toggling notifications');
+        }
+
+        function toggleUserMenu() {
+            // Implementation for user menu
+            console.log('Toggling user menu');
+        }
+
+        function toggleLocationServices() {
+            // Implementation for location services
+            console.log('Toggling location services');
+        }
+
+        // Fraud alert handling
+        function handleFraudAlert(response) {
+            const modal = document.getElementById('fraudAlertModal');
+            if (response === 'fraud') {
+                document.getElementById('cardStatus').className = 'px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800';
+                document.getElementById('cardStatus').textContent = 'Locked';
+            }
+            modal.classList.add('hidden');
+        }
+
+        // Show fraud alert (demo purposes)
+        setTimeout(() => {
+            document.getElementById('fraudAlertModal').classList.remove('hidden');
+        }, 3000);
+
+        // Add new card
+        function addCard() {
+            const cardNumber = document.getElementById('newCardNumber').value;
+            const cardExpiry = document.getElementById('newCardExpiry').value;
+            if (cardNumber && cardExpiry) {
+                alert(`Card ending in ${cardNumber.slice(-4)} added successfully!`);
+                document.getElementById('newCardNumber').value = '';
+                document.getElementById('newCardExpiry').value = '';
+            } else {
+                alert('Please enter valid card details');
+            }
+        }
+
+        // Initial render
+        renderTransactions();
+    </script>
+</body>
+</html>
