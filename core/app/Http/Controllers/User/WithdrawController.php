@@ -147,7 +147,7 @@ class WithdrawController extends Controller
         ]);
 
         $notify[] = ['success', 'Withdraw request sent successfully'];
-        return to_route('user.withdraw.history')->withNotify($notify);
+        return to_route('user.withdraw')->withNotify($notify);
     }
 
     public function withdrawLog(Request $request)

@@ -1,5 +1,11 @@
-@extends($activeTemplate . 'layouts.master')
+@extends($activeTemplate . 'layouts.master2')
+
 @section('content')
+<main class="p-2 sm:px-2 flex-1 overflow-auto">
+    <div class="grid grid-cols-1 ld:grid-cols-2 gap-12">
+        <div class="p-4 bg-black rounded-lg shadow">
+            <!-- Header --><div class="container mx-auto p-4">
+
     <div class="row justify-content-center gy-4">
 
         @if (!auth()->user()->ts)
@@ -72,6 +78,11 @@
             @endif
         </div>
     </div>
+    </div>
+        </div>
+</div>
+</main>
+        
 @endsection
 
 @push('style')

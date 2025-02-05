@@ -21,4 +21,5 @@ class CryptoDeposit extends Model
     {
         return $this->create($data);
     }
+ 
 }

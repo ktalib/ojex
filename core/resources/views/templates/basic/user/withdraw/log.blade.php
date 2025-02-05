@@ -1,66 +1,200 @@
+ <style>
+  
+ /* General Reset */
  
-            <div>
-                <div class="bg-black shadow-md rounded-lg overflow-hidden">
-                    <table class="min-w-full divide-y divide-gray-200 {{ $withdraws->count() ? 'table-auto' : 'table-fixed' }}">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">@lang('Gateway | Transaction')</th>
-                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">@lang('Initiated')</th>
-                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">@lang('Amount')</th>
-                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">@lang('Conversion')</th>
-                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">@lang('Status')</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">@lang('Action')</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-dark divide-y divide-gray-200">
-                            @forelse($withdraws as $withdraw)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div>
-                                            <span class="font-bold text-primary">{{ __(@$withdraw->method->name) }}</span>
-                                            <br>
-                                            <small>{{ $withdraw->trx }}</small>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        <div class="text-right lg:text-center">
-                                            {{ showDateTime($withdraw->created_at) }} <br>
-                                            {{ diffForHumans($withdraw->created_at) }}
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        <div class="text-right lg:text-center">
-                                            {{ showAmount($withdraw->amount) }} - <span class="text-red-500" title="@lang('charge')">{{ showAmount($withdraw->charge) }}</span>
-                                            <br>
-                                            <strong title="@lang('Amount after charge')">{{ showAmount($withdraw->amount - $withdraw->charge) }}</strong>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        <div class="text-right lg:text-center">
-                                            1 {{ __(gs('cur_text')) }} = {{ showAmount($withdraw->rate, currencyFormat: false) }} {{ __($withdraw->currency) }}
-                                            <br>
-                                            <strong>{{ showAmount($withdraw->final_amount, currencyFormat: false) }} {{ __($withdraw->currency) }}</strong>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        @php echo $withdraw->statusBadge @endphp
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <button class="btn btn-sm btn-base detailBtn" data-user_data="{{ json_encode($withdraw->withdraw_information) }}" @if ($withdraw->status == Status::PAYMENT_REJECT) data-admin_feedback="{{ $withdraw->admin_feedback }}" @endif>
-                                            <i class="la la-desktop"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @empty
-                                @php echo userTableEmptyMessage('withdraw history') @endphp
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-                @if ($withdraws->hasPages())
-                    {{ $withdraws->links() }}
-                @endif
-            </div>
+/* Table Container */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1e1e1e; /* Dark table background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+/* Table Header */
+thead th {
+  background-color: #333; /* Dark header background */
+  color: #fff;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Table Body */
+tbody td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #444; /* Dark border */
+  color: #e0e0e0; /* Light text */
+}
+
+/* Status Styling */
+.status {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.status.completed {
+  background-color: #2e7d32; /* Dark green */
+  color: #e0e0e0;
+}
+
+.status.pending {
+  background-color: #ff8f00; /* Dark orange */
+  color: #121212;
+}
+
+.status.failed {
+  background-color: #c62828; /* Dark red */
+  color: #e0e0e0;
+}
+
+/* Action Button */
+.action-btn {
+  padding: 8px 12px;
+  background-color: #4a90e2; /* Blue */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.action-btn:hover {
+  background-color: #357abd; /* Darker blue */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    width: 100%;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #444; /* Dark border */
+    border-radius: 8px;
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    text-align: right;
+    border-bottom: 1px solid #444; /* Dark border */
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 10px;
+    text-align: left;
+    color: #e0e0e0; /* Light text */
+  }
+
+  tbody td:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Pagination Styling */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination a {
+  color: #4a90e2; /* Blue */
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid #444; /* Dark border */
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.pagination a:hover {
+  background-color: #4a90e2; /* Blue */
+  color: #fff;
+}
+
+.pagination .active {
+  background-color: #4a90e2; /* Blue */
+  color: #fff;
+  border-color: #4a90e2; /* Blue */
+}
+    </style>
+
+    <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Gateway</th>
+              <th>Transaction Initiated</th>
+              <th>Amount</th>
+        
+              <th>Status</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            @forelse($withdraws as $withdraw)
+              <tr>
+                <td data-label="Gateway">
+                  <div>
+                    <span class="font-bold text-primary">{{ __(@$withdraw->method->name) }}</span>
+                    <br>
+                    <small>{{ $withdraw->trx }}</small>
+                  </div>
+                </td>
+                <td data-label="Transaction Initiated">
+                  <div class="text-right lg:text-center">
+                    {{ showDateTime($withdraw->created_at) }} <br>
+                    {{ diffForHumans($withdraw->created_at) }}
+                  </div>
+                </td>
+                <td data-label="Amount">
+                  <div class="text-right text-red-500 lg:text-center">
+                    {{ showAmount($withdraw->amount) }}  
+                    
+                  </div>
+                </td>
+           
+                <td data-label="Status">
+                  @php echo $withdraw->statusBadge @endphp
+                </td>
+                {{-- <td data-label="Action">
+                  <button class="action-btn detailBtn" data-user_data="{{ json_encode($withdraw->withdraw_information) }}" @if ($withdraw->status == Status::PAYMENT_REJECT) data-admin_feedback="{{ $withdraw->admin_feedback }}" @endif>
+                    <i class="la la-desktop"></i>
+                  </button>
+                </td> --}}
+              </tr>
+            @empty
+              <tr>
+                <td colspan="6" class="text-center">
+                  @php echo userTableEmptyMessage('withdraw history') @endphp
+                </td>
+              </tr>
+            @endforelse
+          </tbody>
+        </table>
+      </div> 
 
             {{-- <div class="modal fade custom-modal" id="withdrawModal" role="dialog" tabindex="-1">
                 <div class="modal-dialog" role="document">

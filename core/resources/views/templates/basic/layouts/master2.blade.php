@@ -10,6 +10,8 @@
     @include('partials.seo')
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+ 
     <style>
         /* Custom scrollbar */
         ::-webkit-scrollbar { 
@@ -56,11 +58,14 @@
 </head>
 <body class="bg-gray-950 text-gray-200 min-h-screen flex flex-col lg:flex-row">
     <!-- Sidebar -->
-     
+      <div class="sidebar bg-gray-900 w-full lg:w-64 flex-shrink-0">
+        <div class="sidebar__inner">
+         
      <!-- ========= Sidebar Menu Start ================ -->
      @include($activeTemplate . 'partials.sidebar2')
      <!-- ========= Sidebar Menu End ================ -->
-
+        </div> 
+    </div>
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
         <!-- Header -->
@@ -173,9 +178,7 @@
 
 
         // refresh page every 4 seconds
-        setInterval(function() {
-            location.reload();
-        }, 4000);
+      
         </script>
     
     </body>

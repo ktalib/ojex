@@ -9,40 +9,40 @@
         <a href="{{ route('user.home') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 bg-black text-white">
             <i class="ri-dashboard-line"></i> Dashboard
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('crypto.deposit.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-arrow-right-circle-line"></i> Deposit
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('user.withdraw') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-arrow-left-circle-line"></i> Withdraw
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('user.assets.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-coin-line"></i> Assets
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('market.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-line-chart-line"></i> Markets
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('trade.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-exchange-box-line"></i> Trade
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('subscribers.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-radio-line"></i> Subscribe
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('user.signals.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-signal-tower-line"></i> Signals
         </a>
         <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
-            <i class="ri-money-dollar-circle-line"></i> Stake
+            <i class="ri-money-dollar-circle-line"></i> Stake <span class="ml-2 text-xs text-yellow-500">(Coming Soon)</span>
         </a>
         <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
-            <i class="ri-share-forward-line"></i> Referrals
+            <i class="ri-share-forward-line"></i> Referrals <span class="ml-2 text-xs text-yellow-500">(Coming Soon)</span>
         </a>
         <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
-            <i class="ri-wallet-3-line"></i> Connect wallet
+            <i class="ri-wallet-3-line"></i> Connect wallet <span class="ml-2 text-xs text-yellow-500">(Coming Soon)</span>
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('copy.expert.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-user-follow-line"></i> Copy Experts
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
+        <a href="{{ route('user.profile.setting') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gray-900 hover:text-white">
             <i class="ri-settings-3-line"></i> Settings
         </a>
     </nav>

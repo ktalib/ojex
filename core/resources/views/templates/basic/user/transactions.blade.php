@@ -1,7 +1,12 @@
-@extends($activeTemplate . 'layouts.master')
+@extends($activeTemplate . 'layouts.master2')
+
 @section('content')
-    <div class="row align-items-start justify-content-center gy-4">
-        <div class="col-lg-12">
+<main class="p-2 sm:px-2 flex-1 overflow-auto">
+    <div class="grid grid-cols-1 ld:grid-cols-2 gap-12">
+        <div class="p-4 bg-black rounded-lg shadow">
+            <!-- Header --><div class="container mx-auto p-4">
+
+
             <div class="show-filter mb-3 text-end">
                 <button type="button" class="btn btn--base showFilterBtn btn--sm"><i class="las la-filter"></i>
                     @lang('Filter')</button>
@@ -116,4 +121,5 @@
             @endif
         </div>
     </div>
+</main>
 @endsection

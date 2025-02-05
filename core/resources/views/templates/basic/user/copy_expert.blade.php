@@ -6,7 +6,7 @@
 </style>
 @section('content')
 <main class="p-2 sm:px-4 flex-1 overflow-auto">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+    <div class="grid mmm grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
          
         @foreach($copy_experts as $expert)
             <div class="flex justify-center">
@@ -37,18 +37,19 @@
                 </div>
             </div>
         @endforeach
-    </div>
+        </div>
 
-     <!-- Deposit Modal -->
+        
+     
     <div id="depositModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
        <div class="bg-gray-800 rounded-lg max-w-md w-full p-6">
           <div class="flex justify-between items-center mb-6">
              <h2 class="text-xl font-semibold text-white">Deposit</h2>
-             <button id="closeModalButton" class="text-gray-400 hover:text-white">
+             {{-- <button id="closeModalButton" class="text-gray-400 hover:text-white">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
-             </button>
+             </button> --}}
           </div>
 
           <p class="text-gray-400 text-sm mb-6">
@@ -63,21 +64,17 @@
              
              <!-- Type Selection -->
              
+                <input type="hidden" name="type" value="expert_fee">
+                <input type="hidden" name="amount" value="0.051">
 
              <!-- Method Selection -->
              <div class="mb-4">
                 <label class="block text-gray-400 text-sm mb-2">Method:</label>
                 <div class="relative">
-                    <select id="cryptoMethod" class="w-full bg-gray-700 rounded px-3 py-2 appearance-none text-white" name="currency" required>
-                       @foreach($gateways as $currency)
-                          <option 
-                             value="{{ $currency->name }}" 
-                             data-wallet="{{ $currency->description }}"
-                             data-icon="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ strtolower($currency->name) }}.svg"
-                          >
-                             {{ $currency->name }}
-                          </option>
-                       @endforeach
+                    <select   class="w-full bg-gray-700 rounded px-3 py-2 appearance-none text-white" name="currency" required>
+                          <option value="BTC" selected>Bitcoin</option>
+                          
+                      
                     </select>
                     <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,7 +93,7 @@
                     </button>
                 </div>
                 <div class="flex gap-2">
-                    <input type="text" id="walletAddress" readonly class="w-full bg-gray-700 rounded px-3 py-2 text-sm text-white" value="">
+                    <input type="text"   readonly class="w-full bg-gray-700 rounded px-3 py-2 text-sm text-white" value="xo1r487riurew87rew8re8rew89riuerdsnu">
                     <button type="button" id="copyAddressButton" class="text-gray-400 hover:text-white px-2 tooltip" data-tooltip="Copy Address">
                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
@@ -148,21 +145,21 @@
           </div>
        </div>
     </div>
-
+    
     <script>
        document.addEventListener('DOMContentLoaded', function() {
           // Check if user has any crypto deposits where type is expert fee
           @if($hasExpertFeeDeposit)
              openModal();
-             document.querySelector('.grid').classList.add('blur');
+             document.querySelector('.mmm').classList.add('blur');
              document.getElementById('closeModalButton').disabled = true;
              document.getElementById('closeQRCodeButton').disabled = true;
           @endif
 
           // Developer bypass
-          const developerBypass = true; // Set to true to disable restrictions
+          const developerBypass = false; // Set to true to disable restrictions
           if (developerBypass) {
-             document.querySelector('.grid').classList.remove('blur');
+             document.querySelector('.mmm').classList.remove('blur');
              document.getElementById('closeModalButton').disabled = false;
              document.getElementById('closeQRCodeButton').disabled = false;
           }
@@ -309,12 +306,10 @@ document.addEventListener('keydown', function(event) {
 
 // Close modals when clicking outside
 document.addEventListener('click', function(event) {
-    const depositModal = document.getElementById('depositModal');
+     
     const qrCodeModal = document.getElementById('qrCodeModal');
     
-    if (event.target === depositModal) {
-        closeModal();
-    }
+     
     
     if (event.target === qrCodeModal) {
         closeQRCodeModal();

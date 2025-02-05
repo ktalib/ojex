@@ -85,7 +85,7 @@
                                 Crypto
                             </div>
                         </div>
-
+                        <input type="hidden" name="type" value="crypto">
                         <!-- Method Selection -->
                         <div class="mb-4">
                             <label class="block text-gray-400 text-sm mb-2">Method:</label>

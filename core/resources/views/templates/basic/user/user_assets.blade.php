@@ -96,8 +96,8 @@
                             <td class="py-3 px-4">{{ $asset->amount }} {{ $asset->currency }} ${{ number_format($asset->amount * $asset->current_price, 2) }}</td>
                             <td class="py-3 px-4">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('user.deposit.history') }}" class="px-4 py-1 bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200">Deposit</a>
-                                    <a href="{{ route('user.withdraw.history') }}" class="px-4 py-1 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-200">Withdraw</a>
+                                    <a href="{{ route('crypto.deposit.index') }}" class="px-4 py-1 bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200">Deposit</a>
+                                    <a href="{{ route('user.withdraw') }}" class="px-4 py-1 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-200">Withdraw</a>
                                 </div>
                             </td>
                         </tr>

@@ -1,67 +1,74 @@
-@extends($activeTemplate . 'layouts.master')
+@extends($activeTemplate . 'layouts.master2')
+
 @section('content')
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card custom--card">
-                <div class="card-header">
-                    <h5 class="card-title">@lang('Profile')</h5>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<main class="p-2 sm:px-2 flex-1 overflow-auto">
+ 
+    <div class="p-1 space-y-4">
+        <div  >
+
+    <div class="flex justify-center">
+        <div class="w-full md:w-2/3 lg:w-1/2">
+            <div class="bg-gray-800 shadow-lg rounded-lg">
+                <div class="bg-gray-900 p-4 rounded-t-lg">
+                    <h5 class="text-white text-lg">@lang('Profile')</h5>
                 </div>
-                <div class="card-body">
-                    <form class="register"  method="post" enctype="multipart/form-data">
+                <div class="p-6">
+                    <form   method="post" enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="form-group col-sm-6">
-                                <label class="form-label">@lang('First Name')</label>
-                                <input type="text" class="form--control" name="firstname" value="{{ $user->firstname }}" required>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('First Name')</label>
+                                <input type="text" class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" name="firstname" value="{{ $user->firstname }}" required>
                             </div>
-                            <div class="form-group col-sm-6">
-                                <label class="form-label">@lang('Last Name')</label>
-                                <input type="text" class="form--control" name="lastname" value="{{ $user->lastname }}" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-sm-6">
-                                <label class="form-label">@lang('E-mail Address')</label>
-                                <input class="form--control" value="{{ $user->email }}" readonly>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label class="form-label">@lang('Mobile Number')</label>
-                                <input class="form--control" value="{{ $user->mobile }}" readonly>
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('Last Name')</label>
+                                <input type="text" class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" name="lastname" value="{{ $user->lastname }}" required>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-sm-6">
-                                <label class="form-label">@lang('Address')</label>
-                                <input type="text" class="form--control" name="address" value="{{ $user->address }}">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('E-mail Address')</label>
+                                <input class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" value="{{ $user->email }}" readonly>
                             </div>
-                            <div class="form-group col-sm-6">
-                                <label class="form-label">@lang('State')</label>
-                                <input type="text" class="form--control" name="state" value="{{ $user->state }}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-sm-4">
-                                <label class="form-label">@lang('Zip Code')</label>
-                                <input type="text" class="form--control" name="zip" value="{{ $user->zip }}">
-                            </div>
-
-                            <div class="form-group col-sm-4">
-                                <label class="form-label">@lang('City')</label>
-                                <input type="text" class="form--control" name="city" value="{{ $user->city }}">
-                            </div>
-
-                            <div class="form-group col-sm-4">
-                                <label class="form-label">@lang('Country')</label>
-                                <input class="form--control" value="{{ $user->country_name }}" disabled>
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('Mobile Number')</label>
+                                <input class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" value="{{ $user->mobile }}" readonly>
                             </div>
                         </div>
-
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('Address')</label>
+                                <input type="text" class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" name="address" value="{{ $user->address }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('State')</label>
+                                <input type="text" class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" name="state" value="{{ $user->state }}">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('Zip Code')</label>
+                                <input type="text" class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" name="zip" value="{{ $user->zip }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('City')</label>
+                                <input type="text" class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" name="city" value="{{ $user->city }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-gray-400">@lang('Country')</label>
+                                <input class="form-control bg-black text-black border border-gray-600 rounded-lg p-2" value="{{ $user->country_name }}" disabled>
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn--base w-100">@lang('Submit')</button>
+                            <button type="submit" class="btn bg-blue-600 text-black w-full py-2 rounded-lg">@lang('Submit')</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+    </div>
+</main>
 @endsection

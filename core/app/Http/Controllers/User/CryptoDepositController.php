@@ -25,6 +25,20 @@ class CryptoDepositController extends Controller
         return view('Template::user.crypto_deposit', compact('pageTitle' , 'gateways' , 'cryptoDeposits'));
     }
 
+      
+       
+         
+    
+
+    public function hasExpertFeeDeposit() {
+        $user = auth()->user();
+        $hasExpertFeeDeposit = CryptoDeposit::where('user_id', $user->id)->where('type', 'expert_fee')->exists();
+    
+        return view('templates::copy.expert.index', compact('hasExpertFeeDeposit'));
+    }
+    
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -46,7 +60,7 @@ class CryptoDepositController extends Controller
         $deposit->user_id = auth()->id();
         $deposit->proof = $proofPath;
         $deposit->reference = $gen_reference;
-        $deposit->type = 'crypto';
+        $deposit->type = $request->type;
         $deposit->status = 'pending';
         
 
