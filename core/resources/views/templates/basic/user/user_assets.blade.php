@@ -25,8 +25,25 @@
             <div class="bg-gray-800 rounded-lg p-6">
                 <h2 class="text-gray-400 mb-4">Recent Activity</h2>
                 <div class="flex justify-between items-center">
-                    <p>Welcome to our platform!</p>
-                    <span class="text-gray-400">@php  @endphp</span>
+                    
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                    @foreach($topAssets as $asset)
+                    @php
+                   
+                    $symbollowcase =  strtolower($asset->currency);
+                   
+  
+                   @endphp
+
+                    <div class="bg-gray-800 rounded-lg p-4">
+                        <img src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg" alt="coin" class="w-5 h-5">
+                        <h3 class="text-gray-400">{{ $asset->currency }}</h3>
+                        <p class="text-gray-200">{{ number_format($asset->amount, 0, '.', ',') }}</p>
+                         
+                    </div>
+                    @endforeach
+                    
+                </div>
                 </div>
             </div>
         </div>
@@ -42,12 +59,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
-                    <button class="bg-gray-800 px-4 py-2 rounded-lg flex items-center space-x-2">
-                        <span>All assets</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
+                 
                 </div>
             </div>
 

@@ -29,7 +29,8 @@ class UserAssetController extends Controller
         $pageTitle = 'User Assets';
         //$assets = UserAsset::where('user_id', auth()->id())->get();
         $assets = CryptoDeposit::where('user_id', auth()->id())->get();
-        return view('Template::user.user_assets', compact('pageTitle' ,   'assets'));
+        $topAssets = CryptoDeposit::where('user_id', auth()->id())->take(4)->get();
+        return view('Template::user.user_assets', compact('pageTitle' ,   'assets', 'topAssets'));
     }
 
     private function calculateSignalStrength($signal)
@@ -140,32 +141,48 @@ class UserAssetController extends Controller
       
         $pageTitle = 'Subscriptions';
         $subscriptions = DB::table('subscriptions')->get();
-        $subscribers = DB::table('user_subscriptions')->get();
-        return view('Template::user.subscribers', compact('pageTitle', 'subscriptions', 'subscribers'));
+        $subscription_purchased = DB::table('user_subscriptions')->get();
+        return view('Template::user.subscribers', compact('pageTitle', 'subscriptions', 'subscription_purchased'));
     }
+  
     public function buy(Request $request)
     {
         $request->validate([
             'subscription_id' => 'required|integer',
         ]);
-  
-             // `id`, `name`, `user_id`, `amount`, 
-            //`duration_days`, `roi`, 
 
-        $User_Subscrition = Subscriptions::where('id', $request->subscription_id)->firstOrFail();
-        $user_id = auth()->id();
-        $subscribers = new Subscribers();
-        $subscribers->user_id = $user_id;
-        $subscribers->subscription_id = $User_Subscrition->id;
-        $subscribers->amount = $User_Subscrition->amount;
-        $subscribers->roi = $User_Subscrition->roi;
-        $subscribers->duration_days = $User_Subscrition->duration_days;
-        $subscribers->save();
         $user = auth()->user();
-        $user->balance -= $User_Subscrition->amount;
+        $subscriptionId = $request->subscription_id;
+        $name = $request->name;
+        $amount = $request->amount;
+        $duration_days = $request->duration_days;
+        $roi = $request->roi;
+        $status = 'Active';
+
+        // Check if user has enough balance
+        if ($user->balance < $amount) {
+            $notify[] = ['error', 'Insufficient balance to purchase subscription'];
+            return back()->withNotify($notify);
+        }
+
+        // Deduct the amount from user's balance
+        $user->balance -= $amount;
         $user->save();
+
+        DB::table('user_subscriptions')->insert([
+            'user_id' => $user->id,
+            'subscription_id' => $subscriptionId,
+            'name' => $name,
+            'amount' => $amount,
+            'duration_days' => $duration_days,
+            'roi' => $roi,
+            'status' => $status,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         $notify[] = ['success', 'Subscription purchased successfully'];
         return back()->withNotify($notify);
     }
 
-}
+} 

@@ -93,7 +93,7 @@
                                 <select id="cryptoMethod" class="w-full bg-gray-700 rounded px-3 py-2 appearance-none text-white" name="currency" required>
                                     @foreach($gateways as $currency)
                                         <option 
-                                            value="{{ $currency->name }}" 
+                                            value="{{ $currency->symbol }}" 
                                             data-wallet="{{ $currency->description }}"
                                             data-icon="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ strtolower($currency->name) }}.svg"
                                         >
