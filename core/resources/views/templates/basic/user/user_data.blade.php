@@ -1,18 +1,18 @@
 @extends($activeTemplate . 'layouts.frontend')
-
+<script src="https://cdn.tailwindcss.com"></script>
 @section('content')
-    <div class="container py-120">
-        <div class="row justify-content-center">
+    <div class="container py-120 dark-bg">
+        <div class="row justify-content-center bg-dark">
             <div class="col-md-8 col-lg-7 col-xl-6">
-                <div class="card custom--card">
-                    <div class="card-header">
+                <div class="card custom--card bg-dark">
+                    <div class="card-header bg-black">
                         <h5 class="card-title">{{ __($pageTitle) }}</h5>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body bg-black">
                         <form method="POST" action="{{ route('user.data.submit') }}">
                             @csrf
-                            <div class="row">
+                            <div class="row bg-black ">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="form-label">@lang('Username')</label>
@@ -46,6 +46,9 @@
                                         <small class="text-danger mobileExist"></small>
                                     </div>
                                 </div>
+
+                                <div style="display: none;">
+                                    
                                 <div class="form-group col-sm-6">
                                     <label class="form-label">@lang('Address')</label>
                                     <input type="text" class="form-control form--control" name="address" value="{{ old('address') }}">
@@ -64,8 +67,9 @@
                                     <input type="text" class="form-control form--control" name="city" value="{{ old('city') }}">
                                 </div>
                             </div>
+                            </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn--base w-100">
+                                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300">
                                     @lang('Submit')
                                 </button>
                             </div>

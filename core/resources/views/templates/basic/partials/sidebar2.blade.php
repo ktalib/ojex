@@ -1,3 +1,4 @@
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <aside class="hidden lg:flex lg:flex-col w-64 border-r border-gray-800 p-4 bg-gradient-to-b from-gray-900 to-black">
     <div class="mb-8">
         <a href="#" class="text-2xl font-bold text-white flex items-center gap-2">
@@ -26,7 +27,8 @@
         </a>
         <a href="{{ route('subscribers.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
             <i class="ri-radio-line"></i> Subscribe
-        </a>
+        </a> 
+     
         <a href="{{ route('user.signals.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
             <i class="ri-signal-tower-line"></i> Signals
         </a>
@@ -47,7 +49,8 @@
         </a>
     </nav>
 </aside>
-<div x-data="{ open: false }" class="lg:hidden">
+<div x-data="{ open: false }" class="lg:hidden   inset-0 overflow-hidden z-50"
+        role="dialog">
     <button @click="open = true" class="p-2 text-white bg-gray-800 rounded-md">
         <i class="ri-menu-line"></i>
     </button>
@@ -96,14 +99,18 @@
                 <a href="{{ route('user.profile.setting') }}" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
                     <i class="ri-settings-3-line text-2xl"></i> Settings
                 </a>
+                <a href="{{ route('user.logout') }}" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
+                   <i  class="ri-logout-circle-line text-2xl"></i> Logout
+                </a>
+               
             </nav>
         </div>
     </div>
 </div>
 <script>
-     
-     
-    </script>
+  
+  
+</script>
    
 
 {{-- 

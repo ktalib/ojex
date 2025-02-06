@@ -1,85 +1,98 @@
-@extends($activeTemplate . 'layouts.app')
-@php
-    $loginContent = getContent('login.content', true);
-@endphp
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">   
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> {{ gs()->siteName(__($pageTitle)) }}</title>
 
-@section('main')
-    <section class="account bg-img" data-background-image="{{ frontendImage('login', $loginContent->data_values->image, '1100x900') }}">
-        <div class="account-form-wrapper">
-            <a href="{{ route('home') }}" class="account-form__logo">
-                <img src="{{ siteLogo() }}" alt="{{ gs('site_name') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+</head>
+<body class="bg-black min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md">
+        <div class="absolute top-4 left-4">
+            <a href="#" class="text-white hover:text-gray-300">
+                <img src="{{ siteLogo() }}" alt="Logo" class="mx-auto mb-4 rounded-full">
             </a>
-            <div class="account-form">
-                <h4 class="account-form__title"> {{ __(@$loginContent->data_values->title) }} </h4>
-                <p class="account-form__text">@lang('Don\'t have an account?') <a href="{{ route('user.register') }}"
-                        class="link title-style"> @lang('Register') </a></p>
-                <form method="POST" action="{{ route('user.login') }}" class="verify-gcaptcha">
-                    @csrf
-                    <div class="row">
-                        <div class="form-group col-sm-12">
-                            <label class="form--label">@lang('Email / Username')</label>
-                            <input type="text" name="username" value="{{ old('username') }}" class="form--control"
-                                placeholder="@lang('Email / Username')" required>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label class="form--label">@lang('Password')</label>
-
-                            <div class="position-relative">
-                                <input type="password" name="password" class="form-control form--control"
-                                    placeholder="@lang('Password')" required>
-                                <span class="password-show-hide fas fa-eye toggle-password fa-eye-slash"
-                                    id="#password"></span>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <x-captcha :showLabel="false" />
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <div class="d-flex flex-wrap align-items-center justify-content-between">
-                                <div class="form--check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                        {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember">
-                                        @lang('Remember Me')
-                                    </label>
-                                </div>
-
-                                <a href="{{ route('user.password.request') }}" class="forgot-password__link">
-                                    @lang('Forgot Password?')
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <button type="submit" id="recaptcha" class="btn btn--base w-100">
-                                @lang('Login')
-                            </button>
-                        </div>
-                        <div class="col-sm-12">
-                            @include($activeTemplate . 'user.auth.social_login', ['action' => 'Login'])
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
-    </section>
-@endsection
+        <div class="absolute top-4 right-4">
+            <a href="{{ route('home') }}" class="text-white hover:text-gray-300">
+                <i class="fas fa-home text-2xl"></i>
+            </a>
+        </div>
+        
 
-@push('style')
-    <style>
-        .form--check .form-check-label {
-            width: auto;
-        }
 
-        .form--check .form-check-input {
-            width: 16px;
-            height: 16px;
-            margin-top: 4px;
-        }
+         
+        
+        <form method="POST" action="{{ route('user.login') }}" 
+             class="bg-black border border-gray-800 rounded-lg p-8">
+            @csrf
+            <h2 class="text-center text-2xl font-bold text-white mb-6">Log in to your account</h2>
+            
+            <div class="mb-4">
+                <input 
+                    type="text"  name="username"
+                    placeholder="@lang('Email / Username')"
+                    class="w-full p-3 bg-gray-900 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                >
+            </div>
+            
+            <div class="relative mb-4">
+                <input 
+                    type="password"  name="password"
+                    placeholder="Password"
+                    class="w-full p-3 bg-gray-900 text-white border border-gray-700 rounded-md pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                >
+                <button 
+                    type="submit" 
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                    onclick="togglePasswordVisibility()"
+                >
+                    <i id="passwordToggle" class="fas fa-eye"></i>
+                </button>
+            </div>
+            
+            <div class="flex justify-between text-sm text-gray-400 mb-4">
+                <a href="{{ route('user.register') }}" class="hover:text-white">Don't have an account?</a>
+                <a href="{{ route('user.password.request') }}" class="hover:text-white">Forgot your password?</a>
+            </div>
+            
+            <button 
+                type="submit" 
+                class="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition duration-300"
+            >
+                Log in
+            </button>
+        </form>
+    </div>
+    @stack('script-lib')
 
-        .form--check .form-check-input:checked::before {
-            width: 16px;
-            height: 16px;
-            font-size: 12px;
+    @php echo loadExtension('tawk-chat') @endphp
+
+    @include('partials.notify')
+
+    @if (gs('pn'))
+        @include('partials.push_script')
+    @endif
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.querySelector('input[type="password"]');
+            const toggleIcon = document.getElementById('passwordToggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
         }
-    </style>
-@endpush
+    </script>
+</body>
+</html>

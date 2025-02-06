@@ -25,15 +25,16 @@
             <div class="bg-gray-800 rounded-lg p-6">
                 <h2 class="text-gray-400 mb-4">Recent Activity</h2>
                 <div class="flex justify-between items-center">
-                    
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                     @foreach($topAssets as $asset)
                     @php
-                   
                     $symbollowcase =  strtolower($asset->currency);
                    
-  
-                   @endphp
+                    @endphp
+
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                  
+                   
 
                     <div class="bg-gray-800 rounded-lg p-4">
                         <img src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg" alt="coin" class="w-5 h-5">
@@ -41,9 +42,11 @@
                         <p class="text-gray-200">{{ number_format($asset->amount, 0, '.', ',') }}</p>
                          
                     </div>
-                    @endforeach
+                   
                     
                 </div>
+
+                @endforeach
                 </div>
             </div>
         </div>

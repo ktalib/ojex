@@ -1,168 +1,120 @@
-@extends($activeTemplate . 'layouts.frontend')
-@section('main')
-    @php
-        $policyPages = getContent('policy_pages.element', false, null, true);
-        $registerContent = getContent('register.content', true);
-    @endphp
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> {{ gs()->siteName(__($pageTitle)) }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-gray-800 rounded-lg shadow-lg p-8">
+        <a href="{{ route('home') }}" class="block text-center mb-6">
+            <img src="{{ siteLogo() }}" alt="Logo" class="mx-auto rounded-full">
+        </a>
 
-    <section class="account bg-img" data-background-image="{{ frontendImage('register', $registerContent->data_values->image, '1100x900') }}">
-        <div class="account-form-wrapper">
-            <a href="{{ route('home') }}" class="account-form__logo">
-                <img src="{{ siteLogo() }} " alt="">
-            </a>
-            <form action="{{ route('user.register') }}" method="POST" class="verify-gcaptcha">
-                @csrf
-                <div class="account-form">
-                    <h4 class="account-form__title"> {{ __(@$registerContent->data_values->title) }} </h4>
-                    <p class="account-form__text">@lang('Already have an account?') <a href="{{ route('user.login') }}"
-                            class="link title-style"> @lang('Login') </a></p>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form--label required">@lang('First Name')</label>
-                                <input type="text" class="form-control form--control" name="firstname"
-                                    placeholder="First Name" value="{{ old('firstname') }}" required>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form--label">@lang('Last Name')</label>
-                                <input type="text" class="form-control form--control" name="lastname"
-                                    placeholder="Last Name" value="{{ old('lastname') }}" required>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label class="form--label">@lang('Email')</label>
-                                <input type="email" placeholder="@lang('Email Address')"
-                                    class="form-control form--control checkUser" name="email" value="{{ old('email') }}"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-md-12 col-sm-6">
-                            <div class="form-group">
-                                <label class="form--label">@lang('Password')</label>
-                                <div class="position-relative">
-                                    <input type="password" placeholder="@lang('Password')"
-                                        class="form-control form--control @if (gs('secure_password')) secure-password @endif"
-                                        name="password" required>
-                                    <span class="password-show-hide fas fa-eye toggle-password fa-eye-slash"
-                                        id="#password"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-md-12 col-sm-6">
-                            <div class="form-group">
-                                <label class="form--label">@lang('Confirm Password')</label>
-                                <div class=" position-relative">
-                                    <input type="password" placeholder="@lang('Confirm Password')"
-                                        class="form-control form--control" name="password_confirmation" required>
-                                    <span class="password-show-hide fas fa-eye toggle-password fa-eye-slash"
-                                        id="#password_confirmation"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <x-captcha :showLabel="false" />
-                        @if (gs('agree'))
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <div class="form-check form--check">
-                                        <input class="form-check-input" type="checkbox" id="agree"
-                                            @checked(old('agree')) name="agree" required>
-                                        <label class="form-check-label" for="agree">
-                                            @lang('I agree with')
-                                            @foreach ($policyPages as $policy)
-                                                <a href="{{ route('policy.pages', $policy->slug) }}"
-                                                    target="_blank">{{ __($policy->data_values->title) }}</a>
-                                                @if (!$loop->last)
-                                                    ,
-                                                @endif
-                                            @endforeach
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                        <div class="col-sm-12">
-                            <button type="submit" id="recaptcha"
-                                class="btn btn--base btn--lg w-100">@lang('Create account')</button>
-                        </div>
-                    </div>
+        <form action="{{ route('user.register') }}" method="POST" class="space-y-4">
+            @csrf
+            <h2 class="text-2xl font-bold text-white text-center mb-4">Create an Account</h2>
+            
+            <p class="text-gray-400 text-center">
+                Already have an account? 
+                <a href="#" class="text-blue-500 hover:text-blue-400">Login</a>
+            </p>
 
-                    @include($activeTemplate . 'user.auth.social_login', ['action' => 'Register'])
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-300 mb-2">First Name</label>
+                    <input 
+                        type="text" 
+                        name="firstname"
+                        placeholder="First Name" value="{{ old('firstname') }}" required
+                        class="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        
+                    >
                 </div>
-            </form>
-        </div>
-    </section>
-
-    <div class="modal custom--modal fade" id="existModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="existModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title " id="existModalLongTitle">@lang('You are with us')</h5>
-                    <span type="button" class="close-icon" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="las la-times"></i>
-                    </span>
-                </div>
-                <div class="modal-body">
-                    <p class="text text-center ">@lang('You already have an account please Login ')</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark btn--sm"
-                        data-bs-dismiss="modal">@lang('Close')</button>
-                    <a href="{{ route('user.login') }}" class="btn btn--base btn--sm">@lang('Login')</a>
+                <div>
+                    <label class="block text-gray-300 mb-2">Last Name</label>
+                    <input 
+                        type="text" 
+                     name="lastname"
+                                    placeholder="Last Name" value="{{ old('lastname') }}"
+                        class="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                    >
                 </div>
             </div>
-        </div>
-    </div>
-@endsection
+
+            <div>
+                <label class="block text-gray-300 mb-2">Email Address</label>
+                <input 
+                    type="email"  name="email" value="{{ old('email') }}"
+                    placeholder="Email Address" 
+                    class="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                >
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="relative">
+                    <label class="block text-gray-300 mb-2">Password</label>
+                    <input 
+                        type="password" 
+                        placeholder="Password"  name="password" 
+                        class="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                    >
+                    <button type="button" class="absolute right-3 top-10 text-gray-400 hover:text-white">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="relative">
+                    <label class="block text-gray-300 mb-2">Confirm Password</label>
+                    <input 
+                        type="password"  name="password_confirmation"
+                        placeholder="Confirm Password" 
+                        class="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                    >
+                    <button type="button" class="absolute right-3 top-10 text-gray-400 hover:text-white">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center">
+                <input 
+                   type="checkbox" id="agree"
+                                            @checked(old('agree')) name="agree"
+                    class="mr-2 bg-gray-700 border-gray-600 rounded text-blue-500 focus:ring-blue-500"
+                    required
+                >
+                <label for="agree" class="text-gray-300">
+                    I agree to the 
+                    <a href="#" class="text-blue-500 hover:text-blue-400">Terms of Service</a> 
+                    and 
+                    <a href="#" class="text-blue-500 hover:text-blue-400">Privacy Policy</a>
+                </label>
+            </div>
+
+            <button 
+                type="submit" 
+                class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300"
+            >
+                Create Account
+            </button>
+        </form>
+    </div>  @stack('script-lib')
+
+    @php echo loadExtension('tawk-chat') @endphp
+
+    @include('partials.notify')
+
+    @if (gs('pn'))
+        @include('partials.push_script')
+    @endif
 
 
-@if (gs('secure_password'))
-    @push('script-lib')
-        <script src="{{ asset('assets/global/js/secure_password.js') }}"></script>
-    @endpush
-@endif
-
-
-@push('style')
-    <style>
-        .form--check .form-check-input {
-            width: 16px;
-            height: 16px;
-            margin-top: 4px;
-        }
-
-        .form--check .form-check-input:checked::before {
-            width: 16px;
-            height: 16px;
-            font-size: 12px;
-        }
-    </style>
-@endpush
-
-@push('script')
-    <script>
-        "use strict";
-        (function($) {
-
-            $('.checkUser').on('focusout', function(e) {
-                var url = '{{ route('user.checkUser') }}';
-                var value = $(this).val();
-                var token = '{{ csrf_token() }}';
-
-                var data = {
-                    email: value,
-                    _token: token
-                }
-
-                $.post(url, data, function(response) {
-                    if (response.data != false) {
-                        $('#existModalCenter').modal('show');
-                    }
-                });
-            });
-        })(jQuery);
-    </script>
-@endpush
+</body>
+</html>
