@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\CryptoDepositController;
 use App\Http\Controllers\User\CopyExpertController;
+use App\Http\Controllers\User\StakingController;
 use App\Http\Controllers\User\UserAssetController;
 
 
@@ -167,3 +168,6 @@ Route::get('/signals', [UserAssetController::class, 'Signal'])->name('user.signa
 Route::post('/purchase', [UserAssetController::class, 'purchase'])->name('signals.purchase');
 Route::get('/subscribers', [UserAssetController::class, 'subscribers'])->name('subscribers.index');
 Route::post('/buy', [UserAssetController::class, 'buy'])->name('subscribers.buy');
+Route::get('/staking', [StakingController::class, 'index'])->name('staking.index');
+Route::post('/staking', [StakingController::class, 'store'])->name('user.staking.store');
+ 

@@ -22,6 +22,7 @@ class WithdrawController extends Controller
         if ($request->search) {
             $withdraws = $withdraws->where('trx',$request->search);
         }
+        $totalWithdraw = $withdraws->sum('amount');
         $withdraws = $withdraws->with('method')->orderBy('id','desc')->paginate(getPaginate());
         $withdrawMethods = WithdrawMethod::where('status', 1)->get();
         return view('Template::user.withdraw.methods', compact('pageTitle','withdrawMethod' , 'withdraws', 'withdrawMethods'));

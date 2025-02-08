@@ -90,8 +90,8 @@
                  @endphp
 <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-[#F7931A]/10 flex items-center justify-center">
-            <img src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg" class="w-4 h-4">
+        <div class="w-10 h-10 rounded-full bg-[#F7931A]/10 flex items-center justify-center">
+            <img src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg" class="w-6 h-6">
         </div>
         <div>
             <div class="text-white">{{ $currency->name }}</div>
@@ -116,54 +116,9 @@
                 <span class="text-sm text-gray-300">Total Deposits</span>
             
             </div>
-            <p class="text-sm text-gray-300">$0.00</p>
-            <a href="" class="bg-gray-700 px-3 py-1 text-sm rounded-md hover:bg-gray-600">Deposit</a>
-        <!-- Crypto Deposit Modal -->
-        <div id="cryptoDepositModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
-            <div class="bg-gray-900 rounded-lg shadow-lg p-6 w-full max-w-md">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold text-white">Crypto Deposit</h3>
-                    <button id="closeCryptoDepositModal" class="text-gray-400 hover:text-white">
-                        <i class="ri-close-line"></i>
-                    </button>
-                </div>
-                <form action="" method="post">
-                    @csrf
-                    <div class="mb-4">
-                        <label faor="cryptoAmount" class="block text-sm text-gray-400 mb-1">Amount:</label>
-                        <input type="number" id="cryptoAmount" name="amount" class="w-full bg-gray-800 border border-gray-700 rounded-md p-2 text-white" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="cryptoAddress" class="block text-sm text-gray-400 mb-1">Crypto Address:</label>
-                        <input type="text" id="cryptoAddress" name="address" class="w-full bg-gray-800 border border-gray-700 rounded-md p-2 text-white" required>
-                    </div>
-                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 py-2 rounded-md text-white font-medium">Deposit</button>
-                </form>
-            </div>
-        </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const depositButton = document.querySelector('.tab-button[data-tab="tab2"]');
-                const cryptoDepositModal = document.getElementById('cryptoDepositModal');
-                const closeCryptoDepositModal = document.getElementById('closeCryptoDepositModal');
-
-                depositButton.addEventListener('click', () => {
-                    cryptoDepositModal.classList.remove('hidden');
-                });
-
-                closeCryptoDepositModal.addEventListener('click', () => {
-                    cryptoDepositModal.classList.add('hidden');
-                });
-
-                // Close modal when clicking outside of it
-                window.addEventListener('click', (event) => {
-                    if (event.target === cryptoDepositModal) {
-                        cryptoDepositModal.classList.add('hidden');
-                    }
-                });
-            });
-        </script>
+            <p class="text-sm text-gray-300">{{ showAmount(auth()->user()->balance) }}</p>
+            <a href="{{ route('crypto.deposit.index') }}" class="bg-gray-700 px-3 py-1 text-sm rounded-md hover:bg-gray-600">Deposit</a>
+       
         </div>
          
 
@@ -174,7 +129,7 @@
             <span class="text-sm text-gray-300">Total Withdrawals</span>
           </div>
           <div class="flex items-center gap-2">
-            <p class="text-sm text-gray-300">$0.00</p>
+            <p class="text-sm text-gray-300">{{ showAmount($totalWithdraw) }}</p>
             <a  href="{{ route('user.withdraw') }}" class="bg-gray-700 px-3 py-1 text-sm rounded-md hover:bg-gray-600">Withdraw</a>
           </div>
         </div>

@@ -19,6 +19,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Asset;
+use App\Models\Withdrawal;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -48,11 +49,13 @@ class UserController extends Controller
         $widget['completed_order'] = (clone $order)->completed()->count();
         $widget['canceled_order']  = (clone $order)->canceled()->count();
         $widget['total_trade']     = Trade::where('trader_id', $user->id)->count();
-
+        
         $recentOrders       = $order->with('pair.coin')->orderBy('id', 'DESC')->take(10)->get();
         $recentTransactions = Transaction::where('user_id', $user->id)->orderBy('id', 'DESC')->take(10)->get();
-
-        return view('Template::user.dashboard', compact('pageTitle', 'user', 'pairs', 'currencies', 'widget', 'recentOrders', 'recentTransactions' , 'Topcurrencies'  , 'assets', 'userAssets'));
+        $withdraws = Withdrawal::where('user_id', auth()->id())->where('status', '!=', Status::PAYMENT_INITIATE);
+        
+        $totalWithdraw = $withdraws->sum('amount');
+        return view('Template::user.dashboard', compact('pageTitle', 'user', 'pairs', 'currencies', 'widget', 'recentOrders', 'recentTransactions' , 'Topcurrencies'  , 'assets', 'userAssets', 'totalWithdraw'));
     }
 
     public function progress()
@@ -255,15 +258,11 @@ class UserController extends Controller
             'country_code' => 'required|in:' . $countryCodes,
             'country'      => 'required|in:' . $countries,
             'mobile_code'  => 'required|in:' . $mobileCodes,
-            'username'     => 'required|unique:users|min:6',
-            'mobile'       => ['required', 'regex:/^([0-9]*)$/', Rule::unique('users')->where('dial_code', $request->mobile_code)],
+            'username'     => 'required|unique:users|min:4',
+            'mobile'       => ['required', Rule::unique('users')->where('dial_code', $request->mobile_code)],
         ]);
 
-        if (preg_match("/[^a-z0-9_]/", trim($request->username))) {
-            $notify[] = ['info', 'Username can contain only small letters, numbers and underscore.'];
-            $notify[] = ['error', 'No special character, space or capital letters in username.'];
-            return back()->withNotify($notify)->withInput($request->all());
-        }
+     
 
         $user->country_code = $request->country_code;
         $user->mobile       = $request->mobile;

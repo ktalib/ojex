@@ -27,7 +27,7 @@
 
 @php echo loadExtension('google-analytics') @endphp
 
-<body>
+<body class="bg-dark">
 
     @stack('fbComment')
 

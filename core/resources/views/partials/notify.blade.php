@@ -1,6 +1,5 @@
-<link href="{{ asset('assets/global/css/iziToast.min.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/global/css/iziToast_custom.css') }}" rel="stylesheet">
-<script src="{{ asset('assets/global/js/iziToast.min.js') }}"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     "use strict";
@@ -12,30 +11,24 @@
     }
 
     const icons = {
-        success: 'fas fa-check-circle',
-        error: 'fas fa-times-circle',
-        warning: 'fas fa-exclamation-triangle',
-        info: 'fas fa-exclamation-circle',
+        success: 'success',
+        error: 'error',
+        warning: 'warning',
+        info: 'info',
     }
 
     const notifications = @json(session('notify', []));
     const errors = @json(@$errors ? collect($errors->all())->unique() : []);
 
-
     const triggerToaster = (status, message) => {
-        iziToast[status]({
-            title: status.charAt(0).toUpperCase() + status.slice(1),
-            message: message,
-            position: "topRight",
-            backgroundColor: '#fff',
+        Swal.fire({
             icon: icons[status],
+            title: status.charAt(0).toUpperCase() + status.slice(1),
+            text: message,
+            background: '#2f2f2f',
+            color: '#fff',
             iconColor: colors[status],
-            progressBarColor: colors[status],
-            titleSize: '1rem',
-            messageSize: '1rem',
-            titleColor: '#474747',
-            messageColor: '#a2a2a2',
-            transitionIn: 'obunceInLeft'
+            confirmButtonColor: colors[status],
         });
     }
 

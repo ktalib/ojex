@@ -1,9 +1,13 @@
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ 
 <aside class="hidden lg:flex lg:flex-col w-64 border-r border-gray-800 p-4 bg-gradient-to-b from-gray-900 to-black">
     <div class="mb-8">
         <a href="#" class="text-2xl font-bold text-white flex items-center gap-2">
             <i class="ri-flashlight-fill text-yellow-500"></i>
-            TradeX
+            TradededPro
         </a>
     </div>
     <nav class="space-y-2 flex-1">
@@ -32,15 +36,27 @@
         <a href="{{ route('user.signals.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
             <i class="ri-signal-tower-line"></i> Signals
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
-            <i class="ri-money-dollar-circle-line"></i> Stake <span class="ml-2 text-xs text-yellow-500">(Coming Soon)</span>
+        <a href="{{ route('staking.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
+            <i class="ri-money-dollar-circle-line"></i> Stake 
         </a>
         <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
             <i class="ri-share-forward-line"></i> Referrals <span class="ml-2 text-xs text-yellow-500">(Coming Soon)</span>
         </a>
-        <a href="#" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
-            <i class="ri-wallet-3-line"></i> Connect wallet <span class="ml-2 text-xs text-yellow-500">(Coming Soon)</span>
+        <a href="#" onclick="walletNotAvailable()" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
+            <i class="ri-wallet-3-line"></i> Connect wallet
         </a>
+        <script>
+            function walletNotAvailable() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Wallet Not Available',
+                theme: 'dark',
+                text: 'The wallet feature is currently not available. Please try again later.',
+                confirmButtonText: 'OK'
+            });
+            }
+        </script>
+        
         <a href="{{ route('copy.expert.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
             <i class="ri-user-follow-line"></i> Copy Experts
         </a>
@@ -163,3 +179,5 @@
         </a>
     </nav>
 </aside> --}}
+
+

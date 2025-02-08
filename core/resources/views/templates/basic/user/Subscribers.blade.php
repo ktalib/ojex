@@ -95,9 +95,17 @@
                         </button>
                     </div>
                 </div>
-
                 <!-- Content -->
                 <div class="flex-1 overflow-y-auto p-6 bg-black dark:bg-gray-800">
+                    @if($subscription_purchased->isEmpty())
+                        <div class="text-center text-gray-400 dark:text-gray-300">
+                            You have not purchased any subscriptions yet.
+                        </div>
+                    @endif
+                <div>
+              
+
+                </div>
                     @foreach($subscription_purchased as $subscription)
                     @php
                     $totalRoi = ($subscription->amount * $subscription->roi) / 100;
@@ -105,8 +113,12 @@
                     $monthlyRoi = $dailyRoi * 30;
                     $expirationDate = \Carbon\Carbon::parse($subscription->created_at)->addDays($subscription->duration_days);
                     // Floor the days remaining to get whole numbers
-                    $daysRemaining = max(0, floor(now()->floatDiffInDays($expirationDate)));
+                    $daysRemaining = max(0, floor(\Carbon\Carbon::now()->diffInDays($expirationDate, false)));
                     $daysRemainingFormatted = number_format($daysRemaining, 0) . ' ' . Str::plural('day', $daysRemaining);
+
+                    //
+
+                    
                 @endphp
                         <div class="mb-6 p-4 bg-gray-800 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 shadow-sm">
                             <div class="flex justify-between items-center mb-4">
@@ -140,7 +152,6 @@
                                         {{ number_format((100 - ($daysRemaining / $subscription->duration_days) * 100), 2) }}%
                                     </div>
                                 </div>
-
 
                                 <!-- Expiration Information -->
                                 <div class="flex justify-between">
