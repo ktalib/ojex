@@ -12,7 +12,8 @@
     </div>
     <nav class="space-y-2 flex-1">
         <a href="{{ route('user.home') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg">
-            <i class="ri-dashboard-line"></i> Dashboard
+            <i class="ri-dash
+            board-line"></i> Dashboard
         </a>
         <a href="{{ route('crypto.deposit.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
             <i class="ri-arrow-right-circle-line"></i> Deposit
@@ -100,12 +101,10 @@
                 <a href="{{ route('user.signals.index') }}" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
                     <i class="ri-signal-tower-line text-2xl"></i> Signals
                 </a>
-                <a href="#" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
-                    <i class="ri-money-dollar-circle-line text-2xl"></i> Stake <span class="text-xs text-yellow-500">(Coming Soon)</span>
+                <a href="{{ route('staking.index') }}" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
+                    <i class="ri-money-dollar-circle-line text-2xl"></i> Stake <span class="text-xs text-yellow-500"> </span>
                 </a>
-                <a href="#" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
-                    <i class="ri-share-forward-line text-2xl"></i> Referrals <span class="text-xs text-yellow-500">(Coming Soon)</span>
-                </a>
+               
                 <a href="#" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
                     <i class="ri-wallet-3-line text-2xl"></i> Connect wallet <span class="text-xs text-yellow-500">(Coming Soon)</span>
                 </a>

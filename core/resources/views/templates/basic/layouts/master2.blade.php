@@ -69,7 +69,7 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
         <!-- Header -->
-        <header class="flex items-center justify-between p-4 border-b border-gray-800 bg-black">
+        <header class="flex  items-center justify-between p-4 border-b border-gray-800 bg-black">
             <h1 class="text-lg md:text-xl font-semibold">{{ __($pageTitle) }}</h1>
             <div class="flex items-center gap-4">
                 <button class="relative">
@@ -131,7 +131,18 @@
         @endif
     
         @stack('script')
-    
+    <!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '6abcc9170a1385a1f4b11513a4421a07f2aa148f';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+    </script>
+    <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
         <script>
             (function($) {
                 "use strict";

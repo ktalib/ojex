@@ -3,30 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Subscriber;
+use App\Models\Subscribers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB as db;
 
 class SubscriberController extends Controller
 {
     public function index()
     {
         $pageTitle = 'Subscribers';
-        $subscribers = Subscriber::orderBy('id','desc')->paginate(getPaginate());
+        $subscribers = db::table('user_subscriptions')->latest()->paginate(getPaginate());
         return view('admin.subscriber.index', compact('pageTitle', 'subscribers'));
     }
 
     public function sendEmailForm()
     {
-        $pageTitle = 'Email to Subscribers';
-        if (session()->has('SEND_NOTIFICATION_TO_SUBSCRIBER') && !request()->email_sent) {
-            session()->forget('SEND_NOTIFICATION_TO_SUBSCRIBER');
-        }
-        return view('admin.subscriber.send_email', compact('pageTitle'));
+        $pageTitle = 'Subscription plan';
+         $user_subscription_plans = db::table('subscriptions')->latest()->paginate(getPaginate());
+        return view('admin.subscriber.send_email', compact('pageTitle', 'user_subscription_plans'));
     }
+
 
     public function remove($id)
     {
-        $subscriber = Subscriber::findOrFail($id);
+        $subscriber = Subscribers::findOrFail($id);
         $subscriber->delete();
 
         $notify[] = ['success', 'Subscriber deleted successfully'];
@@ -43,7 +43,7 @@ class SubscriberController extends Controller
             'cooling_time' => 'required|integer|gte:1',
         ]);
 
-        $query = Subscriber::query();
+        $query = Subscribers::query();
 
         if (session()->has("SEND_NOTIFICATION_TO_SUBSCRIBER")) {
             $totalSubscriberCount = session('SEND_NOTIFICATION_TO_SUBSCRIBER')['total_subscriber'];
@@ -99,4 +99,40 @@ class SubscriberController extends Controller
         $notify[] = ['success', $message];
         return redirect($url)->withNotify($notify);
     }
+
+  
+
+ 
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id'            => 'required',
+            'name'          => 'required|string|max:255',
+            'amount'        => 'required|numeric|min:0',
+            'duration_days' => 'required|integer|min:1',
+            'roi'           => 'required|numeric|min:0',
+            'profit'        => 'required|numeric|min:0',
+            'status'        => 'required|string|in:active,expired',
+        ]);
+
+        $updated = db::table('user_subscriptions')
+            ->where('id', $request->id)
+            ->update([
+                'name'          => $request->name,
+                'amount'        => $request->amount,
+                'duration_days' => $request->duration_days,
+                'roi'           => $request->roi,
+                'profit'        => $request->profit,
+                'status'        => $request->status,
+            ]);
+
+        if (!$updated) {
+           $notify[] = ['error', 'Subscriber update failed.'];
+              return redirect()->back()->withNotify($notify);
+        }
+
+        $notify[] = ['success', 'Subscriber updated successfully.'];
+        return redirect()->back()->withNotify($notify);
+    }
 }
+

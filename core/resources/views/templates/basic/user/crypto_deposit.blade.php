@@ -77,15 +77,8 @@
 
                     <form action="{{ route('user.crypto.deposit.store') }}" method="POST" enctype="multipart/form-data" id="depositForm">
                         @csrf
-                        
-                        <!-- Type Selection -->
-                        <div class="mb-4">
-                            <label class="block text-gray-400 text-sm mb-2">Type:</label>
-                            <div class="bg-gray-700 rounded px-3 py-2 text-white">
-                                Crypto
-                            </div>
-                        </div>
                         <input type="hidden" name="type" value="crypto">
+                        
                         <!-- Method Selection -->
                         <div class="mb-4">
                             <label class="block text-gray-400 text-sm mb-2">Method:</label>
@@ -93,7 +86,7 @@
                                 <select id="cryptoMethod" class="w-full bg-gray-700 rounded px-3 py-2 appearance-none text-white" name="currency" required>
                                     @foreach($gateways as $currency)
                                         <option 
-                                            value="{{ $currency->symbol }}" 
+                                            value="{{ $currency->name }}" 
                                             data-wallet="{{ $currency->description }}"
                                             data-icon="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ strtolower($currency->name) }}.svg"
                                         >
@@ -108,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-
+                    
                         <!-- Wallet Address -->
                         <div class="mb-4">
                             <div class="flex justify-between items-center mb-2">
@@ -127,7 +120,7 @@
                                 </button>
                             </div>
                         </div>
-
+                    
                         <!-- Amount -->
                         <div class="mb-6">
                             <label class="block text-gray-400 text-sm mb-2">Amount:</label>
@@ -143,13 +136,12 @@
                                 </span>
                             </div>
                         </div>
-
+                    
                         <!-- Payment Proof -->
                         <div class="mb-6">
                             <label class="block text-gray-400 text-sm mb-2">Payment proof:</label>
                             <input type="file" 
                                 name="proof" 
-                                accept="image/*"
                                 required
                                 class="block w-full text-sm text-gray-400
                                     file:mr-4 file:py-2 file:px-4
@@ -158,7 +150,7 @@
                                     file:bg-gray-700 file:text-blue-400
                                     hover:file:bg-gray-600">
                         </div>
-
+                    
                         <!-- Submit Button -->
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white rounded py-2 transition-colors">
                             Deposit
@@ -360,29 +352,7 @@ if (form) {
 }
 
 // File upload preview and validation
-const fileInput = document.querySelector('input[type="file"]');
-if (fileInput) {
-    fileInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            // Validate file type
-            const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload only image files (JPEG, PNG, GIF)');
-                this.value = '';
-                return;
-            }
-            
-            // Validate file size (max 5MB)
-            const maxSize = 5 * 1024 * 1024; // 5MB in bytes
-            if (file.size > maxSize) {
-                alert('File size should not exceed 5MB');
-                this.value = '';
-                return;
-            }
-        }
-    });
-}
+ 
 </script>
 @endpush
 @endsection

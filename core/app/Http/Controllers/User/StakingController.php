@@ -20,11 +20,11 @@ class StakingController extends Controller
         $pageTitle = 'Staking';
         $stakes = DB::table('stakes')->get();
 
-        // $getUserStakes = DB::table('stakes')
-        //     ->where('user_id', auth()->id())
-        //     ->orderBy('created_at', 'desc')
-        //     ->get();
-        return view('Template::user.staking', compact('pageTitle' ,   'stakes'));
+          $getUserStakes = DB::table('users_stakes')
+              ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('Template::user.staking', compact('pageTitle' ,  'getUserStakes', 'stakes'));
     }
 
 
@@ -50,11 +50,19 @@ class StakingController extends Controller
             'duration' => $request->duration,
             'roi' => $request->roi,
         ]);
+
+        //if user balance is less than the amount
+            $user = auth()->user(); 
+            $user->balance -= $request->amount;
+            $user->save();
+    if($user->balance < $request->amount){
+        $notify[] = ['error', 'Insufficient balance'];
+        return back()->withNotify($notify);
+    }
+
+        
         $notify[] = ['success', 'Subscription purchased successfully'];
         return back()->withNotify($notify);
-    
-
-
     
   }
  }

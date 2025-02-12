@@ -27,27 +27,9 @@
         "icon": "las la-coins",
         "route_name": "admin.currency.crypto"
     },
-    "manage_market": {
-        "keyword": ["market", "market management", "manage market", "market list", "market admin"],
-        "title": "Manage Market",
-        "subtitle": "Manage the market list.",
-        "icon": "las la-list",
-        "route_name": "admin.market.list"
-    },
-    "manage_coin_pair": {
-        "keyword": ["coin", "coin pair", "manage coin pair", "cryptocurrency pair", "coin pair list", "coin management"],
-        "title": "Manage Coin Pair",
-        "subtitle": "Manage the coin pairs.",
-        "icon": "las la-list",
-        "route_name": "admin.coin.pair.list"
-    },
-    "pusher_configuration": {
-        "keyword": ["pusher", "configuration", "manage pusher", "pusher settings", "real-time notifications"],
-        "title": "Pusher Configuration",
-        "subtitle": "Configure your Pusher settings.",
-        "icon": "las la-cogs",
-        "route_name": "admin.setting.pusher.configuration"
-    },
+  
+   
+ 
     "chart_setting": {
         "keyword": ["chart", "settings", "manage chart", "chart configuration", "chart options"],
         "title": "Chart Setting",
@@ -56,14 +38,7 @@
         "route_name": "admin.setting.chart"
     },
    
-    "currency_data_provider": {
-        "keyword": ["currency", "data provider", "manage currency", "currency settings", "currency provider"],
-        "title": "Currency Data Provider",
-        "subtitle": "Manage your currency data providers.",
-        "icon": "las la-cog",
-        "route_name": "admin.currency.data.provider.index"
-    },
-
+    
 
     "notification_setting": {
         "keyword": ["email configuration","sms configure","push notification configure","email setting","sms setting","push notification setting","firebase setting","firebase control","email template","sms template","push notification template","notification template","smtp","sendgrid","send grid","mailjet","mail jet","php","nexmo","clickatell","click a tell","infobip","info bip","message bird","sms broadcast","twilio","text magic","custom api","template setting","global template","global notification"],
@@ -93,20 +68,8 @@
         "icon": "las la-globe",
         "route_name": "admin.seo"
     },
-    "manage_frontend": {
-        "keyword": ["frontend","template","manage frontend", "frontend contents", "frontend settings", "about us","banner","contact","faq","social icons","section settings","subscribe", "brand", "how it work", "counter", "pricing", "why choose us", "highlights", "payouts", "testimonial", "cta", "call to action", "achievement", "kyc", "register disable"],
-        "title": "Manage Frontend",
-        "subtitle": "Control all of the frontend contents of the system.",
-        "icon": "la la-html5",
-        "route_name": "admin.frontend.index"
-    },
-    "manage_pages": {
-        "keyword": ["pages","manage pages", "home page","contact page","blog page"],
-        "title": "Manage Pages",
-        "subtitle": "Control dynamic and static pages of the system.",
-        "icon": "las la-list",
-        "route_name": "admin.frontend.manage.pages"
-    },
+ 
+    
     "kyc_setting": {
         "keyword": ["KYC", "verification","kyc verification", "identity verification", "KYC settings", "client verification", "KYC configuration","customer verification"],
         "title": "KYC Setting",
@@ -142,50 +105,14 @@
         "icon": "las la-clock",
         "route_name": "admin.cron.index"
     },
-    "policy_pages": {
-        "keyword": ["privacy and policy", "terms and condition", "terms of service"],
-        "title": "Policy Pages",
-        "subtitle": "Configure your policy and terms of the system here.",
-        "icon": "las la-shield-alt",
-        "route_name": "admin.frontend.sections",
-        "params":{
-            "key":"policy_pages"
-        }
+ 
 
-    },
-    "maintenance_mode": {
-        "keyword": ["maintenance mode", "system maintenance", "system health", "maintenance settings", "system health settings", "enable maintenance", "disable maintenance", "maintenance configuration"],
-        "title": "Maintenance Mode",
-        "subtitle": "Enable or disable the maintenance mode of the system when required.",
-        "icon": "las la-robot",
-        "route_name": "admin.maintenance.mode"
-    },
-    "gdpr_cookie": {
-        "keyword": ["GDPR cookie", "cookie policy", "data privacy", "GDPR settings", "cookie policy settings", "data privacy settings"],
-        "title": "GDPR Cookie",
-        "subtitle": "Set GDPR Cookie policy if required. It will ask visitor of the system to accept if enabled.",
-        "icon": "las la-cookie-bite",
-        "route_name": "admin.setting.cookie"
-    },
+ 
     "custom_css": {
         "keyword": ["custom CSS", "modify styles", "frontend", "styling", "design customization", "CSS settings", "style settings", "frontend customization", "design settings", "customize CSS"],
         "title": "Custom CSS",
         "subtitle": "Write custom css here to modify some styles of frontend of the system if you need to.",
         "icon": "lab la-css3-alt",
         "route_name": "admin.setting.custom.css"
-    },
-    "sitemap": {
-        "keyword": ["Site map", "sitemap", "xml", "sitemap.xml"],
-        "title": "Sitemap XML",
-        "subtitle": "Insert the sitemap XML here to enhance SEO performance.",
-        "icon": "las la-sitemap",
-        "route_name": "admin.setting.sitemap"
-    },
-    "robots": {
-        "keyword": ["Robots", "txt", "robots.txt", "robot.txt"],
-        "title": "Robots txt",
-        "subtitle": "Insert the robots.txt content here to enhance bot web crawlers and instruct them on how to interact with certain areas of the website.",
-        "icon": "las la-robot",
-        "route_name": "admin.setting.robot"
     }
 }

@@ -89,6 +89,12 @@ Route::middleware('admin')->group(function () {
     Route::controller('ManageBotController')->name('bot.')->prefix('bot')->group(function(){
         Route::get('config', 'config')->name('config');
         Route::post('config/save', 'saveConfig')->name('config.save');
+        Route::post('config/stake', 'addStaking')->name('config.stake');
+        Route::post('config/stake/update', 'updateStaking')->name('config.update');
+        Route::post('config/stake/delete/{id}', 'deleteStaking')->name('config.delete');
+        Route::get('config/user_stakes', 'userStaking')->name('config.user_stakes');
+        Route::post('config/user_stakes/update', 'userStakingUpdate')->name('user_stakes.update');
+
     });
 
 
@@ -141,9 +147,9 @@ Route::middleware('admin')->group(function () {
     // Subscriber
     Route::controller('SubscriberController')->prefix('subscriber')->name('subscriber.')->group(function(){
         Route::get('/', 'index')->name('index');
-        Route::get('send-email', 'sendEmailForm')->name('send.email');
+        Route::get('subscribe', 'sendEmailForm')->name('send.email');
         Route::post('remove/{id}', 'remove')->name('remove');
-        Route::post('send-email', 'sendEmail')->name('send.email');
+        Route::post('update', 'update')->name('subscribe.update');
     });
 
     // Deposit Gateway

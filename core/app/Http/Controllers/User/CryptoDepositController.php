@@ -43,7 +43,7 @@ class CryptoDepositController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:0.01',
-            'currency' => 'required',
+           
             'proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 

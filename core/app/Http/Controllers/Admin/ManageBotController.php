@@ -4,15 +4,27 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BotConfig;
+use finfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ManageBotController extends Controller
 {
     public function config()
     {
-        $pageTitle = 'Manage Bot';
+        $pageTitle = 'Manage Staking';
         $botConfig = BotConfig::first();
-        return view('admin.bot.config', compact('pageTitle', 'botConfig'));
+        $stakings = db::table('stakes')->get();
+        $userStakings = db::table('users_stakes')->get();
+        return view('admin.bot.config', compact('pageTitle', 'botConfig', 'stakings' , 'userStakings'));
+    }
+
+    public function userStaking()
+    {
+        $pageTitle = 'Users  Staking';
+ 
+        $userStakings = db::table('users_stakes')->get();
+        return view('admin.bot.user_stakes', compact('pageTitle',    'userStakings'));
     }
 
     public function saveConfig(Request $request)
@@ -58,5 +70,117 @@ class ManageBotController extends Controller
         $notify[] = ['success', 'Bot configuration updated successfully'];
         return back()->withNotify($notify);
     }
+
+  // function to  add staking  `id`, `name`, `crypto_type`, `minimum`, `maximum`, `amount`, `duration`, `roi`, `status`,
+    public function addStaking(Request $request)
+    {
+        $request->validate([
+             'name' => 'required|string',
+             'crypto_type' => 'required|string',
+                'minimum' => 'required|numeric|min:0',
+                'maximum' => 'required|numeric|min:0',
+                'amount' => 'required|numeric|min:0',
+                'duration' => 'required|integer|min:0',
+                'roi' => 'required|numeric|min:0',
+                 
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'crypto_type' => $request->crypto_type,
+            'minimum' => $request->minimum,
+            'maximum' => $request->maximum,
+            'amount' => $request->amount,
+            'duration' => $request->duration,
+            'roi' => $request->roi,
+            'status' => 'active',
+        ];
+
+        DB::table('stakes')->insert($data);
+        $notify[] = ['success', 'Staking added successfully'];
+        return back()->withNotify($notify);
+    }
+
+    // function to update staking
+    public function updateStaking(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required|string',
+            'crypto_type' => 'required|string',
+            'minimum' => 'required|numeric|min:0',
+            'maximum' => 'required|numeric|min:0',
+            'amount' => 'required|numeric|min:0',
+            'duration' => 'required|integer|min:0',
+            'roi' => 'required|numeric|min:0',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'crypto_type' => $request->crypto_type,
+            'minimum' => $request->minimum,
+            'maximum' => $request->maximum,
+            'amount' => $request->amount,
+            'duration' => $request->duration,
+            'roi' => $request->roi,
+        ];
+        DB::table('stakes')->where('id', $request->id)->update($data);
+        $notify[] = ['success', 'Staking updated successfully'];
+        return back()->withNotify($notify);
+    }
+
+    // function to delete staking
+    public function deleteStaking(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
+
+        DB::table('stakes')->where('id', $request->id)->delete();
+        $notify[] = ['success', 'Staking deleted successfully'];
+        return back()->withNotify($notify);
+    }
+
+public function userStakingUpdate (Request $request)
+ {
+      $request->validate([
+            'id' => 'required',
+            'name' => 'required|string',
+            'crypto_type' => 'required|string',
+            'amount' => 'required|numeric|min:0',
+            'duration' => 'required|integer|min:0',
+            'roi' => 'required|numeric|min:0',
+            'status' => 'required',
+      ]);
+
+      $data = [
+            'user_id' => $request->id,
+            'name' => $request->name,
+            'crypto_type' => $request->crypto_type,
+            'amount' => $request->amount,
+            'duration' => $request->duration,
+            'roi' => $request->roi,
+            'status' => $request->status,
+      ];
+      DB::table('users_stakes')->where('id', $request->id)->update($data);
+      $notify[] = ['success', 'User staking updated successfully'];
+      return back()->withNotify($notify);
+ }
+
+    public function userStakingDelete(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
+
+        DB::table('users_stakes')->where('id', $request->id)->delete();
+        $notify[] = ['success', 'User staking deleted successfully'];
+        return back()->withNotify($notify);
+    }
+
+  
+
+
+
 
 }
