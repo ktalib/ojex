@@ -45,11 +45,10 @@
        <div class="bg-gray-800 rounded-lg max-w-md w-full p-6">
           <div class="flex justify-between items-center mb-6">
              <h2 class="text-xl font-semibold text-white">Deposit</h2>
-             {{-- <button id="closeModalButton" class="text-gray-400 hover:text-white">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-             </button> --}}
+             <a href="{{ route('user.home') }}" class="text-gray-400 hover:text-white">
+                Back home
+               
+            </a>  
           </div>
 
           <p class="text-gray-400 text-sm mb-6">
@@ -85,12 +84,14 @@
              </div>
 
              <!-- Wallet Address -->
+             <div class="flex justify-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?data=1234&size=150x150" alt="QR Code" class="">
+             </div>
+
              <div class="mb-4">
                 <div class="flex justify-between items-center mb-2">
                     <label class="text-gray-400 text-sm">Address:</label>
-                    <button type="button" id="toggleQRCodeButton" class="text-blue-400 text-sm hover:underline">
-                       Show QR Code
-                    </button>
+                     
                 </div>
                 <div class="flex gap-2">
                     <input type="text"   readonly class="w-full bg-gray-700 rounded px-3 py-2 text-sm text-white" value="xo1r487riurew87rew8re8rew89riuerdsnu">
@@ -129,22 +130,7 @@
        </div>
     </div>
 
-    <!-- QR Code Modal -->
-    <div id="qrCodeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-       <div class="bg-gray-800 rounded-lg max-w-md w-full p-6">
-          <div class="flex justify-between items-center mb-6">
-             <h2 class="text-xl font-semibold text-white">QR Code</h2>
-             <button id="closeQRCodeButton" class="text-gray-400 hover:text-white">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-             </button>
-          </div>
-          <div class="flex justify-center">
-             <img id="qrCodeImage" src="" alt="QR Code" class="max-w-full h-auto">
-          </div>
-       </div>
-    </div>
+  
     
     <script>
        document.addEventListener('DOMContentLoaded', function() {
@@ -153,7 +139,6 @@
              openModal();
              document.querySelector('.mmm').classList.add('blur');
              document.getElementById('closeModalButton').disabled = true;
-             document.getElementById('closeQRCodeButton').disabled = true;
           @endif
 
           // Developer bypass
@@ -161,7 +146,6 @@
           if (developerBypass) {
              document.querySelector('.mmm').classList.remove('blur');
              document.getElementById('closeModalButton').disabled = false;
-             document.getElementById('closeQRCodeButton').disabled = false;
           }
        });
     </script>
@@ -210,12 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeEventListeners() {
     // Modal controls
     document.getElementById('closeModalButton').addEventListener('click', closeModal);
-    document.getElementById('closeQRCodeButton').addEventListener('click', closeQRCodeModal);
-    document.getElementById('toggleQRCodeButton').addEventListener('click', toggleQRCode);
-    
-    // Form controls
-    document.getElementById('copyAddressButton').addEventListener('click', copyAddress);
-    document.getElementById('cryptoMethod').addEventListener('change', updateWalletAddress);
+  
     
     // Form submission
     document.getElementById('depositForm').addEventListener('submit', handleFormSubmit);
@@ -228,55 +207,10 @@ function handleFormSubmit(e) {
     submitButton.innerHTML = 'Processing...';
 }
 
-function updateWalletAddress() {
-    const select = document.getElementById('cryptoMethod');
-    const selectedOption = select.options[select.selectedIndex];
-    
-    const walletAddress = selectedOption.dataset.wallet || '';
-    const iconPath = selectedOption.dataset.icon || '';
-    
-    document.getElementById('walletAddress').value = walletAddress;
-    
-    const cryptoIcon = document.getElementById('cryptoIcon');
-    if (iconPath) {
-        cryptoIcon.innerHTML = `<img src="${iconPath}" alt="${selectedOption.value}" class="h-6 w-6">`;
-    } else {
-        cryptoIcon.textContent = selectedOption.value;
-    }
-}
+ 
 
-function copyAddress() {
-    const addressInput = document.getElementById('walletAddress');
-    navigator.clipboard.writeText(addressInput.value).then(() => {
-        const copyButton = document.getElementById('copyAddressButton');
-        copyButton.classList.remove('text-gray-400');
-        copyButton.classList.add('text-green-400');
-        copyButton.setAttribute('data-tooltip', 'Copied!');
-        
-        setTimeout(() => {
-            copyButton.classList.remove('text-green-400');
-            copyButton.classList.add('text-gray-400');
-            copyButton.setAttribute('data-tooltip', 'Copy Address');
-        }, 1000);
-    }).catch(err => {
-        console.error('Failed to copy:', err);
-    });
-}
-
-function toggleQRCode() {
-    const qrCodeModal = document.getElementById('qrCodeModal');
-    const isHidden = qrCodeModal.classList.contains('hidden');
-    
-    if (isHidden) {
-        const address = document.getElementById('walletAddress').value;
-        const qrCodeImage = document.getElementById('qrCodeImage');
-        qrCodeImage.src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(address)}&size=200x200`;
-        qrCodeModal.classList.remove('hidden');
-        qrCodeModal.classList.add('flex');
-    } else {
-        closeQRCodeModal();
-    }
-}
+ 
+ 
 
 function openModal() {
     const modal = document.getElementById('depositModal');
@@ -290,31 +224,11 @@ function closeModal() {
     modal.classList.add('hidden');
 }
 
-function closeQRCodeModal() {
-    const modal = document.getElementById('qrCodeModal');
-    modal.classList.remove('flex');
-    modal.classList.add('hidden');
-}
+ 
+ 
+ 
 
-// Handle escape key press to close modals
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closeModal();
-        closeQRCodeModal();
-    }
-});
-
-// Close modals when clicking outside
-document.addEventListener('click', function(event) {
-     
-    const qrCodeModal = document.getElementById('qrCodeModal');
-    
-     
-    
-    if (event.target === qrCodeModal) {
-        closeQRCodeModal();
-    }
-});
+ 
 
 // Format amount input to 8 decimal places
 const amountInput = document.querySelector('input[name="amount"]');

@@ -137,7 +137,7 @@ class PaymentController extends Controller
             } else {
                 notify($user, $isManual ? 'DEPOSIT_APPROVE' : 'DEPOSIT_COMPLETE', [
                     'method_name'     => $methodName,
-                    'method_currency' => $deposit->method_currency,
+                    'method_currency' => $deposit->currency,
                     'method_amount'   => showAmount($deposit->final_amount, currencyFormat: false),
                     'amount'          => showAmount($deposit->amount, currencyFormat: false),
                     'charge'          => showAmount($deposit->charge, currencyFormat: false),

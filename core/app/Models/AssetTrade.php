@@ -9,17 +9,17 @@ class  AssetTrade  extends Model
 {
     protected $table = 'asset_trades';
     protected $fillable = [
+        
         'user_id',
-        'type', // buy, sell, convert
-        'category', // Crypto, Stocks, Forex
+        'action', // buy, sell, convert
+        'trade_type', // Crypto, Stocks, Forex
         'amount',
         'assets',
         'loss',
         'profit',
         'duration',
         'status'
-    ];
-
+    ]; 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

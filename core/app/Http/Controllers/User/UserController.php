@@ -326,44 +326,38 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'trade_type' => 'required|in:buy,sell,convert',
-            'type' => 'required|in:Crypto,Stocks,Forex',
-            'amount' => 'required|numeric|min:0.01',
-            'assets' => 'required|string', // Changed from asset_symbol to assets
-            'duration' => 'required',
+            'action' => 'required|string',
+            'trade_type' => 'required|string',
+            'amount' => 'required|numeric',
+            'assets' => 'required|string',
+            'duration' => 'required|string',
             'loss' => 'nullable|numeric',
             'profit' => 'nullable|numeric'
         ]);
-
+    
         $user = auth()->user();
         $balance = $user->balance; // Assuming the User model has a balance attribute
-
+    
+        // Check if the user has enough balance for the trade
         if ($balance < $validated['amount']) {
-           
-           // return ['error' => true, 'message' => 'Insufficient balance'];
-
-            $notify[] = ['error', 'Insufficient balance'];
-            return back()->withNotify($notify);
+            return back()->withErrors(['amount' => 'Insufficient balance for this trade.']);
         }
-
-        try {
-            $trade = AssetTrade::create([
-                'user_id' => $user->id,
-                'trade_type' => $validated['trade_type'],
-                'type' => $validated['type'],
-                'amount' => $validated['amount'],
-                'assets' => $validated['assets'], // Use assets column
-                'duration' => $validated['duration'],
-                'status' => 'open'
-            ]);
-
-            $notify[] = ['success', 'Trade created successfully'];
-            return back()->withNotify($notify);
-        } catch (\Exception $e) {
-            Log::error('Trade creation failed: ' . $e->getMessage());
-            $notify[] = ['error', 'Trade creation failed'];
-            return back()->withNotify($notify);
-        }
+    
+        // Create the trade
+        AssetTrade::create([
+            'user_id' => $user->id,
+            'action' => $validated['action'],
+            'trade_type' => $validated['trade_type'],
+            'amount' => $validated['amount'],
+            'assets' => $validated['assets'],
+            'duration' => $validated['duration'],
+            'loss' => $validated['loss'],
+            'profit' => $validated['profit'],
+            'status' => 'open' // Assuming the initial status is 'open'
+        ]);
+    
+        $notify[] = ['success', 'Trade created successfully.'];
+        return back()->withNotify($notify);
     }
 
 }

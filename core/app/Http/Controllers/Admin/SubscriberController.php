@@ -12,9 +12,15 @@ class SubscriberController extends Controller
     public function index()
     {
         $pageTitle = 'Subscribers';
-        $subscribers = db::table('user_subscriptions')->latest()->paginate(getPaginate());
+        $subscribers = db::table('user_subscriptions')
+            ->join('users', 'users.id', '=', 'user_subscriptions.user_id')
+            ->orderBy('user_subscriptions.created_at', 'desc')
+            ->paginate(getPaginate());
         return view('admin.subscriber.index', compact('pageTitle', 'subscribers'));
     }
+
+  
+
 
     public function sendEmailForm()
     {
@@ -134,5 +140,53 @@ class SubscriberController extends Controller
         $notify[] = ['success', 'Subscriber updated successfully.'];
         return redirect()->back()->withNotify($notify);
     }
+ 
+ 
+    public function storePlan(Request $request)
+    {
+        $request->validate([
+            'name'          => 'required|string|max:255',
+         
+        ]);
+
+        db::table('subscriptions')->insert([
+            'name'          => $request->name,
+            'minimum_amount' => $request->minimum_amount,
+            'maximum_amount' => $request->maximum_amount,
+            'duration_days' => $request->duration_days,
+            'roi_percentage'  => $request->roi_percentage,
+       
+        ]);
+
+        $notify[] = ['success', 'Subscriber added successfully.'];
+        return redirect()->back()->withNotify($notify);
+    }
+
+    public function updatePlan(Request $request)
+    {
+        $request->validate([
+            'id'            => 'required',
+        ]);
+
+        $updated = db::table('subscriptions')
+            ->where('id', $request->id)
+            ->update([
+                'name'          => $request->name,
+                'minimum_amount'        => $request->minimum_amount,
+                'maximum_amount'        => $request->maximum_amount,
+                'duration_days' => $request->duration_days,
+                'roi_percentage'           => $request->roi_percentage,
+            ]);
+
+        if (!$updated) {
+           $notify[] = ['error', 'Subscriber update failed.'];
+              return redirect()->back()->withNotify($notify);
+        }
+
+        $notify[] = ['success', 'Subscriber updated successfully.'];
+        return redirect()->back()->withNotify($notify);
+    }
+   
+
 }
 

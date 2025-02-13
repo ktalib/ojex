@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Constants\Status;
-use App\Models\Deposit;
+use App\Models\CryptoDeposit;
 use App\Models\Gateway;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
@@ -63,9 +63,9 @@ class DepositController extends Controller
     protected function depositData($scope = null,$summary = false,$userId = null)
     {
         if ($scope) {
-            $deposits = Deposit::$scope()->with(['user', 'gateway']);
+            $deposits = CryptoDeposit::$scope()->with(['user', 'gateway']);
         }else{
-            $deposits = Deposit::with(['user', 'gateway']);
+            $deposits = CryptoDeposit::with(['user', 'gateway']);
         }
 
         if ($userId) {
@@ -112,7 +112,7 @@ class DepositController extends Controller
 
     public function details($id)
     {
-        $deposit = Deposit::where('id', $id)->with(['user', 'gateway'])->firstOrFail();
+        $deposit = CryptoDeposit::where('id', $id)->with(['user', 'gateway'])->firstOrFail();
         $pageTitle = $deposit->user->username.' requested ' . showAmount($deposit->amount);
         $details = ($deposit->detail != null) ? json_encode($deposit->detail) : null;
         return view('admin.deposit.detail', compact('pageTitle', 'deposit','details'));
@@ -121,7 +121,7 @@ class DepositController extends Controller
 
     public function approve($id)
     {
-        $deposit = Deposit::where('id',$id)->where('status',Status::PAYMENT_PENDING)->firstOrFail();
+        $deposit = CryptoDeposit::where('id',$id)->where('status',Status::PAYMENT_PENDING)->firstOrFail();
 
         PaymentController::userDataUpdate($deposit,true);
 
@@ -136,7 +136,7 @@ class DepositController extends Controller
             'id' => 'required|integer',
             'message' => 'required|string|max:255'
         ]);
-        $deposit = Deposit::where('id',$request->id)->where('status',Status::PAYMENT_PENDING)->firstOrFail();
+        $deposit = CryptoDeposit::where('id',$request->id)->where('status',Status::PAYMENT_PENDING)->firstOrFail();
 
         $deposit->admin_feedback = $request->message;
         $deposit->status = Status::PAYMENT_REJECT;

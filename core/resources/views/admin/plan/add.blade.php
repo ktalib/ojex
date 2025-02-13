@@ -12,7 +12,7 @@
                             <button class="btn btn--dark btn--sm addPhase" type="button"> <i class="las la-plus"></i> @lang('Add Phase')</button>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="display: none">
                         <div class="row">
                             <div class="col-md-6 col-xl-3">
                                 <div class="form-group">

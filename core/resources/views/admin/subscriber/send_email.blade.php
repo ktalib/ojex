@@ -35,7 +35,7 @@
                                 
                                 
                                 <td>
-                                    <button class="btn btn-sm btn-primary" onclick="openEditModal({{ json_encode($subscriber) }})">@lang('Update')</button>
+                                    <button class="btn btn-sm btn-primary" onclick="openUpdateModal({{ json_encode($subscriber) }})">@lang('Update')</button>
                                 </td>
                                 
                             </tr>
@@ -57,7 +57,96 @@
         </div><!-- card end -->
     </div>
 
+<!-- Add Plan Modal -->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('admin.subscriber.subscribe.storePlan') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">@lang('Add New Plan')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">@lang('Name')</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="minimum_amount">@lang('Minimum Amount')</label>
+                        <input type="number" class="form-control" id="minimum_amount" name="minimum_amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="maximum_amount">@lang('Maximum Amount')</label>
+                        <input type="number" class="form-control" id="maximum_amount" name="maximum_amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration_days">@lang('Duration Days')</label>
+                        <input type="number" class="form-control" id="duration_days" name="duration_days" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="roi_percentage">@lang('ROI Percentage')</label>
+                        <input type="number" class="form-control" id="roi_percentage" name="roi_percentage" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn-primary">@lang('Save changes')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+
+
+<!-- Update Plan Modal -->
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('admin.subscriber.subscribe.updatePlan') }}" method="POST">
+                @csrf
+                 
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">@lang('Update Plan')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="updatePlanId">
+                    <div class="form-group">
+                        <label for="updateName">@lang('Name')</label>
+                        <input type="text" class="form-control" id="updateName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateMinimumAmount">@lang('Minimum Amount')</label>
+                        <input type="number" class="form-control" id="updateMinimumAmount" name="minimum_amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateMaximumAmount">@lang('Maximum Amount')</label>
+                        <input type="number" class="form-control" id="updateMaximumAmount" name="maximum_amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateDurationDays">@lang('Duration Days')</label>
+                        <input type="number" class="form-control" id="updateDurationDays" name="duration_days" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateRoiPercentage">@lang('ROI Percentage')</label>
+                        <input type="number" class="form-control" id="updateRoiPercentage" name="roi_percentage" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn-primary">@lang('Save changes')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+ 
 </div>
   
 @endsection
@@ -65,7 +154,15 @@
 
 @push('script')
     <script>
- 
+ function openUpdateModal(plan) {
+        $('#updatePlanId').val(plan.id);
+        $('#updateName').val(plan.name);
+        $('#updateMinimumAmount').val(plan.minimum_amount);
+        $('#updateMaximumAmount').val(plan.maximum_amount);
+        $('#updateDurationDays').val(plan.duration_days);
+        $('#updateRoiPercentage').val(plan.roi_percentage);
+        $('#updateModal').modal('show');
+    }
     </script>
 @endpush
 

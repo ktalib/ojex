@@ -8,14 +8,17 @@ use App\Models\PhaseLogic;
 use App\Models\Plan;
 use App\Models\PlanHistory;
 use App\Models\PlanPhase;
+use App\Models\SignalPurchase;
+use App\Models\Signals;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ManagePlanController extends Controller
 {
     public function list()
     {
-        $pageTitle = "Plan List";
-        $plans     = Plan::searchable(['name'])->paginate(getPaginate());
+        $pageTitle = "All Signals Plans";
+        $plans     = Signals::searchable(['name'])->paginate(getPaginate());
         return view('admin.plan.list', compact('pageTitle', 'plans'));
     }
 
@@ -125,8 +128,13 @@ class ManagePlanController extends Controller
 
     public function history()
     {
-        $pageTitle = "Plan Histories";
-        $histories = PlanHistory::searchable(['plan:name', 'user:username'])->with(['user', 'plan'])->paginate(getPaginate());
+        $pageTitle = "Users Signal Plan History";
+        // get all signal purchase
+        $histories = Db::table('signal_purchases')
+            ->join('users', 'signal_purchases.user_id', '=', 'users.id')
+            ->select('signal_purchases.*', 'users.username')
+            ->latest()
+            ->paginate(getPaginate());
         return view('admin.plan.histories', compact('pageTitle', 'histories'));
     }
     public function status($id)

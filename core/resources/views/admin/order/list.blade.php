@@ -6,116 +6,84 @@
                 <div class="card-body p-0">
                     <div class="table-responsive--md  table-responsive">
                         <table class="table table--light style--two">
-                            @php
-                                $showStatus = request()->routeIs('admin.order.history');
-                            @endphp
                             <thead>
                                 <tr>
-                                    <th>@lang('Date | Pair')</th>
-                                    <th>@lang('Order Side')</th>
-                                    <th>@lang('Order Type')</th>
-                                    <th>@lang('Amount | Rate')</th>
-                                    <th>@lang('Total')</th>
-                                    <th>@lang('Filled')</th>
-                                    @if ($showStatus)
-                                        <th>@lang('Status')</th>
-                                    @endif
+                                    <th>Asset</th>
+                                    <th>Action</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                     <th >Profit/Loss</th>  
+                                    <th>Status</th>
+                                    <th>@lang('Trade Date')</th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($orders as $order)
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                {{ $order->formatted_date }}
-                                                <br>
-                                                {{ @$order->pair->symbol }}
-                                            </div>
-                                        </td>
-                                        <td> @php echo $order->orderSideBadge; @endphp </td>
-                                        <td> @php echo $order->orderTypeBadge; @endphp </td>
-                                        <td>
-                                            <div>
-                                                {{ showAmount($order->amount, currencyFormat:false) }} {{ @$order->pair->coin->symbol }} <br>
-                                                {{ showAmount($order->rate, currencyFormat:false) }} {{ @$order->pair->market->currency->symbol }}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            {{ showAmount($order->amount, currencyFormat:false) }} {{ @$order->pair->coin->symbol }}
-                                        </td>
-                                        <td>
-                                            <div class="text-center">
-                                                <div class="progress">
-                                                    <div class="progress-bar" role="progressbar"
-                                                        style="width: {{ getAmount($order->filed_percentage) }}%;"
-                                                        aria-valuenow="{{ getAmount($order->filed_percentage) }} ">
-                                                    </div>
-                                                </div>
-                                                <span class="fs-10">
-                                                    <small>{{ getAmount($order->filed_percentage) }}%</small> |
-                                                    <small>{{ showAmount($order->filled_amount, currencyFormat:false) }}
-                                                        {{ @$order->pair->coin->symbol }}
-                                                    </small>
-                                                </span>
-                                            </div>
-                                        </td>
-                                        @if ($showStatus)
-                                            <td> @php echo $order->statusBadge; @endphp </td>
+                                @foreach ($userAssets->where('status', 'open') as $trade)
+                                <tr  >
+                                    <td  >
+                                        @php
+                                            $symbollowcase = strtolower($trade->assets);
+                                        @endphp
+                                         @php
+                                         $symbollowcase = strtolower($trade->assets);
+                                         $icon =   $trade->assets;
+                                         $icon2 = strtolower(substr($trade->assets, 0, 2));
+                                         $iconSrc = '';
+                 
+                                         if ($trade->trade_type == 'Crypto') {
+                                             $iconSrc = "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{$symbollowcase}.svg";
+                                         } elseif ($trade->trade_type == 'Stocks') {
+                                             $iconSrc = "https://cdn.jsdelivr.net/gh/ahmeterenodaci/Nasdaq-Stock-Exchange-including-Symbols-and-Logos/logos/_{$icon}.png"; // Replace with actual stock icon URL
+                                         } elseif ($trade->trade_type == 'Forex') {
+                                             $iconSrc = "https://flagcdn.com/36x27/{$icon2}.png"; // Replace with actual forex icon URL
+                                         }
+                                     @endphp
+                                        <img src="{{ $iconSrc }}" class="w-30 rounded-circle" alt="icon">
+
+                                        {{ $trade->assets }}
+                                    </td>
+                                    <td >{{ $trade->action }}</td>
+                                    <td >{{ $trade->trade_type }}</td>
+                                    <td >{{ $trade->amount }}</td>
+                                    <td class="px--6 py--4">
+                                   
+                                        
+                                        <span class="badge badge--success">{{ $trade->profit }} </span>
+                                     <br>
+                                        <span class="badge badge--danger">{{ $trade->loss }}</span>
+                                    </td>  
+                                    <td  >
+
+                                        @if ($trade->status == 'open')
+                                            <span class="badge badge--success">{{ $trade->status }}</span>
+                                        @else
+                                            <span class="badge badge--danger">{{ $trade->status }}</span>
                                         @endif
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
-                                    </tr>
-                                @endforelse
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @if ($orders->hasPages())
-                    <div class="card-footer py-4">
-                        {{ paginateLinks($orders) }}
-                    </div>
-                @endif
+               
             </div>
         </div>
     </div>
 @endsection
 
-@push('breadcrumb-plugins')
-    <div class="d-flex flex-wrap gap-2 justify-content-between">
-        <x-search-form placeholder="Pair,coin,currency..." />
-        <form>
-            <div class="input-group">
-                <select name="order_side" class="form-control">
-                    <option value="">@lang('Order Side')</option>
-                    <option value="{{ Status::BUY_SIDE_ORDER }}" @selected(request()->order_side == Status::BUY_SIDE_ORDER)>@lang('Buy')</option>
-                    <option value="{{ Status::SELL_SIDE_ORDER }}" @selected(request()->order_side == Status::SELL_SIDE_ORDER)>@lang('Sell')</option>
-                </select>
-                <button class="btn btn--primary input-group-text" type="submit"><i class="la la-search"></i></button>
-            </div>
-        </form>
-    </div>
-@endpush
+ 
+
+
 
 @push('script')
     <script>
         "use strict";
         (function($) {
-
-            $(`select[name=order_side]`).on('change', function(e) {
+            $(`select[name=trade_side]`).on('change', function(e) {
                 $(this).closest('form').submit();
             });
-
         })(jQuery);
     </script>
-@endpush
-
-
-@push('style')
-    <style>
-        .progress {
-            height: 9px;
-        }
-    </style>
 @endpush

@@ -8,64 +8,56 @@
                         <table class="table table--light style--two">
                             <thead>
                                 <tr>
-                                    <th>@lang('Order Date | Pair')</th>
+                                    <th>Asset</th>
+                                    <th>Action</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    {{-- <th >Price</th> --}}
+                                    <th>Status</th>
                                     <th>@lang('Trade Date')</th>
-                                    <th>@lang('Trade Side')</th>
-                                    <th>@lang('Rate')</th>
-                                    <th>@lang('Amount')</th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($trades as $trade)
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                {{ @$trade->order->formatted_date }}
-                                                <br>
-                                                {{ @$trade->order->pair->symbol }}
-                                            </div>
-                                        </td>
-                                        <td>{{ showDateTime($trade->created_at) }}</td>
-                                        <td> @php  echo $trade->tradeSideBadge; @endphp </td>
-                                        <td>
-                                            {{ showAmount($trade->rate, currencyFormat:false) }} {{ @$trade->order->pair->market->currency->symbol }}
-                                        </td>
-                                        <td> {{ showAmount($trade->amount, currencyFormat:false) }} {{ @$trade->order->pair->coin->symbol }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
-                                    </tr>
-                                @endforelse
+                                @foreach ($userAssets->where('status', 'complete') as $trade)
+                                <tr class="bg-gray-800 border-b border-gray-700">
+                                    <td class="px-6 py-4">
+                                        @php
+                                            $symbollowcase = strtolower($trade->assets);
+                                        @endphp
+                                        <img class="w-10 h-10 rounded-full"
+                                            src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg"
+                                            alt="Jese image">
+
+                                        {{ $trade->assets }}
+                                    </td>
+                                    <td class="px-6 py-4">{{ $trade->action }}</td>
+                                    <td class="px-6 py-4">{{ $trade->trade_type }}</td>
+                                    <td class="px-6 py-4">{{ $trade->amount }}</td>
+                                    {{-- <td class="px-6 py-4">{{ $trade->price }}</td> --}}
+                                    <td class="px-6 py-4">
+
+                                        @if ($trade->status == 'open')
+                                            <span
+                                                class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">{{ $trade->status }}</span>
+                                        @else
+                                            <span
+                                                class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">{{ $trade->status }}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @if ($trades->hasPages())
-                    <div class="card-footer py-4">
-                        {{ paginateLinks($trades) }}
-                    </div>
-                @endif
+               
             </div>
         </div>
     </div>
 @endsection
 
-@push('breadcrumb-plugins')
-    <div class="d-flex flex-wrap gap-2 justify-content-between">
-        <x-search-form placeholder="Pair,coin,currency..." />
-        <form>
-            <div class="input-group">
-                <select name="trade_side" class="form-control">
-                    <option value="">@lang('Trade Side')</option>
-                    <option value="{{ Status::BUY_SIDE_ORDER }}" @selected(request()->trade_side == Status::BUY_SIDE_ORDER)>@lang('Buy')</option>
-                    <option value="{{ Status::SELL_SIDE_ORDER }}" @selected(request()->trade_side == Status::SELL_SIDE_ORDER)>@lang('Sell')</option>
-                </select>
-                <button class="btn btn--primary input-group-text" type="submit"><i class="la la-search"></i></button>
-            </div>
-        </form>
-    </div>
-@endpush
+ 
 
 
 

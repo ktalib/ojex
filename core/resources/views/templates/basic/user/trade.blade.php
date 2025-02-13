@@ -96,114 +96,64 @@
             <div class="rounded-lg border border-gray-800 bg-black p-6">
                 <form action="{{ route('user.trade.store') }}" method="post">
                     @csrf
-                  
+                
                     <div class="flex gap-4 mb-6">
-                        <label class="flex items-center gap-2">
-                            <input type="radio" name="trade_type[]" value="buy" class="form-radio text-emerald-500">
-                            <span class="text-white">Buy</span>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="action" value="buy" class="form-radio text-emerald-500 hidden" checked>
+                            <span class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition">Buy</span>
                         </label>
-                        <label class="flex items-center gap-2">
-                            <input type="radio" name="trade_type[]" value="sell" class="form-radio text-red-500">
-                            <span class="text-white">Sell</span>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="action" value="sell" class="form-radio text-red-500 hidden">
+                            <span class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">Sell</span>
                         </label>
-                        <label class="flex items-center gap-2">
-                            <input type="radio" name="trade_type[]" value="convert" class="form-radio text-blue-500">
-                            <span class="text-white">Convert</span>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="action" value="convert" class="form-radio text-blue-500 hidden">
+                            <span class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Convert <small class="text-red">(soon)</small></span>
                         </label>
                     </div>
-                    
-               
-
-                <div class="space-y-4">
-                    <div>
-                        <label class="text-sm text-gray-400 mb-2 block">Type:</label>
-                        <select class="w-full bg-gray-900 border border-gray-700 rounded-md p-2" name="type">
-                            <option value="Crypto">Crypto</option>
-                            <option value="Stocks">Stocks</option>
-                            <option value="Forex">Forex</option>
-                        </select>
-                    </div>
-
-                    <div class="relative w-72">
-                        <label for="amount" class="block text-sm text-gray-400 mb-1">Amount:</label>
-                        <div class="flex items-center border border-gray-700 rounded-lg bg-gray-800 text-white px-3 py-2">
-                            <input
-                                id="amount"
-                                type="text"
-                                name="amount"
-                                placeholder="100"
-                                class="flex-1 bg-transparent outline-none text-white placeholder-gray-400"
-                            />
-                            <div class="relative">
-                                <button
-                                    id="dropdownButton"
-                                    type="button"
-                                    class="flex items-center justify-center space-x-2 text-sm bg-gray-700 px-2 py-1 rounded-lg"
-                                >
-                                    <img id="selectedIcon" src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/btc.svg" alt="BTC" class="w-4 h-4" />
-                                    <span id="selectedSymbol">BTC</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        class="w-4 h-4 ml-1"
-                                    >
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </button>
-                                <div
-                                    id="dropdownMenu"
-                                    class="absolute z-10 hidden mt-2 w-64 bg-gray-900 border border-gray-700 rounded-lg shadow-lg left-0 md:left-auto md:right-0 overflow-auto max-h-40"
-                                >
-                                    <div class="p-2">
-                                        <input
-                                            type="text"
-                                            id="assetSearch"
-                                            placeholder="Search for assets"
-                                            class="w-full px-2 py-1 text-sm bg-gray-800 text-white rounded-lg border border-gray-700 placeholder-gray-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-                                        />
+                
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Type:</label>
+                            <select class="w-full bg-gray-900 border border-gray-700 rounded-md p-2" name="trade_type" id="assetType">
+                                <option value="Crypto">Crypto</option>
+                                <option value="Stocks">Stocks</option>
+                                <option value="Forex">Forex</option>
+                            </select>
+                        </div>
+                
+                        <div class="relative w-72">
+                            <label for="amount" class="block text-sm text-gray-400 mb-1">Amount:</label>
+                            <div class="flex items-center border border-gray-700 rounded-lg bg-gray-800 text-white px-3 py-2">
+                                <input id="amount" type="text" name="amount" placeholder="100" class="flex-1 bg-transparent outline-none text-white placeholder-gray-400" />
+                                <div class="relative">
+                                    <button id="dropdownButton" type="button" class="flex items-center justify-center space-x-2 text-sm bg-gray-700 px-2 py-1 rounded-lg">
+                                        <img id="selectedIcon" src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/btc.svg" alt="BTC" class="w-4 h-4" />
+                                        <span id="selectedSymbol">BTC</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 ml-1">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    <div id="dropdownMenu" class="absolute z-10 hidden mt-2 w-64 bg-gray-900 border border-gray-700 rounded-lg shadow-lg left-0 md:left-auto md:right-0 overflow-auto max-h-40">
+                                        <div class="p-2">
+                                            <input type="text" id="assetSearch" placeholder="Search for assets" class="w-full px-2 py-1 text-sm bg-gray-800 text-white rounded-lg border border-gray-700 placeholder-gray-500 focus:ring-1 focus:ring-blue-500 focus:outline-none" />
+                                        </div>
+                                        <ul class="max-h-40 overflow-y-auto text-sm" id="assetList">
+                                            {{-- Assets will be loaded here by javascript --}}
+                                        </ul>
                                     </div>
-                                    <ul class="max-h-40 overflow-y-auto text-sm">
-                                        @foreach($assets as $asset)
-                                        @php
-                                            $symbollowcase = strtolower($asset->symbol);
-                                        @endphp
-                                        <li 
-                                            data-symbol="{{ $asset->symbol }}" 
-                                            data-name="{{ $asset->name }}"
-                                            data-icon="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg"
-                                            class="asset-item flex items-center justify-between px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                                        >
-                                            <div class="flex items-center space-x-2">                                      
-                                                <img src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg" alt="{{ $asset->symbol }}" class="w-4 h-4" />
-                                                <span>{{ $asset->name }}</span>
-                                            </div>
-                                            <span class="text-gray-400 text-xs">{{ $asset->symbol }}</span>
-                                        </li>
-                                        @endforeach
-                                    </ul>
                                 </div>
                             </div>
+                            <input type="hidden" name="assets" id="selectedAssetSymbol" />
                         </div>
-                        <input type="hidden" name="assets" id="selectedAssetSymbol" />
-                    </div>
-
-                <div>
-                    <label class="text-sm text-gray-400 mb-2 block">Current USD Balance: {{ showAmount(auth()->user()->balance) }}</label>
-                     
-                </div>
-                <div>
-                    <label class="text-sm text-gray-400 mb-2 block">Current Asset Price:            $00098</label>
-                     
-                </div>
- 
-
- 
-                    
-
-
+                
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 block">Current USD Balance: {{ showAmount(auth()->user()->balance) }}</label>
+                        </div>
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 block">Current Asset Price:</label>
+                        </div>
+                
                         <div class="flex gap-4 mb-6">
                             <div class="w-1/2">
                                 <label class="text-sm text-gray-400 mb-2 block">Stop Loss:</label>
@@ -214,222 +164,310 @@
                                 <input type="number" name="profit" value="32100" class="w-full bg-gray-900 border border-gray-700 rounded-md p-2">
                             </div>
                         </div>
-
-                    <div>
-                        <label class="text-sm text-gray-400 mb-2 block">Duration:</label>
-                        <select class="w-full bg-gray-900 border border-gray-700 rounded-md p-2" name="duration">
-                            <option>2 minutes</option>
-                            <option>5 minutes</option>
-                            <option>10 minutes</option>
-
-
-                        </select>
+                
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 block">Duration:</label>
+                            <select class="w-full bg-gray-900 border border-gray-700 rounded-md p-2" name="duration">
+                                <option>2 minutes</option>
+                                <option>5 minutes</option>
+                                <option>10 minutes</option>
+                            </select>
+                        </div>
+                
+                        <button class="w-full bg-emerald-500 hover:bg-emerald-600 py-3 rounded-md text-white font-medium" type="submit">
+                            Done
+                        </button>
                     </div>
-
-                    <button
-                        class="w-full bg-emerald-500 hover:bg-emerald-600 py-3 rounded-md text-white font-medium" type="submit">
-                        Buy
-                    </button>
-                </div>
-            </div>
-
-            </form>
-        </div>
-
-        
-        <!-- Trades Section -->
-
-        <div class="rounded-lg border border-gray-800 bg-black p-4">
-            <div>
-            <h2 class="text-lg font-semibold mb-4">Trades</h2>
-            <div class="space-x-2 mb-4">
-            <button class="px-4 py-2 text-sm bg-blue-500 text-white rounded-md" id="openTradesBtn">Open</button>
-            <button class="px-4 py-2 text-sm text-gray-400 hover:text-white" id="closedTradesBtn">completed</button>
-            </div>
-
-            <!-- Open Trades Table -->
-            <div id="openTradesSection">
-            @if($userAssets->where('status', 'open')->isEmpty())
-            <div class="text-gray-400 text-sm">No open trades yet.</div>
-            @else
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-400">
-                <thead class="text-xs text-gray-400 uppercase bg-gray-700">
-                <tr>
-                    <th scope="col" class="px-6 py-3">Asset</th>
-                    <th scope="col" class="px-6 py-3">Type</th>
-                    <th scope="col" class="px-6 py-3">Amount</th>
-                    <th scope="col" class="px-6 py-3">Price</th>
-                    <th scope="col" class="px-6 py-3">Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($userAssets->where('status', 'open') as $trade)
-                <tr class="bg-gray-800 border-b border-gray-700">
-                    <td class="px-6 py-4">  @php
-                        $symbollowcase = strtolower($trade->assets);
-
-                    @endphp
-                    <img class="w-10 h-10 rounded-full" src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase}}.svg" alt="Jese image">
-
-                    {{ $trade->assets }}</td>
-                    <td class="px-6 py-4">{{ $trade->type }}</td>
-                    <td class="px-6 py-4">{{ $trade->amount }}</td>
-                    <td class="px-6 py-4">{{ $trade->price }}</td>
-                    <td class="px-6 py-4">
+                </form> 
+                            </div>
+                 
+                        </div>
+                
                         
-                       @if ($trade->status == 'open')
-                          <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">{{ $trade->status }}</span>
-                          @else
-                            <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">{{ $trade->status }}</span>
-
-                          @endif
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-                </table>
-            </div>
-            @endif
-            </div>
-
-            <!-- Closed Trades Table -->
-            <div id="closedTradesSection" class="hidden">
-            @if($userAssets->where('status', 'complete')->isEmpty())
-            <div class="text-gray-400 text-sm">No closed trades yet.</div>
-            @else
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-400">
-                <thead class="text-xs text-gray-400 uppercase bg-gray-700">
-                <tr>
-                    <th scope="col" class="px-6 py-3">Asset</th>
-                    <th scope="col" class="px-6 py-3">Type</th>
-                    <th scope="col" class="px-6 py-3">Amount</th>
-                    <th scope="col" class="px-6 py-3">Price</th>
-                    <th scope="col" class="px-6 py-3">Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($userAssets->where('status', 'complete') as $trade)
-                <tr class="bg-gray-800 border-b border-gray-700">
-                    <td class="px-6 py-4">
-                        @php
-                            $symbollowcase = strtolower($trade->assets);
-
-                        @endphp
-                        <img class="w-10 h-10 rounded-full" src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase}}.svg" alt="Jese image">
-
-                        {{ $trade->assets }}
-                    
-                    </td>
-                    <td class="px-6 py-4">{{ $trade->type }}</td>
-                    <td class="px-6 py-4">{{ $trade->amount }}</td>
-                    <td class="px-6 py-4">{{ $trade->price }}</td>
-                    <td class="px-6 py-4"> 
-
-                        @if ($trade->status == 'open')
-                        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">{{ $trade->status }}</span>
-                        @else
-                          <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">{{ $trade->status }}</span>
-
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-                </table>
-            </div>
-            @endif
-            </div>
-            </div>
-        </div>
-        </div>
-    </main>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const openTradesBtn = document.getElementById('openTradesBtn');
-        const closedTradesBtn = document.getElementById('closedTradesBtn');
-        const openTradesSection = document.getElementById('openTradesSection');
-        const closedTradesSection = document.getElementById('closedTradesSection');
-
-        openTradesBtn.addEventListener('click', () => {
-            openTradesSection.classList.remove('hidden');
-            closedTradesSection.classList.add('hidden');
-            openTradesBtn.classList.add('bg-blue-500', 'text-white');
-            closedTradesBtn.classList.remove('bg-blue-500', 'text-white');
-            closedTradesBtn.classList.add('text-gray-400');
-        });
-
-        closedTradesBtn.addEventListener('click', () => {
-            closedTradesSection.classList.remove('hidden');
-            openTradesSection.classList.add('hidden');
-            closedTradesBtn.classList.add('bg-blue-500', 'text-white');
-            openTradesBtn.classList.remove('bg-blue-500', 'text-white');
-            openTradesBtn.classList.add('text-gray-400');
-        });
-
-        const dropdownButton = document.getElementById("dropdownButton");
-        const dropdownMenu = document.getElementById("dropdownMenu");
-        const selectedIcon = document.getElementById("selectedIcon");
-        const selectedSymbol = document.getElementById("selectedSymbol");
-        const selectedAssetSymbol = document.getElementById("selectedAssetSymbol");
-        const assetSearch = document.getElementById("assetSearch");
-
-        // Toggle dropdown
-        dropdownButton.addEventListener("click", () => {
-            dropdownMenu.classList.toggle("hidden");
-});
-
-// Close dropdown when clicking outside
-document.addEventListener('click', function(event) {
-if (!dropdownMenu.contains(event.target) && !dropdownButton.contains(event.target)) {
-    dropdownMenu.classList.add("hidden");
-}
-});
-
-// Asset selection
-document.querySelectorAll(".asset-item").forEach((item) => {
-item.addEventListener("click", () => {
-    const symbol = item.getAttribute("data-symbol");
-    const name = item.getAttribute("data-name");
-    const icon = item.getAttribute("data-icon");
-
-    // Update dropdown button
-    selectedIcon.src = icon;
-    selectedSymbol.textContent = symbol;
-    
-    // Set hidden input for form submission
-    selectedAssetSymbol.value = symbol;
-
-    // Close dropdown
-    dropdownMenu.classList.add("hidden");
-});
-});
-
-// Search functionality
-assetSearch.addEventListener("input", function (e) {
-const query = e.target.value.toLowerCase();
-document.querySelectorAll(".asset-item").forEach((item) => {
-    const text = item.textContent.toLowerCase();
-    item.style.display = text.includes(query) ? "flex" : "none";
-});
-});
-});
-
-const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        // Remove "active" class from all buttons and contents
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-
-        // Add "active" class to the clicked button and corresponding content
-        button.classList.add('active');
-        const tabId = button.getAttribute('data-tab');
-        document.getElementById(tabId).classList.add('active');
-      });
-    });
-  </script>
-@endsection
+                        <!-- Trades Section -->
+                
+                        <div class="rounded-lg border border-gray-800 bg-black p-4">
+                            <div>
+                            <h2 class="text-lg font-semibold mb-4">Trades</h2>
+                            <div class="space-x-2 mb-4">
+                            <button class="px-4 py-2 text-sm bg-blue-500 text-white rounded-md" id="openTradesBtn">Open</button>
+                            <button class="px-4 py-2 text-sm text-gray-400 hover:text-white" id="closedTradesBtn">completed</button>
+                            </div>
+                
+                            <!-- Open Trades Table -->
+                            <div id="openTradesSection">
+                            @if($userAssets->where('status', 'open')->isEmpty())
+                            <div class="text-gray-400 text-sm">No open trades yet.</div>
+                            @else
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+                                <thead class="text-xs text-gray-400 uppercase bg-gray-700">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Asset</th>
+                                    <th scope="col" class="px-6 py-3">Type</th>
+                                    <th scope="col" class="px-6 py-3">Amount</th>
+                                    <th scope="col" class="px-6 py-3">Loss/Profit</th>
+                                    <th scope="col" class="px-6 py-3">Action</th>
+                                    <th scope="col" class="px-6 py-3">Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($userAssets->where('status', 'open') as $trade)
+                                <tr class="bg-gray-800 border-b border-gray-700">
+                                    <td class="px-6 py-4"> 
+                                        @php
+                                        $symbollowcase = strtolower($trade->assets);
+                                        $icon =   $trade->assets;
+                                        $icon2 = strtolower(substr($trade->assets, 0, 2));
+                                        $iconSrc = '';
+                
+                                        if ($trade->trade_type == 'Crypto') {
+                                            $iconSrc = "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{$symbollowcase}.svg";
+                                        } elseif ($trade->trade_type == 'Stocks') {
+                                            $iconSrc = "https://cdn.jsdelivr.net/gh/ahmeterenodaci/Nasdaq-Stock-Exchange-including-Symbols-and-Logos/logos/_{$icon}.png"; // Replace with actual stock icon URL
+                                        } elseif ($trade->trade_type == 'Forex') {
+                                            $iconSrc = "https://flagcdn.com/36x27/{$icon2}.png"; // Replace with actual forex icon URL
+                                        }
+                                    @endphp
+                                    <img class="w-10 h-10 rounded-full" src="{{ $iconSrc }}" alt="{{ $trade->assets }} image"> 
+                                    {{ $trade->assets }}</td>
+                                    <td class="px-6 py-4">{{ $trade->trade_type }}</td>
+                                    <td class="px-6 py-4">{{ $trade->amount }}</td>
+                                    <td class="px-6 py-4">
+                                        <span class="text-green-500">$ {{ $trade->profit }}</span> <br>
+                                         <span class="text-red-500">$ {{ $trade->loss }}</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        @if ($trade->action == 'buy')
+                                            <span class="text-green-500">{{ $trade->action }}</span>
+                                        @else
+                                            <span class="text-red-500">{{ $trade->action }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        
+                                       @if ($trade->status == 'open')
+                                          <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">{{ $trade->status }}</span>
+                                          @else
+                                            <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">{{ $trade->status }}</span>
+                
+                                          @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                                </table>
+                            </div>
+                            @endif
+                            </div>
+                
+                            <!-- Closed Trades Table -->
+                            <div id="closedTradesSection" class="hidden">
+                            @if($userAssets->where('status', 'complete')->isEmpty())
+                            <div class="text-gray-400 text-sm">No closed trades yet.</div>
+                            @else
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+                                <thead class="text-xs text-gray-400 uppercase bg-gray-700">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Asset</th>
+                                    <th scope="col" class="px-6 py-3">Type</th>
+                                    <th scope="col" class="px-6 py-3">Amount</th>
+                                    <th scope="col" class="px-6 py-3">Loss/Profit</th>
+                                    <th scope="col" class="px-6 py-3">Action</th>
+                                    <th scope="col" class="px-6 py-3">Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($userAssets->where('status', 'complete') as $trade)
+                                <tr class="bg-gray-800 border-b border-gray-700">
+                                    <td class="px-6 py-4">
+                                        @php
+                                        $symbollowcase = strtolower($trade->assets);
+                                        $icon =   $trade->assets;
+                                        $icon2 = strtolower(substr($trade->assets, 0, 2));
+                                        $iconSrc = '';
+                
+                                        if ($trade->trade_type == 'Crypto') {
+                                            $iconSrc = "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{$symbollowcase}.svg";
+                                        } elseif ($trade->trade_type == 'Stocks') {
+                                            $iconSrc = "https://cdn.jsdelivr.net/gh/ahmeterenodaci/Nasdaq-Stock-Exchange-including-Symbols-and-Logos/logos/_{$icon}.png"; // Replace with actual stock icon URL
+                                        } elseif ($trade->trade_type == 'Forex') {
+                                            $iconSrc = "https://flagcdn.com/36x27/{$icon2}.png"; // Replace with actual forex icon URL
+                                        }
+                                    @endphp
+                                    <img class="w-10 h-10 rounded-full" src="{{ $iconSrc }}" alt="{{ $trade->assets }} image"> 
+                
+                                        {{ $trade->assets }}
+                                    
+                                    </td>
+                                    <td class="px-6 py-4">{{ $trade->trade_type }}</td>
+                                    <td class="px-6 py-4">{{ $trade->amount }}</td>
+                                    <td class="px-6 py-4">
+                                        <span class="text-green-500">$ {{ $trade->profit }}</span> <br>
+                                        <span class="text-red-500">$ {{ $trade->loss }}</span>
+                                    </td>
+                                    <td class="px-6 py-4">{{ $trade->action }}</td>
+                                    <td class="px-6 py-4"> 
+                
+                                        @if ($trade->status == 'open')
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">{{ $trade->status }}</span>
+                                        @else
+                                          <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">{{ $trade->status }}</span>
+                
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                                </table>
+                            </div>
+                            @endif
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </main>
+                    <script>
+                       document.addEventListener('DOMContentLoaded', function() {
+                    const dropdownButton = document.getElementById("dropdownButton");
+                    const dropdownMenu = document.getElementById("dropdownMenu");
+                    const selectedIcon = document.getElementById("selectedIcon");
+                    const selectedSymbol = document.getElementById("selectedSymbol");
+                    const selectedAssetSymbol = document.getElementById("selectedAssetSymbol");
+                    const assetSearch = document.getElementById("assetSearch");
+                    const assetType = document.getElementById("assetType");
+                    const assetList = document.getElementById("assetList");
+                
+                    let stocksData = [];
+                    let forexData = [];
+                
+                    // Fetch stock data
+                    fetch('https://tradededpro.com/app/assets/global/jsons/stock.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            stocksData = data;
+                        })
+                        .catch(error => console.error('Error fetching stock data:', error));
+                
+                    // Fetch forex data
+                    fetch('https://tradededpro.com/app/assets/global/jsons/forex.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            forexData = Object.entries(data.usd).map(([symbol, rate]) => ({
+                                symbol: symbol.toUpperCase(),
+                                name: symbol.toUpperCase(),
+                                rate: rate
+                            }));
+                        })
+                        .catch(error => console.error('Error fetching forex data:', error));
+                
+                    // Function to populate asset list based on selected type
+                    function populateAssetList(type) {
+                        assetList.innerHTML = ''; // Clear existing list
+                
+                        let assets = [];
+                        let iconBaseUrl = '';
+                
+                        if (type === 'Crypto') {
+                            assets = @json($assets);
+                            iconBaseUrl = 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/';
+                        } else if (type === 'Stocks') {
+                            assets = stocksData;
+                        } else if (type === 'Forex') {
+                            assets = forexData;
+                        }
+                
+                        assets.forEach(asset => {
+                            let iconSrc = '';
+                            if (type === 'Crypto') {
+                                const symbollowcase = asset.symbol.toLowerCase();
+                                iconSrc = iconBaseUrl + symbollowcase + '.svg';
+                            } else if (type === 'Stocks') {
+                                iconSrc = asset.logoUrl;
+                            } else if (type === 'Forex') {
+                                iconSrc = `https://flagcdn.com/36x27/${asset.symbol.substring(0, 2).toLowerCase()}.png`; // Flag icon
+                            }
+                
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('asset-item', 'flex', 'items-center', 'justify-between', 'px-4', 'py-2', 'hover:bg-gray-700', 'cursor-pointer');
+                            listItem.setAttribute('data-symbol', asset.symbol);
+                            listItem.setAttribute('data-name', asset.symbol);
+                            listItem.setAttribute('data-icon', iconSrc);
+                
+                            listItem.innerHTML = `
+                                <div class="flex items-center space-x-2">
+                                    <img src="${iconSrc}" alt="${asset.symbol}" class="w-4 h-4" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/0/381.png'">
+                                    <span>${asset.symbol.toUpperCase()}</span>
+                                </div>
+                                <span class="text-gray-400 text-xs">${asset.symbol.toUpperCase()}</span>
+                            `;
+                            assetList.appendChild(listItem);
+                
+                            // Add click listener to asset item
+                            listItem.addEventListener("click", () => {
+                                const symbol = listItem.getAttribute("data-symbol");
+                                const name = listItem.getAttribute("data-name");
+                                const icon = listItem.getAttribute("data-icon");
+                
+                                // Update dropdown button
+                                selectedIcon.src = icon;
+                                selectedSymbol.textContent = symbol;
+                
+                                // Set hidden input for form submission
+                                selectedAssetSymbol.value = symbol;
+                
+                                // Close dropdown
+                                dropdownMenu.classList.add("hidden");
+                            });
+                        });
+                    }
+                
+                    // Initial population of asset list
+                    populateAssetList(assetType.value);
+                
+                    // Repopulate asset list on asset type change
+                    assetType.addEventListener('change', (event) => {
+                        populateAssetList(event.target.value);
+                    });
+                
+                    // Toggle dropdown
+                    dropdownButton.addEventListener("click", () => {
+                        dropdownMenu.classList.toggle("hidden");
+                    });
+                
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(event) {
+                        if (!dropdownMenu.contains(event.target) && !dropdownButton.contains(event.target)) {
+                            dropdownMenu.classList.add("hidden");
+                        }
+                    });
+                
+                    // Search functionality
+                    assetSearch.addEventListener("input", function(e) {
+                        const query = e.target.value.toLowerCase();
+                        document.querySelectorAll(".asset-item").forEach((item) => {
+                            const text = item.textContent.toLowerCase();
+                            item.style.display = text.includes(query) ? "flex" : "none";
+                        });
+                    });
+                });
+                
+                const tabButtons = document.querySelectorAll('.tab-button');
+                    const tabContents = document.querySelectorAll('.tab-content');
+                
+                    tabButtons.forEach((button) => {
+                      button.addEventListener('click', () => {
+                        // Remove "active" class from all buttons and contents
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabContents.forEach(content => content.classList.remove('active'));
+                
+                        // Add "active" class to the clicked button and corresponding content
+                        button.classList.add('active');
+                        const tabId = button.getAttribute('data-tab');
+                        document.getElementById(tabId).classList.add('active');
+                      });
+                    });
+                  </script>
+                @endsection
+                

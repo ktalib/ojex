@@ -61,7 +61,7 @@ class CryptoDepositController extends Controller
         $deposit->proof = $proofPath;
         $deposit->reference = $gen_reference;
         $deposit->type = $request->type;
-        $deposit->status = 'pending';
+        $deposit->status = '0';
         
 
          

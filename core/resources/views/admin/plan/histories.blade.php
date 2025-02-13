@@ -9,12 +9,13 @@
                             <thead>
                                 <tr>
                                     <th>@lang('SL')</th>
-                                    <th>@lang('User')</th>
-                                    <th>@lang('Plan Name')</th>
-                                    <th>@lang('Price')</th>
-                                    <th>@lang('Funds')</th>
-                                    <th>@lang('Subscribed at')</th>
-                                    <th>@lang('Expires at')</th>
+                                    <th>@lang('User ID')</th>
+                                  
+                                    <th>@lang('Amount')</th>
+                                    <th>@lang('Strength at Purchase')</th>
+                                    <th>@lang('Currency')</th>
+                                    <th>@lang('Status')</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -22,17 +23,15 @@
                                     <tr>
                                         <td>{{ $histories->firstItem() + $loop->index }}</td>
                                         <td>
-                                            <span class="fw-bold">{{ $history->user->fullname }}</span>
-                                            <br>
-                                            <span class="small">
-                                                <a href="{{ appendQuery('search', @$history->user->username) }}"><span>@</span>{{ $history->user->username }}</a>
-                                            </span>
+                                            <span class="fw-bold">{{ $history->username }}</span>
+                                             
                                         </td>
-                                        <td> {{ $history->plan->name }} <a href="{{ appendQuery('search', $history->plan->name) }}"> <i class="las la-search"></i> </a></td>
-                                        <td>{{ showAmount($history->price) }}</td>
-                                        <td>{{ showAmount($history->fund) }}</td>
-                                        <td>{{ showDateTime($history->created_at) }}</td>
-                                        <td>{{ showDateTime($history->expires_at) }}</td>
+                                      
+                                        <td>{{ showAmount($history->amount) }}</td>
+                                        <td>{{ $history->strength_at_purchase }} %</td>
+                                        <td>{{ $history->currency }}</td>
+                                        <td>{{ $history->status }}</td>
+                                   
                                     </tr>
                                 @empty
                                     <tr>

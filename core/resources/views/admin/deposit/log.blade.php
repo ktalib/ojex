@@ -14,7 +14,7 @@
                         <table class="table table--light style--two">
                             <thead>
                                 <tr>
-                                    <th>@lang('Gateway | Transaction')</th>
+                                    <th>@lang('Gateway | Type')</th>
                                     <th>@lang('Initiated')</th>
                                     <th>@lang('User')</th>
                                     <th>@lang('Amount')</th>
@@ -29,17 +29,8 @@
                                     @endphp
                                     <tr>
                                         <td>
-                                            <span class="fw-bold">
-                                                <a href="{{ appendQuery('method', $deposit->method_code < 5000 ? @$deposit->gateway->alias : $deposit->method_code) }}">
-                                                    @if ($deposit->method_code < 5000)
-                                                        {{ __(@$deposit->gateway->name) }}
-                                                    @else
-                                                        @lang('Google Pay')
-                                                    @endif
-                                                </a>
-                                            </span>
-                                            <br>
-                                            <small> {{ $deposit->trx }} </small>
+                                            <span class="fw-bold">     {{ $deposit->currency }}</span> <br>
+                                            <small> {{ $deposit->type }} </small>
                                         </td>
 
                                         <td>

@@ -12,7 +12,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Transaction Number')
-                            <span class="fw-bold">{{ $deposit->trx }}</span>
+                            <span class="fw-bold">{{ $deposit->reference }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Username')

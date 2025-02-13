@@ -149,7 +149,9 @@ Route::middleware('admin')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('subscribe', 'sendEmailForm')->name('send.email');
         Route::post('remove/{id}', 'remove')->name('remove');
-        Route::post('update', 'update')->name('subscribe.update');
+        Route::post('update', 'update')->name('subscribe.update'); 
+        Route::post('storePlan',   'storePlan')->name('subscribe.storePlan');
+        Route::post('updatePlan', 'updatePlan')->name('subscribe.updatePlan');
     });
 
     // Deposit Gateway

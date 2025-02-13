@@ -5,20 +5,24 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Trade;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
     public function open()
     {
-        $pageTitle = "Open Order";
-        $orders    = $this->orderData('open');
-        return view('admin.order.list', compact('pageTitle', 'orders'));
+        $pageTitle = "Open Trades";
+        $userAssets    =  DB::table('asset_trades')->orderBy('id', 'desc')->paginate(getPaginate());
+        return view('admin.order.list', compact('pageTitle', 'userAssets'));
     }
+
     public function history($userId = 0)
     {
-        $pageTitle = "Order History";
-        $orders    = $this->orderData(userId: $userId);
-        return view('admin.order.list', compact('pageTitle', 'orders'));
+        $pageTitle = "Complete Trades";
+        $userAssets    =  DB::table('asset_trades')->orderBy('id', 'desc')->paginate(getPaginate());
+
+        return view('admin.order.list', compact('pageTitle', 'userAssets'));
     }
 
     protected function orderData($scope = null, $userId = 0)

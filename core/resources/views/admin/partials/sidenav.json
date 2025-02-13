@@ -28,31 +28,29 @@
     },
 
     "manage_plans": {
-        "title": "Manage Plans",
+        "title": "Manage Signals",
         "icon": "las la-signal",
         "menu_active": "admin.plan*",
         "submenu": [
             {
-                "title": "List",
+                "title": "Add",
                 "route_name": "admin.plan.list",
                 "icon": "las la-dot-circle",
                 "menu_active": "admin.plan.list",
-                "keyword": ["plan list", "Manage Plans", "Plan overview", "Plan details"]
+                "keyword": ["plan list", "Manage Plans", "Plan overview", "Plan details"],
+                "disabled": true,
+                "coming_soon": true
             },
             {
-                "title": "Histories",
+                "title": "User Signals",
                 "route_name": "admin.plan.history",
                 "icon": "las la-dot-circle",
                 "menu_active": "admin.plan.history",
-                "keyword": ["plan histories", "purchase", "Plan record", "Plan management", "Plan history"]
-            },
-            {
-                "title": "Logic Box",
-                "route_name": "admin.plan.logic.box.list",
-                "icon": "las la-dot-circle",
-                "menu_active": "admin.plan.logic.box.list",
-                "keyword": ["logic box", "Plan logic", "bot logic", "Plan setup", "Logic management"]
+                "keyword": ["plan histories", "purchase", "Plan record", "Plan management", "Plan history"],
+                "disabled": true,
+                "coming_soon": true
             }
+           
         ]
     },
 
@@ -81,7 +79,7 @@
     },
 
     "manage_order": {
-        "title": "Manage Order",
+        "title": "Manage Trades",
         "icon": "las la-coins",
         "menu_active":  [
             "admin.order*",
@@ -89,26 +87,20 @@
         ],
         "submenu": [
             {
-                "title": "Open Order",
+                "title": "Open Trades",
                 "route_name": "admin.order.open",
                 "icon": "las la-dot-circle",
                 "menu_active": "admin.order.open",
                 "keyword": ["open order", "active order", "manage order", "pending order"]
             },
             {
-                "title": "Order History",
+                "title": "Complete Trades",
                 "route_name": "admin.order.history",
                 "icon": "las la-dot-circle",
                 "menu_active": "admin.order.history",
                 "keyword": ["order history", "previous orders", "order management", "past orders"]
-            },
-            {
-                "title": "Trade History",
-                "route_name": "admin.trade.history",
-                "icon": "las la-dot-circle",
-                "menu_active": "admin.trade.history",
-                "keyword": ["trade history", "completed trades", "trade record", "order trade history"]
             }
+            
         ]
     },
    

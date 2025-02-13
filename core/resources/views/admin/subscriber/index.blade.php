@@ -28,7 +28,7 @@
                                 <tr>
                          
                                     <td>{{ $subscriber->name }}</td>
-                                    <td>{{ $subscriber->user_id }}</td>
+                                    <td>{{ $subscriber->username }}</td>
                                     <td>{{ $subscriber->amount }}</td>
                                     <td>{{ $subscriber->duration_days }}</td>
                                     <td>{{ $subscriber->roi }}</td>
@@ -129,6 +129,6 @@
 @endsection
 @if($subscribers->count())
 @push('breadcrumb-plugins')
-    <a href="{{ route('admin.subscriber.send.email') }}" class="btn btn-sm btn-outline--primary" ><i class="las la-paper-plane"></i>@lang('Send Email')</a>
+    <a href="{{ route('admin.subscriber.send.email') }}" class="btn btn-sm btn-outline--primary" ><i class="las la-paper-plane"></i>@lang('Manage plans')</a>
 @endpush
 @endif

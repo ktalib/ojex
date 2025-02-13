@@ -10,11 +10,12 @@
                                 <tr>
                                     <th>@lang('SL')</th>
                                     <th>@lang('Name')</th>
-                                    <th>@lang('Price')</th>
-                                    <th>@lang('Fund')</th>
-                                    <th>@lang('Conversion')</th>
-                                    <th>@lang('Status')</th>
-                                    <th>@lang('Action')</th>
+                                    <th>@lang('Signal Price')</th>
+                                    <th>@lang('Signal Strength')</th>
+                                    <th>@lang('Amount')</th>
+                                    <th>@lang('Currency')</th>
+                                    <th>@lang('Current Balance')</th>
+                                    <th>@lang('Is Active')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,34 +28,22 @@
                                             {{ $plan->name }}
                                         </td>
                                         <td>
-                                            {{ showAmount($plan->price) }}
+                                            {{ $plan->signal_price }}
                                         </td>
                                         <td>
-                                            {{ showAmount($plan->fund) }}
+                                            {{ $plan->signal_strength }}
                                         </td>
                                         <td>
-                                            {{ $plan->conversion }}
+                                            {{ $plan->amount }}
                                         </td>
                                         <td>
-                                            @php
-                                                echo $plan->statusBadge;
-                                            @endphp
+                                            {{ $plan->currency }}
                                         </td>
                                         <td>
-                                            <div class="button--group">
-                                                <a href="{{ route('admin.plan.edit', $plan->id) }}" class="btn btn-sm btn-outline--primary" data-resource="{{ $plan }}" data-modal_title="@lang('Update plan')" type="button">
-                                                    <i class="la la-pencil"></i>@lang('Edit')
-                                                </a>
-                                                @if ($plan->status == Status::DISABLE)
-                                                    <button class="btn btn-sm btn-outline--success confirmationBtn" data-question="@lang('Are you sure to enable this plan')?" data-action="{{ route('admin.plan.status', $plan->id) }}">
-                                                        <i class="la la-eye"></i> @lang('Enable')
-                                                    </button>
-                                                @else
-                                                    <button class="btn btn-sm btn-outline--danger confirmationBtn" data-question="@lang('Are you sure to disable this plan')?" data-action="{{ route('admin.plan.status', $plan->id) }}">
-                                                        <i class="la la-eye-slash"></i> @lang('Disable')
-                                                    </button>
-                                                @endif
-                                            </div>
+                                            {{ $plan->current_balance }}
+                                        </td>
+                                        <td>
+                                            {{ $plan->is_active ? 'Yes' : 'No' }}
                                         </td>
                                     </tr>
                                 @empty

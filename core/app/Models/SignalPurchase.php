@@ -9,12 +9,9 @@ class SignalPurchase extends Model
         'signal_id',
         'user_id',
         'amount',
-        'price_at_purchase',
         'strength_at_purchase',
         'currency',
-        'total_cost',
         'status',
-        'transaction_id',
         'is_active'
     ];
 
@@ -26,11 +23,7 @@ class SignalPurchase extends Model
     ];
 
     // Relationship with Signal
-    public function signal()
-    {
-        return $this->belongsTo(Signal::class);
-    }
-
+   
     // Relationship with User
     public function user()
     {

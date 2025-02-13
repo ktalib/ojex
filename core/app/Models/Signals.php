@@ -28,4 +28,6 @@ class Signals extends Model
     {
         return $this->signal_strength . '%';
     }
+
+    
 }
