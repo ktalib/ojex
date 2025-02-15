@@ -1,7 +1,9 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+**
+**
 ## Trading Platform
 
-Welcome to the ojex Trading  Platform project. This platform is designed to facilitate secure and efficient trading.
+Welcome to the ojex Trading Platform project. This platform is designed to facilitate secure and efficient trading.
 
 ### Features
 
@@ -9,6 +11,16 @@ Welcome to the ojex Trading  Platform project. This platform is designed to faci
 - Secure transactions
 - User-friendly interface
 - Advanced trading tools
+
+### Screenshots
+
+Here are some screenshots of the platform:
+
+![Dashboard](screenshots/1.png)
+*Dashboard*
+
+![Trading View](screenshots/2-view.png)
+*Trading View*
 
 ### Installation
 
