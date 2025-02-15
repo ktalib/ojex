@@ -11,11 +11,7 @@
                     <div class="card-body">
                         <div class="payment-method-item">
                             <div class="gateway-body mb-3">
-                                <div class="gateway-thumb">
-                                    <div class="thumb">
-                                        <x-image-uploader image="" class="w-100" type="gateway" :required=false />
-                                    </div>
-                                </div>
+                               
                                 <div class="gateway-content">
                                     <div class="row mb-none-15">
                                         <div class="col-sm-12 col-md-6 mb-15">
@@ -39,22 +35,22 @@
 
                                 <div class="row">
 
-                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: none"> 
                                         <div class="card border border--primary mt-3">
                                             <h5 class="card-header bg--primary">@lang('Range')</h5>
                                             <div class="card-body">
-                                                <div class="form-group">
+                                                <div class="form-group"  >
                                                     <label>@lang('Minimum Amount')</label>
                                                     <div class="input-group">
-                                                        <input type="number" step="any" class="form-control" name="min_limit" required value="{{ old('min_limit') }}">
+                                                        <input type="number" step="any" class="form-control" name="min_limit" required value="10">
                                                         <div class="input-group-text">{{ __(gs('cur_text')) }}</div>
                                                     </div>
                                                     <span class="min-limit-error-message text--danger"></span>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" style="display:none">
                                                     <label>@lang('Maximum Amount')</label>
                                                     <div class="input-group">
-                                                        <input type="number" step="any" class="form-control" name="max_limit" required value="{{ old('max_limit') }}">
+                                                        <input type="number" step="any" class="form-control" name="max_limit" required value="10000000000000">
                                                         <div class="input-group-text">{{ __(gs('cur_text')) }}</div>
                                                     </div>
                                                     <span class="max-limit-error-message text--danger"></span>
@@ -62,21 +58,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: none">
                                         <div class="card border border--primary mt-3">
                                             <h5 class="card-header bg--primary">@lang('Charge')</h5>
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label>@lang('Fixed Charge')</label>
                                                     <div class="input-group">
-                                                        <input type="number" step="any" class="form-control" name="fixed_charge" required value="{{ old('fixed_charge') }}">
+                                                        <input type="number" step="any" class="form-control" name="fixed_charge" required value="0">
                                                         <div class="input-group-text">{{ __(gs('cur_text')) }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>@lang('Percent Charge')</label>
                                                     <div class="input-group">
-                                                        <input type="number" step="any" class="form-control" name="percent_charge" required value="{{ old('percent_charge') }}">
+                                                        <input type="number" step="any" class="form-control" name="percent_charge" required value="0">
                                                         <div class="input-group-text">%</div>
                                                     </div>
                                                 </div>
@@ -86,10 +82,10 @@
 
                                     <div class="col-12">
                                         <div class="card border border--primary mt-3">
-                                            <h5 class="card-header bg--primary">@lang('Deposit Instruction')</h5>
+                                            <h5 class="card-header bg--primary">@lang('Wallet Address')</h5>
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <textarea rows="8" class="form-control border-radius-5 nicEdit" name="instruction">{{ old('instruction') }}</textarea>
+                                                    <input   class="form-control" name="instruction"> 
                                                 </div>
                                             </div>
                                         </div>

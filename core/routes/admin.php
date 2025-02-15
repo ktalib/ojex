@@ -48,14 +48,18 @@ Route::middleware('admin')->group(function () {
 
         Route::get('download-attachments/{file_hash}', 'downloadAttachment')->name('download.attachment');
     });
-
     Route::controller('OrderController')->group(function () {
         Route::name('order.')->prefix('order')->group(function () {
             Route::get('open', 'open')->name('open');
+            //Route::get('trade_history.blade', 'history')->name('history');
             Route::get('history/{user_id?}', 'history')->name('history');
+            Route::post('trade/update/{id}', 'tradeupdate')->name('trade.update');
         });
         Route::get('trade/history/{user_id?}', 'tradeHistory')->name('trade.history');
     });
+
+
+    
     Route::name('plan.')->prefix('plan')->group(function () {
         Route::controller('ManagePlanController')->group(function () {
             Route::get('/', 'list')->name('list');

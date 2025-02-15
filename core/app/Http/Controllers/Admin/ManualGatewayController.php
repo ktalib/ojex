@@ -52,7 +52,7 @@ class ManualGatewayController extends Controller
         $method->code                 = $methodCode;
         $method->form_id              = @$generate->id ?? 0;
         $method->name                 = $request->name;
-        $method->image                = $filename;
+        $method->image                = "null.png";
         $method->alias                = strtolower(trim(str_replace(' ', '_', $request->name)));
         $method->status               = Status::ENABLE;
         $method->gateway_parameters   = json_encode([]);
@@ -105,7 +105,7 @@ class ManualGatewayController extends Controller
 
         $generate                     = $formProcessor->generate('manual_deposit', true, 'id', $method->form_id);
         $method->name                 = $request->name;
-        $method->image                = $filename;
+        $method->image                = "null.png";
         $method->alias                = strtolower(trim(str_replace(' ', '_', $request->name)));
         $method->gateway_parameters   = json_encode([]);
         $method->supported_currencies = [];
@@ -141,7 +141,6 @@ class ManualGatewayController extends Controller
             'max_limit'      => 'required|numeric|gt:min_limit',
             'fixed_charge'   => 'required|numeric|gte:0',
             'percent_charge' => 'required|numeric|between:0,100',
-            'image'          => [$isUpdate ? 'nullable' : 'required', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png'])],
             'instruction'    => 'required',
         ];
 

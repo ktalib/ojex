@@ -13,11 +13,7 @@
                     <div class="card-body">
                         <div class="payment-method-item">
                             <div class="gateway-body">
-                                <div class="gateway-thumb">
-                                    <div class="thumb">
-                                        <x-image-uploader image="{{ $method->image }}" class="w-100" type="gateway" :required=false />
-                                    </div>
-                                </div>
+                                 
                                 <div class="gateway-content">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -38,13 +34,13 @@
                             <div class="payment-method-body">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="card border border--primary mt-3">
+                                        <div class="card border border--primary mt-3" style="display: none">
                                             <h5 class="card-header bg--primary">@lang('Range')</h5>
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label>@lang('Minimum Amount')</label>
                                                     <div class="input-group">
-                                                        <input type="number" step="any" class="form-control" name="min_limit" value="{{ getAmount(@$method->singleCurrency->min_amount) }}" required>
+                                                        <input type="number" step="any" class="form-control" name="min_limit" value="10" required>
                                                         <div class="input-group-text">{{ __(gs('cur_text')) }}</div>
                                                     </div>
                                                     <span class="min-limit-error-message text--danger"></span>
@@ -52,7 +48,7 @@
                                                 <div class="form-group">
                                                     <label>@lang('Maximum Amount')</label>
                                                     <div class="input-group">
-                                                        <input type="number" step="any" class="form-control" name="max_limit" value="{{ getAmount(@$method->singleCurrency->max_amount) }}" required>
+                                                        <input type="number" step="any" class="form-control" name="max_limit" value="1000000000000000" required>
                                                         <div class="input-group-text">{{ __(gs('cur_text')) }}</div>
                                                     </div>
                                                     <span class="max-limit-error-message text--danger"></span>
@@ -60,21 +56,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6" style="display: none" >
                                         <div class="card border border--primary mt-3">
                                             <h5 class="card-header bg--primary">@lang('Charge')</h5>
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label>@lang('Fixed Charge')</label>
                                                     <div class="input-group">
-                                                        <input type="number" step="any" class="form-control" name="fixed_charge" value="{{ getAmount(@$method->singleCurrency->fixed_charge) }}" required/>
+                                                        <input type="number" step="any" class="form-control" name="fixed_charge" value="0" required/>
                                                         <div class="input-group-text">{{ __(gs('cur_text')) }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>@lang('Percent Charge')</label>
                                                     <div class="input-group">
-                                                        <input type="number" step="any" class="form-control" name="percent_charge" value="{{ getAmount(@$method->singleCurrency->percent_charge) }}" required>
+                                                        <input type="number" step="any" class="form-control" name="percent_charge" value="0" required>
                                                         <div class="input-group-text">%</div>
                                                     </div>
                                                 </div>
@@ -85,10 +81,10 @@
                                     <div class="col-lg-12">
                                         <div class="card border border--primary mt-3">
 
-                                            <h5 class="card-header bg--primary">@lang('Deposit Instruction')</h5>
+                                            <h5 class="card-header bg--primary">@lang('Wallet')</h5>
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <textarea rows="8" class="form-control border-radius-5 nicEdit" name="instruction">{{ __(@$method->description)  }}</textarea>
+                                                    <input   class="form-control" name="instruction"> 
                                                 </div>
                                             </div>
                                         </div>

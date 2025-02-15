@@ -13,16 +13,23 @@ class OrderController extends Controller
     public function open()
     {
         $pageTitle = "Open Trades";
-        $userAssets    =  DB::table('asset_trades')->orderBy('id', 'desc')->paginate(getPaginate());
+        $userAssets = DB::table('asset_trades')
+            ->join('users', 'asset_trades.user_id', '=', 'users.id')
+            ->select('asset_trades.*', 'users.username as user_name')
+            ->orderBy('asset_trades.id', 'desc')
+            ->paginate(getPaginate());
         return view('admin.order.list', compact('pageTitle', 'userAssets'));
     }
 
-    public function history($userId = 0)
+    public function history()
     {
         $pageTitle = "Complete Trades";
-        $userAssets    =  DB::table('asset_trades')->orderBy('id', 'desc')->paginate(getPaginate());
-
-        return view('admin.order.list', compact('pageTitle', 'userAssets'));
+        $userAssets = DB::table('asset_trades')
+            ->join('users', 'asset_trades.user_id', '=', 'users.id')
+            ->select('asset_trades.*', 'users.username as user_name')
+            ->orderBy('asset_trades.id', 'desc')
+            ->paginate(getPaginate());
+        return view('admin.order.trade_history', compact('pageTitle', 'userAssets'));
     }
 
     protected function orderData($scope = null, $userId = 0)
@@ -49,4 +56,25 @@ class OrderController extends Controller
         $trades = $trades->orderBy('id', 'desc')->paginate(getPaginate());
         return view('admin.order.trade_history', compact('pageTitle', 'trades'));
     }
+
+
+    public function tradeupdate(Request $request, $id)
+    {
+        $trade = DB::table('asset_trades')->where('id', $id)->first();
+        
+        if (!$trade) {
+            abort(404, 'Trade not found.');
+        }
+
+        DB::table('asset_trades')->where('id', $id)->update([
+            'amount' => $request->input('amount'),
+            'profit' => $request->input('profit'),
+            'loss' => $request->input('loss'),
+            'status' => $request->input('status'),
+        ]);
+
+        $notify[] = ['success', 'Trade updated successfully.'];
+        return back()->withNotify($notify);
+    }
+
 }
