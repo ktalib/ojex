@@ -19,7 +19,10 @@ Here are some screenshots of the platform:
 ![Dashboard](screenshots/1.png)
 *Dashboard*
 
-![Trading View](screenshots/2-view.png)
+![Trading View](screenshots/2.png)
+*Trading View*
+
+![Trading View](screenshots/3.png)
 *Trading View*
 
 ### Installation
