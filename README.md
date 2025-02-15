@@ -11,6 +11,25 @@ Welcome to the ojex Trading Platform project. This platform is designed to facil
 - Secure transactions
 - User-friendly interface
 - Advanced trading tools
+- Multi-language support
+- Mobile-friendly design
+- Customizable alerts
+- Detailed analytics and reporting
+- Robust API for integrations
+- 24/7 customer support
+- Dashboard
+- Deposit
+- Withdraw
+- Assets
+- Markets
+- Trade
+- Subscribe
+- Signals
+- Stake
+- Referrals (Coming Soon)
+- Connect wallet (Coming Soon)
+- Copy Experts
+- Setting
 
 ### Screenshots
 
@@ -68,6 +87,6 @@ This project is licensed under the MIT License.
 
 ### Contact
 
-For more information, visit the [GitHub repository](https://github.com/ktalib/trading-platform).
+For more information, visit the [GitHub repository](https://github.com/ktalib/ojex).
 
  
