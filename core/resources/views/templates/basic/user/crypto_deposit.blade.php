@@ -22,7 +22,7 @@
                             <th class="py-3 text-gray-300">Method</th>
                             <th class="py-3 text-gray-300">Type</th>
                             <th class="py-3 text-gray-300">Amount</th>
-                            <th class="py-3 text-gray-300">Total (USD)</th>
+                            <th class="py-3 text-gray-300">In (USD)</th>
                             <th class="py-3 text-gray-300">Status</th>
                         </tr>
                     </thead>
@@ -34,17 +34,32 @@
                                 <td class="py-3 text-gray-300">{{ $deposit->currency }}</td>
                                 <td class="py-3 text-gray-300">{{ $deposit->type }}</td>
                                 <td class="py-3 text-gray-300">{{ number_format($deposit->amount, 8) }}</td>
-                                <td class="py-3 text-gray-300">${{ number_format($deposit->amount, 2) }}</td>
+                                <td class="py-3 text-gray-300" id="usd-amount-{{ $deposit->id }}"></td>
                                 <td class="py-3">
                                     <span class="px-2 py-1 rounded text-xs 
-                                        @if($deposit->status === 'completed') bg-green-500 text-white
-                                        @elseif($deposit->status === 'pending') bg-yellow-500 text-black
-                                        @else bg-red-500 text-white
+                                        @if($deposit->status ==  1) bg-green-500 text-white
+                                        @elseif($deposit->status == 2) bg-yellow-500 text-black
+                                        @elseif($deposit->status == 3) bg-red-500 text-white
+                                        @else bg-gray-500 text-white
                                         @endif">
-                                        {{ ucfirst($deposit->status) }}
+                                        @if($deposit->status == 0) Initiated
+                                        @elseif($deposit->status == 1) Completed
+                                        @elseif($deposit->status == 2) Pending
+                                        @elseif($deposit->status == 3) Rejected
+                                        @else Unknown
+                                        @endif
                                     </span>
                                 </td>
                             </tr>
+                            <script>
+       fetch(`https://min-api.cryptocompare.com/data/price?fsym={{ $deposit->currency }}&tsyms=USD&api_key=6994a7265d2d0ad7b35a3de4ff877b7c54d8e922f7c7c05141a4583ed300fcfd`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const usdAmount = ({{ $deposit->amount }} * data.USD).toFixed(2);
+                                        document.getElementById('usd-amount-{{ $deposit->id }}').textContent = `$${usdAmount}`;
+                                    })
+                                    .catch(error => console.error('Error fetching USD conversion:', error));
+                            </script>
                         @empty
                             <tr>
                                 <td class="py-4 text-gray-400" colspan="7">
@@ -125,11 +140,10 @@
                         <div class="mb-6">
                             <label class="block text-gray-400 text-sm mb-2">Amount:</label>
                             <div class="flex gap-2">
-                                <input type="number" 
+                                <input type="text" 
                                     name="amount" 
-                                    value="0.00000000" 
-                                    min="0" 
-                                    step="0.00000001" 
+                                    value="0.00" 
+                                   
                                     class="w-full bg-gray-700 rounded-l px-3 py-2 text-white" 
                                     required>
                                 <span id="cryptoIcon" class="bg-gray-700 rounded-r px-3 py-2 text-gray-400 flex items-center justify-center min-w-[60px]">
