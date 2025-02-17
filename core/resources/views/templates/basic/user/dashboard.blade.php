@@ -84,6 +84,7 @@
                     </div>
                 </div>
  <div id="tab1" class="tab-content active">
+    <p class="text-sm text-gray-400">Top Cryptocurrencies</p>
                 @foreach($Topcurrencies as $currency)
                     @php
                         $symbollowcase = strtolower($currency->symbol);

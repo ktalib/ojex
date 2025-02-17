@@ -83,20 +83,24 @@
                         <tr class="hover:bg-gray-700 transition duration-200">
                             <td class="py-3 px-4 flex items-center space-x-2">
                                 <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-                                    
                                     @php
-                   
-                                     $symbollowcase =  strtolower($asset->currency);
-                                    
-                   
+                                        $symbollowcase = strtolower($asset->currency);
                                     @endphp
                                     <img src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg" alt="coin" class="w-5 h-5">
                                 </div>
                                 <span>{{ $asset->currency }}</span>
                             </td>
                             <td class="py-3 px-4">{{ $asset->type }}</td>
-                            <td class="py-3 px-4">${{ number_format($asset->amount, 2) }}/{{ $asset->currency }}</td>
-                            <td class="py-3 px-4">{{ $asset->amount }} {{ $asset->currency }} ${{ number_format($asset->amount * $asset->current_price, 2) }}</td>
+                            <td class="py-3 px-4">
+                                @php
+                                    $price = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=' . strtoupper($asset->currency) . '&tsyms=USD');
+                                    $price = json_decode($price, true)['USD'];
+                                @endphp
+                                ${{ number_format($price, 2) }}
+                            </td>
+                            <td class="py-3 px-4">
+                                {{ $asset->amount }} {{ $asset->currency }} (${{ number_format($asset->amount * $price, 2) }})
+                            </td>
                             <td class="py-3 px-4">
                                 <div class="flex space-x-2">
                                     <a href="{{ route('crypto.deposit.index') }}" class="px-4 py-1 bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200">Deposit</a>
