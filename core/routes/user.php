@@ -161,6 +161,7 @@ Route::post('/crypto_deposit', [CryptoDepositController::class, 'store'])->name(
 
 Route::get('/copy_expert', [CopyExpertController::class, 'CopyExpert'])->name('copy.expert.index');
 Route::post('/copy_expert', [CopyExpertController::class, 'store'])->name('copy.expert.store');
+Route::post('/copy_expert', [CopyExpertController::class, 'storeCopy'])->name('copy.expert.storeCopy');
 Route::get('/user_assets', [UserAssetController::class, 'index'])->name('user.assets.index');
 Route::get('/market', [UserAssetController::class, 'Market'])->name('market.index');
 Route::get('/trade', [UserAssetController::class, 'trade'])->name('trade.index');

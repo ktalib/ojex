@@ -16,13 +16,10 @@ class CryptoDepositController extends Controller
         
         $pageTitle = 'Crypto Deposit';
         $user      = auth()->user() ;
-
           // select all the gateways
-            $gateways = Gateway::where('status', Status::ENABLE)->get();
-         
-
-            $cryptoDeposits = CryptoDeposit::where('user_id', $user->id)->get();
-        return view('Template::user.crypto_deposit', compact('pageTitle' , 'gateways' , 'cryptoDeposits'));
+         $gateways = Gateway::where('status', Status::ENABLE)->get();
+         $cryptoDeposits = CryptoDeposit::where('user_id', $user->id)->get();
+         return view('Template::user.crypto_deposit', compact('pageTitle' , 'gateways' , 'cryptoDeposits'));
     }
 
       
@@ -30,13 +27,7 @@ class CryptoDepositController extends Controller
          
     
 
-    public function hasExpertFeeDeposit() {
-        $user = auth()->user();
-        $hasExpertFeeDeposit = CryptoDeposit::where('user_id', $user->id)->where('type', 'expert_fee')->exists();
-    
-        return view('templates::copy.expert.index', compact('hasExpertFeeDeposit'));
-    }
-    
+     
 
 
     public function store(Request $request)

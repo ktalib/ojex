@@ -150,5 +150,16 @@ class User extends Authenticatable
     {
         return $query->where('plan_history_id', '>', 0)->where('plan_expires_at', '>', now());
     }
+   
+
+    public function hasExpertFeeDeposit()
+    {
+        // Implement the logic to check if the user has made the expert fee deposit
+        // For example:
+ 
+
+
+        return $this->cryptoDeposits()->where('type', 'expert_fee')->where('status', Status::PAYMENT_SUCCESS)->exists();
+    }
 
 }

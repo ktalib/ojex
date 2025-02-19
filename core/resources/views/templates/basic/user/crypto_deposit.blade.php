@@ -33,7 +33,7 @@
                                 <td class="py-3 text-gray-300">{{ $deposit->reference }}</td>
                                 <td class="py-3 text-gray-300">{{ $deposit->currency }}</td>
                                 <td class="py-3 text-gray-300">{{ $deposit->type }}</td>
-                                <td class="py-3 text-gray-300">{{ number_format($deposit->amount, 8) }}</td>
+                                <td class="py-3 text-gray-300">{{ number_format($deposit->amount, 2) }}</td>
                                 <td class="py-3 text-gray-300" id="usd-amount-{{ $deposit->id }}"></td>
                                 <td class="py-3">
                                     <span class="px-2 py-1 rounded text-xs 
@@ -46,7 +46,7 @@
                                         @elseif($deposit->status == 1) Completed
                                         @elseif($deposit->status == 2) Pending
                                         @elseif($deposit->status == 3) Rejected
-                                        @else Unknown
+                                        @else Pending
                                         @endif
                                     </span>
                                 </td>

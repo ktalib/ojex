@@ -439,7 +439,7 @@
                     <img class="w-10 h-10 rounded-full" src="{{ $iconSrc }}" alt="{{ $trade->assets }} image"> 
                     {{ $trade->assets }}</td>
                     <td class="px-6 py-4">{{ $trade->trade_type }}</td>
-                    <td class="px-6 py-4">{{ $trade->amount }}</td>
+                    <td class="px-6 py-4">{{ number_format($trade->amount, 2) }}</td>
                     <td class="px-6 py-4">
                         <span class="text-green-500">$ {{ $trade->profit }}</span> <br>
                          <span class="text-red-500">$ {{ $trade->loss }}</span>

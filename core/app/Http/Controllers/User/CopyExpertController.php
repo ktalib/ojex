@@ -7,6 +7,7 @@ use App\Models\CopyExpert;
 use App\Http\Controllers\Controller;
 use App\Models\CryptoDeposit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CopyExpertController extends Controller
 {
@@ -21,9 +22,9 @@ class CopyExpertController extends Controller
           // select all    copy experts
             $copy_experts = CopyExpert::get();
             $gateways = Gateway::where('status', Status::ENABLE)->get();
-              // check if user has any crypto deposits where type is expert feee
-            $hasExpertFeeDeposit = CryptoDeposit::where('user_id', $user->id)->where('type', 'expert_fee')->get();
-        return view('Template::user.copy_expert', compact('pageTitle' , 'gateways' , 'copy_experts', 'hasExpertFeeDeposit'));
+            $getCopyExpertFee = CryptoDeposit::where('user_id', $user->id)->where('type', 'expert_fee')->get();
+            // $getCopyExpert = CryptoDeposit::where('user_id', $user->id)->where('type', 'expert_fee')->get();
+        return view('Template::user.copy_expert', compact('pageTitle' , 'gateways' , 'copy_experts', 'getCopyExpertFee'));
     }
 
     public function store(Request $request)
@@ -43,4 +44,23 @@ class CopyExpertController extends Controller
 
         return redirect()->back()->with('success', 'Deposit successful!');
     }
+
+    public function storeCopy(Request $request)
+    {
+       $request->validate([
+           'expert_id' => 'required'
+       ]);
+       
+       DB::table('copy')->insert([
+           'user_id' => auth()->user()->id,
+           'expert_id' => $request->expert_id,
+           'created_at' => now(),
+           'updated_at' => now()
+       ]);
+
+       $notify[] = ['success', 'Copied successful!'];
+       return back()->withNotify($notify);
+    }
+
+   
 }

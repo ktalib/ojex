@@ -84,7 +84,7 @@
                                             <h5 class="card-header bg--primary">@lang('Wallet')</h5>
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <input   class="form-control" name="instruction"> 
+                                                    <input   class="form-control" name="instruction" value="{{ $method->description }}" required/> 
                                                 </div>
                                             </div>
                                         </div>

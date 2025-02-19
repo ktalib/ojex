@@ -108,4 +108,9 @@ class CryptoDeposit extends Model
     {
         return $query->where('status', Status::PAYMENT_INITIATE);
     }
+
+
+     
+ 
+
 }
