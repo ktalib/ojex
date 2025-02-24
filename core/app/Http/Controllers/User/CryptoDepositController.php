@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\User;
 use App\Constants\Status;
 use App\Models\Gateway;
+use App\Models\UserWallet;
 use App\Http\Controllers\Controller;
 use App\Models\CryptoDeposit;
 use Illuminate\Http\Request;
-
 class CryptoDepositController extends Controller
 {
    
@@ -25,16 +25,10 @@ class CryptoDepositController extends Controller
       
        
          
-    
-
-     
-
-
     public function store(Request $request)
     {
         $request->validate([
             'amount' => 'required|numeric|min:0.01',
-           
             'proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
@@ -44,6 +38,7 @@ class CryptoDepositController extends Controller
         } else {
             return redirect()->back()->with('error', 'Proof is required!');
         }
+
         $gen_reference = strtoupper(\Illuminate\Support\Str::random(12));
         $deposit = new CryptoDeposit();
         $deposit->amount = $request->amount;
@@ -53,13 +48,20 @@ class CryptoDepositController extends Controller
         $deposit->reference = $gen_reference;
         $deposit->type = $request->type;
         $deposit->status = '0';
-        
-
-         
         $deposit->save();
 
-        //return redirect()->back()->with('success', 'Deposit successful!');
+        // Update user's wallet
+        $this->updateUserWallet($deposit->user_id, $deposit->currency, $deposit->amount);
+
         $notify[] = ['success', 'Deposit successful!'];
         return back()->withNotify($notify);
     }
+
+    private function updateUserWallet($userId, $currency, $amount)
+    {
+        $wallet = UserWallet::firstOrNew(['user_id' => $userId, 'currency' => $currency]);
+        $wallet->balance = ($wallet->balance ?? 0) + $amount;
+        $wallet->save();
+    }
+    
 }

@@ -341,13 +341,8 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Format amount input to 8 decimal places
-const amountInput = document.querySelector('input[name="amount"]');
-if (amountInput) {
-    amountInput.addEventListener('change', function() {
-        this.value = parseFloat(this.value).toFixed(8);
-    });
-}
+ 
+ 
 
 // Add loading state for form submission
 const form = document.querySelector('form');

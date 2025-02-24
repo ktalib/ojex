@@ -21,6 +21,12 @@
         <a href="{{ route('user.withdraw') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
             <i class="ri-arrow-left-circle-line"></i> Withdraw
         </a>
+           
+        <a href="{{ route('user.wallet.list') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
+            <i class="ri-wallet-3-line"></i>
+                Wallet
+        </a>
+
         <a href="{{ route('user.assets.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
             <i class="ri-coin-line"></i> Assets
         </a>
@@ -86,6 +92,10 @@
                 <a href="{{ route('user.withdraw') }}" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
                     <i class="ri-arrow-left-circle-line text-2xl"></i> Withdraw
                 </a>
+                 
+                <a href="{{ route('user.wallet.list') }}" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
+                    <i class="ri-coin-line text-2xl"></i> wallets </a> 
+
                 <a href="{{ route('user.assets.index') }}" class="flex flex-col items-center gap-1 rounded-lg p-3 text-gray-400 hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white shadow-lg">
                     <i class="ri-coin-line text-2xl"></i> Assets
                 </a>

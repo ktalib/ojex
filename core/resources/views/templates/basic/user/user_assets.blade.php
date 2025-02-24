@@ -93,6 +93,7 @@
                             <td class="py-3 px-4">{{ $asset->type }}</td>
                             <td class="py-3 px-4">
                                 @php
+                                    // Fetch the current price of the asset in USD
                                     $price = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=' . strtoupper($asset->currency) . '&tsyms=USD');
                                     $price = json_decode($price, true)['USD'];
                                 @endphp

@@ -11,6 +11,7 @@ use App\Models\Trade;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Models\WithdrawMethod;
+use App\Models\UserWallet;
 use Illuminate\Http\Request;
 
 class WalletController extends Controller
@@ -18,7 +19,7 @@ class WalletController extends Controller
     public function list()
     {
         $pageTitle = 'My Wallets';
-        $wallets   = $this->walletQuery()->groupBy('wallets.id')->orderBy('balance', 'desc')->orderBy('in_order', 'desc')->paginate(getPaginate());
+        $wallets   = UserWallet::where('user_id', auth()->id())->get();
         return view('Template::user.wallet.list', compact('pageTitle', 'wallets'));
     }
 
