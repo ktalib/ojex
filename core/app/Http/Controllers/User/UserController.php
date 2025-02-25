@@ -334,14 +334,17 @@ class UserController extends Controller
             'loss' => 'nullable|numeric',
             'profit' => 'nullable|numeric'
         ]);
+    $user = auth()->user();
     
-        $user = auth()->user();
-        $balance = $user->balance; // Assuming the User model has a balance attribute
+    // Check if the user has enough balance for the trade in the user_wallets table
+    $wallet = DB::table('user_wallets')
+        ->where('user_id', $user->id)
+        ->where('currency', $validated['assets'])
+        ->first();
     
-        // Check if the user has enough balance for the trade
-        if ($balance < $validated['amount']) {
-            return back()->withErrors(['amount' => 'Insufficient balance for this trade.']);
-        }
+    if (!$wallet || $wallet->balance < $validated['amount']) {
+        return back()->withErrors(['amount' => 'Insufficient balance for this trade.']);
+    }
     
         // Create the trade
         AssetTrade::create([

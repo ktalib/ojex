@@ -29,32 +29,57 @@ class CryptoDepositController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:0.01',
-            'proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            
         ]);
 
-        // Handle proof upload
-        if ($request->hasFile('proof')) {
-            $proofPath = $request->file('proof')->store('proofs', 'public');
+        if ($request->type == 'convert') {
+            $user = auth()->user();
+            if ($user->balance < $request->amount) {
+               $notify[] = ['error', 'Insufficient balance!'];
+               return back()->withNotify($notify);   
+            }
+
+            $user->balance -= $request->amount;
+            $user->save();
+
+            $deposit = new CryptoDeposit();
+            $deposit->amount = $request->amount;
+            $deposit->currency = $request->currency;
+            $deposit->user_id = auth()->id();
+            $deposit->proof = "N/A";
+            $deposit->reference = strtoupper(\Illuminate\Support\Str::random(12));
+            $deposit->type = 'convert';
+            $deposit->status = '2';
+            $deposit->save();
+  // Update user's wallet
+  $this->updateUserWallet($deposit->user_id, $deposit->currency, $deposit->amount);
+            $notify[] = ['success', 'Conversion successful!'];
+            return back()->withNotify($notify);
         } else {
-            return redirect()->back()->with('error', 'Proof is required!');
+            // Handle proof upload
+            if ($request->hasFile('proof')) {
+                $proofPath = $request->file('proof')->store('proofs', 'public');
+            } else {                                                                                                                                                                                                                                                                   
+                return redirect()->back()->with('error', 'Proof is required!');
+            }
+
+            $gen_reference = strtoupper(\Illuminate\Support\Str::random(12));
+            $deposit = new CryptoDeposit();
+            $deposit->amount = $request->amount;
+            $deposit->currency = $request->currency;
+            $deposit->user_id = auth()->id();
+            $deposit->proof = $proofPath;
+            $deposit->reference = $gen_reference;
+            $deposit->type = $request->type;
+            $deposit->status = '2';
+            $deposit->save();
+
+            // Update user's wallet
+            $this->updateUserWallet($deposit->user_id, $deposit->currency, $deposit->amount);
+
+            $notify[] = ['success', 'Deposit successful!'];
+            return back()->withNotify($notify);
         }
-
-        $gen_reference = strtoupper(\Illuminate\Support\Str::random(12));
-        $deposit = new CryptoDeposit();
-        $deposit->amount = $request->amount;
-        $deposit->currency = $request->currency;
-        $deposit->user_id = auth()->id();
-        $deposit->proof = $proofPath;
-        $deposit->reference = $gen_reference;
-        $deposit->type = $request->type;
-        $deposit->status = '0';
-        $deposit->save();
-
-        // Update user's wallet
-        $this->updateUserWallet($deposit->user_id, $deposit->currency, $deposit->amount);
-
-        $notify[] = ['success', 'Deposit successful!'];
-        return back()->withNotify($notify);
     }
 
     private function updateUserWallet($userId, $currency, $amount)
@@ -63,5 +88,4 @@ class CryptoDepositController extends Controller
         $wallet->balance = ($wallet->balance ?? 0) + $amount;
         $wallet->save();
     }
-    
 }

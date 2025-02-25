@@ -314,8 +314,11 @@
             <span class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">Sell</span>
         </label>
         <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="action" value="convert" class="form-radio text-blue-500 hidden">
-            <span class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Convert <small class="text-red">(soon)</small></span>
+            <button type="button" onclick="document.getElementById('convertModal').classList.remove('hidden')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Convert
+              </button>
+            {{-- <input type="radio" name="action" value="convert" class="form-radio text-blue-500 hidden">
+            <span class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Convert <small class="text-red">(soon)</small></span> --}}
         </label>
     </div>
 
@@ -534,7 +537,96 @@
             </div>
         </div>
         </div>
+
+        <div class="fixed inset-0 z-50 overflow-y-auto hidden" id="convertModal">
+            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+        
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        
+            <div class="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="convertModalLabel">
+                <div class="bg-gray-900 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <h3 class="text-lg leading-6 font-medium text-white" id="convertModalLabel">
+                        Convert Fiat to Crypto
+                    </h3>
+                    <div class="mt-2">
+                        <form action="{{ route('user.crypto.deposit.store') }}" method="POST"   id="depositForm">
+                        @csrf
+                        
+                        <input type="hidden" name="type" value="convert">
+                        <div class="mb-4">
+                            <label for="fiatAmount" class="block text-sm font-medium text-white">Amount (USD)</label>
+                            <input type="number" class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" id="fiatAmount" name="amount" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="cryptoSelect" class="block text-sm font-medium text-white">Select Crypto</label>
+                            <select class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" id="cryptoSelect" name="currency" required>
+                            @foreach($currencies as $crypto)
+                                <option value="{{ $crypto->symbol }}" data-icon="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ strtolower($crypto->symbol) }}.svg">
+                                {{ $crypto->name }} ({{ $crypto->symbol }})
+                                </option>
+                            @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <img id="cryptoIcon" src="" alt="Crypto Icon" class="w-10 h-10">
+                        </div>
+                        <div class="mb-4">
+                            <label for="cryptoAmount" class="block text-sm font-medium text-white">Amount (Crypto)</label>
+                            <input type="text" class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" id="cryptoAmount" name="crypto_amount" readonly>
+                        </div>
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Convert
+                        </button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="bg-gray-900 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-700 shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto" onclick="document.getElementById('convertModal').classList.add('hidden')">
+                    Close
+                </button>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        <script>
+            document.getElementById('cryptoSelect').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const iconUrl = selectedOption.getAttribute('data-icon');
+            document.getElementById('cryptoIcon').src = iconUrl;
+            updateCryptoAmount();
+            });
+
+            document.getElementById('fiatAmount').addEventListener('input', updateCryptoAmount);
+
+            function updateCryptoAmount() {
+            const fiatAmount = document.getElementById('fiatAmount').value;
+            const cryptoSymbol = document.getElementById('cryptoSelect').value;
+
+            if (fiatAmount && cryptoSymbol) {
+                fetch(`https://min-api.cryptocompare.com/data/price?fsym=${cryptoSymbol}&tsyms=USD`)
+                .then(response => response.json())
+                .then(data => {
+                    const price = data.USD;
+                    const cryptoAmount = fiatAmount / price;
+                    document.getElementById('cryptoAmount').value = cryptoAmount.toFixed(8);
+                })
+                .catch(error => console.error('Error fetching crypto price:', error));
+            }
+            }
+        </script>
+
     </main>
+
+     
+
     <script>
        document.addEventListener('DOMContentLoaded', function() {
     const dropdownButton = document.getElementById("dropdownButton");
@@ -642,7 +734,7 @@
     dropdownButton.addEventListener("click", () => {
         dropdownMenu.classList.toggle("hidden");
     });
-
+ 
     // Close dropdown when clicking outside
     document.addEventListener('click', function(event) {
         if (!dropdownMenu.contains(event.target) && !dropdownButton.contains(event.target)) {
