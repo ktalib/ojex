@@ -242,7 +242,10 @@ Route::middleware('admin')->group(function () {
         Route::post('reply/{id}', 'replyTicket')->name('reply');
         Route::post('close/{id}', 'closeTicket')->name('close');
         Route::get('download/{attachment_id}', 'ticketDownload')->name('download');
-        Route::post('delete/{id}', 'ticketDelete')->name('delete');
+        Route::post('delete', 'ticketDelete')->name('delete');
+        Route::post('subject', 'store')->name('store');
+        Route::post('updatecopy', 'updatecopy')->name('updatecopy');
+    
     });
 
 

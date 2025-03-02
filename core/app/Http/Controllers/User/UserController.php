@@ -15,6 +15,7 @@ use App\Models\Order;
 use App\Models\PlanHistory;
 use App\Models\Trade;
 use App\Models\AssetTrade;
+use App\Models\CryptoDeposit;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -38,7 +39,9 @@ class UserController extends Controller
             ->get();
 
         $currencies = Currency::rankOrdering()->select('name', 'id', 'symbol')->active()->get();
-        $Topcurrencies =  Currency::rankOrdering()->select('name', 'id', 'symbol' , 'rate')->active()-> take(5)->get();  // Top 5 Currencies
+        $Topcurrencies = CryptoDeposit::where('user_id', $user->id)->orderBy('id', 'DESC')->take(5)->get();
+        
+        // Top 5 Currencies
         $assets = Currency::rankOrdering()->select('name', 'id', 'symbol')->active()->get();
 
     //user assets

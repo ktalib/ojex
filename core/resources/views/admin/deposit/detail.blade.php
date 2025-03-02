@@ -14,6 +14,15 @@
                             @lang('Transaction Number')
                             <span class="fw-bold">{{ $deposit->reference }}</span>
                         </li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @lang('See proof of payment')
+                            <span class="fw-bold">
+                                <a href="{{ asset('core/storage/app/public/' . $deposit->proof) }}" class="btn btn--primary btn-sm" target="_blank">@lang('View')</a>
+                            </span>
+                        </li>
+                          
+
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Username')
                             <span class="fw-bold">

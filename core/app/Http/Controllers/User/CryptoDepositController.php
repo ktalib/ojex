@@ -12,7 +12,7 @@ class CryptoDepositController extends Controller
    
     public function cryptoDeposit()
 
-    { 
+    {  
         
         $pageTitle = 'Crypto Deposit';
         $user      = auth()->user() ;

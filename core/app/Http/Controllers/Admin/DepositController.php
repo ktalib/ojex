@@ -121,13 +121,26 @@ class DepositController extends Controller
 
     public function approve($id)
     {
-        $deposit = CryptoDeposit::where('id',$id)->where('status',Status::PAYMENT_PENDING)->firstOrFail();
+        $deposit = CryptoDeposit::where('id', $id)->where('status', Status::PAYMENT_PENDING)->firstOrFail();
 
-        PaymentController::userDataUpdate($deposit,true);
+        $deposit->status = Status::PAYMENT_SUCCESS;
+        $deposit->save();
+
+        // PaymentController::userDataUpdate($deposit, true);
+
+        notify($deposit->user, 'DEPOSIT_APPROVE', [
+            'method_name' => $deposit->methodName(),
+            'method_currency' => $deposit->method_currency,
+            'method_amount' => showAmount($deposit->final_amount, currencyFormat: false),
+            'amount' => showAmount($deposit->amount, currencyFormat: false),
+            'charge' => showAmount($deposit->charge, currencyFormat: false),
+            'rate' => showAmount($deposit->rate, currencyFormat: false),
+            'trx' => $deposit->trx,
+        ]);
 
         $notify[] = ['success', 'Deposit request approved successfully'];
 
-        return to_route('admin.deposit.pending')->withNotify($notify);
+        return back()->withNotify($notify);
     }
 
     public function reject(Request $request)
@@ -154,7 +167,7 @@ class DepositController extends Controller
         ]);
 
         $notify[] = ['success', 'Deposit request rejected successfully'];
-        return  to_route('admin.deposit.pending')->withNotify($notify);
+        return  to_route('admin.deposit.log')->withNotify($notify);
 
     }
 }

@@ -84,28 +84,30 @@
                     </div>
                 </div>
  <div id="tab1" class="tab-content active">
-    <p class="text-sm text-gray-400">Top Cryptocurrencies</p>
+    <p class="text-sm text-gray-400">Recent Deposits</p>
                 @foreach($Topcurrencies as $currency)
                     @php
-                        $symbollowcase = strtolower($currency->symbol);
-                        $apiUrl = "https://min-api.cryptocompare.com/data/price?fsym={$currency->symbol}&tsyms=USD";
+                        $symbollowcase = strtolower($currency->currency);
+                        $apiUrl = "https://min-api.cryptocompare.com/data/price?fsym={$currency->currency}&tsyms=USD";
                         $response = file_get_contents($apiUrl);
                         $data = json_decode($response, true);
                         $rate = $data['USD'] ?? 0;
+                        $amount_usd = $currency->amount * $rate;
                     @endphp
+                     
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-[#F7931A]/10 flex items-center justify-center">
                                 <img src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/refs/heads/master/svg/color/{{ $symbollowcase }}.svg" class="w-6 h-6">
                             </div>
                             <div>
-                                <div class="text-white">{{ $currency->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $currency->symbol }}</div>
+                                <div class="text-white">{{ $currency->currency }}</div>
+                                
                             </div>
                         </div>
                         <div class="text-right">
-                            <div class="text-white">${{ number_format($rate, 2) }}</div>
-                            <div class="text-sm text-gray-500">{{ number_format($rate, 2) }} {{ $currency->symbol }}</div>
+                            <div class="text-white">${{ number_format($amount_usd, 2) }}</div>
+                            <div class="text-sm text-gray-500">{{ $currency->amount }} {{ $currency->currency }}</div>
                         </div>
                     </div>
                 @endforeach

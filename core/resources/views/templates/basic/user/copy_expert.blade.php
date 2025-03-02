@@ -17,7 +17,7 @@
         @foreach($copy_experts as $expert)
             <div class="flex justify-center">
                 <div class="w-full max-w-sm bg-dark rounded-xl shadow-lg shadow-gray-800 p-6 sm:flex sm:items-center sm:space-x-6">
-                    <img class="block mx-auto h-24 w-24 rounded-full sm:mx-0 sm:shrink-0" src="https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png" alt="{{ $expert->name }}">
+                    <img class="block mx-auto h-24 w-24 rounded-full sm:mx-0 sm:shrink-0" src="{{ $expert->image ? asset('storage/app/' . $expert->image) : 'https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png' }}" alt="{{ $expert->name }}">
                     <div class="text-center sm:text-left space-y-2">
                         <div class="space-y-0.5">
                             <p class="text-lg font-semibold">
