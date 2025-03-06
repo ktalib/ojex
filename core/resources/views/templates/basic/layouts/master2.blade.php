@@ -90,7 +90,7 @@
 
 
         <!-- add fix footer with 5 icons  -->
-        {{-- <footer class="bg-gray-900 p-4 border-t border-gray-800 fixed bottom-0 w-full">
+          <footer class="bg-gray-900 p-4 border-t border-gray-800 fixed bottom-0 w-full">
             <div class="flex justify-between items-center">
             <a href="#" class="text-gray-400 hover:text-gray-100 flex flex-col items-center">
                 <i class="ri-home-4-line text-2xl"></i>
@@ -113,7 +113,7 @@
                 <span class="text-xs mt-1">Profile</span>
             </a>
             </div>
-        </footer> --}}
+        </footer> 
     
          
         </body>

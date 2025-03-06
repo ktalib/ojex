@@ -31,7 +31,7 @@ class CryptoDepositController extends Controller
         //     'fiat_amount' => 'required_if:type,fiat_to_crypto|numeric|min:0.01',
         //     'crypto_amount' => 'required|numeric|min:0.000001',
         //     'currency' => 'required|string',
-        //     'type' => 'required|in:fiat_to_crypto,crypto_to_fiat',
+        //     'type' => 'required|in:fiat_to_crypto,crypto_to_fiat,crypto',
         // ]);
     
         $user = auth()->user();
@@ -87,6 +87,24 @@ class CryptoDepositController extends Controller
             // Don't create a crypto deposit record for crypto_to_fiat
             
             $notify[] = ['success', 'Successfully converted crypto to fiat!'];
+            return back()->withNotify($notify);
+        }
+        elseif ($conversionType === 'crypto') {
+            // Create a crypto deposit record
+            $deposit = new CryptoDeposit();
+            $deposit->amount = $request->amount;
+            $deposit->currency = $request->currency;
+            $deposit->user_id = $user->id;
+            $deposit->proof = $request->proof;
+            $deposit->reference = strtoupper(\Illuminate\Support\Str::random(12));
+            $deposit->type = 'crypto';
+            $deposit->status = '1'; // Assuming 1 is "pending" status
+            $deposit->save();
+            
+            // Update user's crypto wallet
+            $this->updateUserWallet($user->id, $request->currency, $request->amount);
+            
+            $notify[] = ['success', 'Crypto deposit initiated successfully!'];
             return back()->withNotify($notify);
         }
         
