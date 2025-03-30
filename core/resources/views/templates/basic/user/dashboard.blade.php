@@ -195,70 +195,149 @@
       
 </div>
 
-
-
  
             </div>
         </div>
 
-
-       
-
-        
-        
 
         <div class="p-4 bg-black rounded-lg shadow">
             <div>
                 <!-- Categories Card -->
                 <div class="rounded-lg border border-gray-800 bg-gray-950 p-4">
                     <h3 class="text-sm text-gray-400 mb-2">Categories</h3>
-                    <p class="text-sm">
-                        No categories yet.
-                        <a href="#" class="text-blue-400 hover:text-blue-300">Deposit now</a>
-                        to see your portfolio breakdown.
-                    </p>
+                    @php
+                        $totalTradeAmount = $userAssets->sum('amount');
+                        $cryptoTrades = $userAssets->where('trade_type', 'Crypto')->sum('amount');
+                        $stockTrades = $userAssets->where('trade_type', 'Stocks')->sum('amount');
+                        $forexTrades = $userAssets->where('trade_type', 'Forex')->sum('amount');
+                        
+                        $cryptoPercent = $totalTradeAmount > 0 ? ($cryptoTrades / $totalTradeAmount) * 100 : 0;
+                        $stockPercent = $totalTradeAmount > 0 ? ($stockTrades / $totalTradeAmount) * 100 : 0;
+                        $forexPercent = $totalTradeAmount > 0 ? ($forexTrades / $totalTradeAmount) * 100 : 0;
+                    @endphp
+
+                    @if($totalTradeAmount > 0)
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-400">Crypto</span>
+                                <span class="text-sm text-gray-400">{{ number_format($cryptoPercent, 1) }}%</span>
+                            </div>
+                            <div class="relative h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="absolute top-0 left-0 h-full bg-blue-500 rounded-full" style="width: {{ $cryptoPercent }}%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-400">Stocks</span>
+                                <span class="text-sm text-gray-400">{{ number_format($stockPercent, 1) }}%</span>
+                            </div>
+                            <div class="relative h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="absolute top-0 left-0 h-full bg-green-500 rounded-full" style="width: {{ $stockPercent }}%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-400">Forex</span>
+                                <span class="text-sm text-gray-400">{{ number_format($forexPercent, 1) }}%</span>
+                            </div>
+                            <div class="relative h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="absolute top-0 left-0 h-full bg-purple-500 rounded-full" style="width: {{ $forexPercent }}%"></div>
+                            </div>
+                        </div>
+                    @else
+                        <p class="text-sm">
+                            No categories yet.
+                            <a href="{{ route('crypto.deposit.index') }}" class="text-blue-400 hover:text-blue-300">Deposit now</a>
+                            to see your portfolio breakdown.
+                        </p>
+                    @endif
                 </div>
 
                 <!-- Trading Progress Card -->
                 <div>
                     <h3 class="text-sm text-gray-400 mb-2">Trading progress</h3>
+                    @php
+                        $completedTrades = $userAssets->where('status', 'complete')->count();
+                        $totalTrades = $userAssets->count();
+                        $progressPercent = $totalTrades > 0 ? ($completedTrades / $totalTrades) * 100 : 0;
+                    @endphp
                     <div class="relative h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="absolute top-0 left-0 h-full w-0 bg-emerald-500 rounded-full"></div>
+                        <div class="absolute top-0 left-0 h-full bg-emerald-500 rounded-full" style="width: {{ $progressPercent }}%"></div>
                     </div>
                     <div class="text-right mt-1">
-                        <span class="text-sm text-gray-400">0%</span>
+                        <span class="text-sm text-gray-400">{{ number_format($progressPercent, 1) }}%</span>
                     </div>
                 </div>
 
                 <!-- Signal Strength Card -->
                 <div>
                     <h3 class="text-sm text-gray-400 mb-2">Signal strength</h3>
-                    <div class="flex gap-1">
-                        <!-- 15 red bars -->
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
-                        <div class="h-4 w-4 bg-red-500/20 rounded"></div>
+                    @php
+                        // You can modify this value (0-100) to change signal strength
+                        $signalStrength = 10; 
+                        $barCount = 5;
+                        $activeBarCount = ceil(($signalStrength / 100) * $barCount);
+                    @endphp
+                    <div class="flex gap-1" id="signal-bars">
+                        @for ($i = 1; $i <= $barCount; $i++)
+                            @if ($i <= $activeBarCount)
+                             <div class="signal-bar h-4 w-4 rounded transition-all duration-300" 
+                                 style="background-color: {{ $i <= 5 ? '#EF4444' : ($i <= 10 ? '#F59E0B' : '#10B981') }};"></div>
+                            @else
+                                <div class="signal-bar h-4 w-4 bg-gray-500/20 rounded transition-all duration-300"></div>
+                            @endif
+                        @endfor
                     </div>
                     <div class="text-right mt-1">
-                        <span class="text-sm text-red-500">0%</span>
+                        <span class="text-sm signal-strength-value {{ $signalStrength > 50 ? 'text-green-500' : 'text-red-500' }}">
+                            {{ $signalStrength }}%
+                        </span>
                     </div>
                 </div>
+
+                <script>
+                    // Function to update signal strength
+                    function updateSignalStrength(strength) {
+                        const bars = document.querySelectorAll('.signal-bar');
+                        const activeCount = Math.ceil((strength / 100) * bars.length);
+                        
+                        bars.forEach((bar, index) => {
+                            if (index < activeCount) {
+                                // Set color based on position
+                                if (index < 3) {
+                                    bar.style.backgroundColor = '#EF4444'; // Red
+                                } else if (index < 6) {
+                                    bar.style.backgroundColor = '#F59E0B'; // Orange 
+                                } else if (index < 9) {
+                                    bar.style.backgroundColor = '#FBBF24'; // Yellow
+                                } else if (index < 12) {
+                                    bar.style.backgroundColor = '#34D399'; // Light green
+                                } else {
+                                    bar.style.backgroundColor = '#10B981'; // Green
+                                }
+                                bar.classList.remove('bg-gray-500/20');
+                            } else {
+                                bar.style.backgroundColor = '';
+                                bar.classList.add('bg-gray-500/20');
+                            }
+                        });
+                        
+                        const strengthDisplay = document.querySelector('.signal-strength-value');
+                        strengthDisplay.textContent = `${strength}%`;
+                        strengthDisplay.classList.toggle('text-green-500', strength > 50);
+                        strengthDisplay.classList.toggle('text-red-500', strength <= 50);
+                    }
+
+                    // Example: Update signal strength every 5 seconds with random value
+                    setInterval(() => {
+                        const newStrength = Math.floor(Math.random() * 100);
+                        updateSignalStrength(newStrength);
+                    }, 5000);
+                </script>
             </div>
 
         </div>
     </div>
+
+    
     <div class="p-1 space-y-4">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-1">
             <!-- Chart and Trades Section -->
@@ -309,18 +388,21 @@
     <div class="flex gap-4 mb-6">
         <label class="flex items-center gap-2 cursor-pointer">
             <input type="radio" name="action" value="buy" class="form-radio text-emerald-500 hidden" checked>
-            <span class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition">Buy</span>
+            <span class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition w-full text-center">Buy</span>
         </label>
         <label class="flex items-center gap-2 cursor-pointer">
             <input type="radio" name="action" value="sell" class="form-radio text-red-500 hidden">
-            <span class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">Sell</span>
+            <span class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition w-full text-center">Sell</span>
         </label>
         <label class="flex items-center gap-2 cursor-pointer">
-            <button type="button" onclick="document.getElementById('convertModal').classList.remove('hidden')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Convert
-              </button>
-            {{-- <input type="radio" name="action" value="convert" class="form-radio text-blue-500 hidden">
-            <span class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Convert <small class="text-red">(soon)</small></span> --}}
+            <button type="button" onclick="document.getElementById('fiatToCryptoModal').classList.remove('hidden')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full text-center">
+             Fiat to Coin
+            </button>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+            <button type="button" onclick="document.getElementById('cryptoToFiatModal').classList.remove('hidden')" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full text-center">
+           Coin to Fiat
+            </button>
         </label>
     </div>
 
@@ -539,122 +621,199 @@
             </div>
         </div>
         </div>
-        <div class="fixed inset-0 z-50 overflow-y-auto hidden" id="convertModal">
-            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        <!-- Fiat to Crypto Modal -->
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" id="fiatToCryptoModal">
+            <div class="bg-gray-900 rounded-lg shadow-lg max-w-lg w-full p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-white">Convert Fiat to Crypto</h3>
+                    <button onclick="document.getElementById('fiatToCryptoModal').classList.add('hidden')" class="text-gray-400 hover:text-white">
+                        ✖
+                    </button>
                 </div>
-                
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                
-                <div class="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="convertModalLabel">
-                    <div class="bg-gray-900 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                <h3 class="text-lg leading-6 font-medium text-white" id="convertModalLabel">Convert Fiat to Crypto or Crypto to Fiat</h3>
-                                <div class="mt-2">
-                                    <form action="{{ route('user.crypto.deposit.store') }}" method="POST"   id="depositForm">
-                                        @csrf
-                                        <input type="hidden" name="type" id="conversionType" value="fiat_to_crypto">
-                                        
-                                        <!-- Toggle Conversion Type -->
-                                        <div class="mb-4 flex justify-center">
-                                            <button type="button" id="toggleConversion" class="px-4 py-2 bg-blue-500 text-white rounded-md">Switch to Crypto to Fiat</button>
-                                        </div>
-                                        
-                                        <!-- Fiat Input -->
-                                        <div class="mb-4">
-                                            <label for="fiatAmount" class="block text-sm font-medium text-white">Amount (USD)</label>
-                                            <input type="type" class="mt-1 block w-full rounded-md bg-gray-800 text-white p-2" id="fiatAmount" name="fiat_amount" required>
-                                        </div>
-                                        
-                                        <!-- Crypto Selection -->
-                                        <div class="mb-4">
-                                            <label for="cryptoSelect" class="block text-sm font-medium text-white">Select Crypto</label>
-                                            <select class="mt-1 block w-full rounded-md bg-gray-800 text-white p-2" id="cryptoSelect" name="currency" required>
-                                                @foreach($currencies as $crypto)
-                                                    <option value="{{ $crypto->symbol }}" data-icon="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/{{ strtolower($crypto->symbol) }}.svg">
-                                                        {{ $crypto->name }} ({{ $crypto->symbol }})
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        
-                                        <!-- Crypto Icon -->
-                                        <div class="mb-4 flex justify-center">
-                                            <img id="cryptoIcon" src="" alt="Crypto Icon" class="w-10 h-10">
-                                        </div>
-                                        
-                                        <!-- Crypto Input -->
-                                        <div class="mb-4">
-                                            <label for="cryptoAmount" class="block text-sm font-medium text-white">Amount (Crypto)</label>
-                                            <input type="text" class="mt-1 block w-full rounded-md bg-gray-800 text-white p-2" id="cryptoAmount" name="crypto_amount" required>
-                                        </div>
-                                        
-                                        <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md">Convert</button>
-                                    </form>
-                                </div>
-                            </div>
+        
+                <form action="{{ route('user.crypto.deposit.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="type" value="fiat_to_crypto">
+        
+                    <div>
+                        <label for="f2c_fiatAmount" class="text-sm text-gray-300 block">Fiat Amount (USD)</label>
+                        <input type="number" id="f2c_fiatAmount" name="fiat_amount" step="0.01" min="0"
+                            class="w-full p-3 rounded-md bg-gray-800 text-white focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter amount in USD" required>
+                    </div>
+        
+                    <div>
+                        <label for="f2c_cryptoAmount" class="text-sm text-gray-300 block">You will receive</label>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="f2c_cryptoAmount" name="crypto_amount" readonly
+                                class="flex-1 p-3 rounded-md bg-gray-800 text-white">
+                            <span id="f2c_cryptoSymbol" class="text-white"></span>
                         </div>
                     </div>
-                    <div class="bg-gray-900 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button type="button" class="mt-3 w-full bg-gray-800 text-white px-4 py-2 rounded-md sm:w-auto" onclick="document.getElementById('convertModal').classList.add('hidden')">Close</button>
+        
+                    <div>
+                        <label for="f2c_cryptoSelect" class="text-sm text-gray-300 block">Select Cryptocurrency</label>
+                        <div class="relative flex items-center bg-gray-800 rounded-md">
+                            <img id="f2c_cryptoIcon" src="" class="w-8 h-8 ml-3" alt="Crypto Icon">
+                            <select id="f2c_cryptoSelect" name="currency" class="w-full p-3 pl-12 bg-transparent text-black rounded-md focus:ring-2 focus:ring-blue-500" required>
+                                @foreach($currencies as $crypto)
+                                    <option value="{{ $crypto->symbol }}" data-icon="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/{{ strtolower($crypto->symbol) }}.svg">
+                                        {{ $crypto->name }} ({{ $crypto->symbol }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
+        
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition">
+                        Convert to Crypto
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Crypto to Fiat Modal -->
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" id="cryptoToFiatModal">
+            <div class="bg-gray-900 rounded-lg shadow-lg max-w-lg w-full p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-white">Convert Crypto to Fiat</h3>
+                    <button onclick="document.getElementById('cryptoToFiatModal').classList.add('hidden')" class="text-gray-400 hover:text-white">
+                        ✖
+                    </button>
                 </div>
+        
+                <form action="{{ route('user.crypto.deposit.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="type" value="crypto_to_fiat">
+        
+                    <div>
+                        <label for="c2f_cryptoSelect" class="text-sm text-gray-300 block">Select Cryptocurrency</label>
+                        <div class="relative flex items-center bg-gray-800 rounded-md">
+                            <img id="c2f_cryptoIcon" src="" class="w-8 h-8 ml-3" alt="Crypto Icon">
+                            <select id="c2f_cryptoSelect" name="currency" class="w-full p-3 pl-12 bg-transparent text-black rounded-md focus:ring-2 focus:ring-blue-500" required>
+                                @foreach($currencies as $crypto)
+                                    <option value="{{ $crypto->symbol }}" data-icon="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/{{ strtolower($crypto->symbol) }}.svg">
+                                        {{ $crypto->name }} ({{ $crypto->symbol }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+        
+                    <div>
+                        <label for="c2f_cryptoAmount" class="text-sm text-gray-300 block">Crypto Amount</label>
+                        <input type="number" id="c2f_cryptoAmount" name="crypto_amount" step="0.00000001" min="0"
+                            class="w-full p-3 rounded-md bg-gray-800 text-white focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter crypto amount" required>
+                    </div>
+        
+                    <div>
+                        <label for="c2f_fiatAmount" class="text-sm text-gray-300 block">You will receive (USD)</label>
+                        <input type="text" id="c2f_fiatAmount" name="fiat_amount" 
+                            class="w-full p-3 rounded-md bg-gray-800 text-white" readonly>
+                    </div>
+        
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg transition">
+                        Convert to USD
+                    </button>
+                </form>
             </div>
         </div>
         
         <script>
-            let isFiatToCrypto = true;
+            // Initialize Fiat to Crypto conversion
+            document.addEventListener('DOMContentLoaded', function() {
+                const f2c_fiatAmount = document.getElementById('f2c_fiatAmount');
+                const f2c_cryptoAmount = document.getElementById('f2c_cryptoAmount');
+                const f2c_cryptoSelect = document.getElementById('f2c_cryptoSelect');
+                const f2c_cryptoIcon = document.getElementById('f2c_cryptoIcon');
+                const f2c_cryptoSymbol = document.getElementById('f2c_cryptoSymbol');
         
-            document.getElementById('toggleConversion').addEventListener('click', function() {
-                isFiatToCrypto = !isFiatToCrypto;
-                document.getElementById('toggleConversion').textContent = isFiatToCrypto ? 'Switch to Crypto to Fiat' : 'Switch to Fiat to Crypto';
-                document.querySelector('label[for="fiatAmount"]').textContent = isFiatToCrypto ? 'Amount (USD)' : 'Amount (Crypto)';
-                document.querySelector('label[for="cryptoAmount"]').textContent = isFiatToCrypto ? 'Amount (Crypto)' : 'Amount (USD)';
-                document.getElementById('fiatAmount').placeholder = isFiatToCrypto ? 'Amount (USD)' : 'Amount (Crypto)';
-                document.getElementById('cryptoAmount').placeholder = isFiatToCrypto ? 'Amount (Crypto)' : 'Amount (USD)';
-                document.getElementById('conversionType').value = isFiatToCrypto ? 'fiat_to_crypto' : 'crypto_to_fiat';
-                updateConversion();
-            });
+                function updateF2CConversion() {
+                    const fiatAmount = parseFloat(f2c_fiatAmount.value) || 0;
+                    const cryptoSymbol = f2c_cryptoSelect.value;
         
-            document.getElementById('cryptoSelect').addEventListener('change', function() {
-                const selectedOption = this.options[this.selectedIndex];
-                document.getElementById('cryptoIcon').src = selectedOption.getAttribute('data-icon');
-                updateConversion();
-            });
-        
-            document.getElementById('fiatAmount').addEventListener('input', updateConversion);
-            document.getElementById('cryptoAmount').addEventListener('input', updateConversion);
-        
-            function updateConversion() {
-                const fiatAmount = parseFloat(document.getElementById('fiatAmount').value);
-                const cryptoAmount = parseFloat(document.getElementById('cryptoAmount').value);
-                const cryptoSymbol = document.getElementById('cryptoSelect').value;
-        
-                if (!cryptoSymbol) return;
-        
-                fetch(`https://min-api.cryptocompare.com/data/price?fsym=${cryptoSymbol}&tsyms=USD`)
-                .then(response => response.json())
-                .then(data => {
-                    const price = data.USD;
-                    if (isFiatToCrypto && fiatAmount) {
-                        document.getElementById('cryptoAmount').value = (fiatAmount / price).toFixed(8);
-                    } else if (!isFiatToCrypto && cryptoAmount) {
-                        document.getElementById('fiatAmount').value = (cryptoAmount * price).toFixed(2);
+                    if (fiatAmount <= 0 || !cryptoSymbol) {
+                        f2c_cryptoAmount.value = '';
+                        return;
                     }
-                })
-                .catch(error => console.error('Error fetching crypto price:', error));
-            }
+        
+                    fetch(`https://min-api.cryptocompare.com/data/price?fsym=${cryptoSymbol}&tsyms=USD`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const price = data.USD;
+                            if (price && price > 0) {
+                                const cryptoAmount = fiatAmount / price;
+                                f2c_cryptoAmount.value = cryptoAmount.toFixed(8);
+                                f2c_cryptoSymbol.textContent = cryptoSymbol;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching crypto price:', error);
+                            f2c_cryptoAmount.value = '';
+                        });
+                }
+        
+                f2c_fiatAmount.addEventListener('input', updateF2CConversion);
+                f2c_cryptoSelect.addEventListener('change', function() {
+                    const selectedOption = this.options[this.selectedIndex];
+                    f2c_cryptoIcon.src = selectedOption.getAttribute('data-icon');
+                    updateF2CConversion();
+                });
+        
+                // Set initial crypto icon
+                if (f2c_cryptoSelect.value) {
+                    f2c_cryptoIcon.src = f2c_cryptoSelect.options[f2c_cryptoSelect.selectedIndex].getAttribute('data-icon');
+                    updateF2CConversion();
+                }
+            });
+        
+            // Initialize Crypto to Fiat conversion
+            document.addEventListener('DOMContentLoaded', function() {
+                const c2f_cryptoAmount = document.getElementById('c2f_cryptoAmount');
+                const c2f_fiatAmount = document.getElementById('c2f_fiatAmount');
+                const c2f_cryptoSelect = document.getElementById('c2f_cryptoSelect');
+                const c2f_cryptoIcon = document.getElementById('c2f_cryptoIcon');
+        
+                function updateC2FConversion() {
+                    const cryptoAmount = parseFloat(c2f_cryptoAmount.value) || 0;
+                    const cryptoSymbol = c2f_cryptoSelect.value;
+        
+                    if (cryptoAmount <= 0 || !cryptoSymbol) {
+                        c2f_fiatAmount.value = '';
+                        return;
+                    }
+        
+                    fetch(`https://min-api.cryptocompare.com/data/price?fsym=${cryptoSymbol}&tsyms=USD`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const price = data.USD;
+                            if (price && price > 0) {
+                                const fiatAmount = cryptoAmount * price;
+                                c2f_fiatAmount.value = `${fiatAmount.toFixed(2)}`;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching crypto price:', error);
+                            c2f_fiatAmount.value = '';
+                        });
+                }
+        
+                c2f_cryptoAmount.addEventListener('input', updateC2FConversion);
+                c2f_cryptoSelect.addEventListener('change', function() {
+                    const selectedOption = this.options[this.selectedIndex];
+                    c2f_cryptoIcon.src = selectedOption.getAttribute('data-icon');
+                    updateC2FConversion();
+                });
+        
+                // Set initial crypto icon
+                if (c2f_cryptoSelect.value) {
+                    c2f_cryptoIcon.src = c2f_cryptoSelect.options[c2f_cryptoSelect.selectedIndex].getAttribute('data-icon');
+                }
+            });
         </script>
         
-        
-
-    </main>
-
-     
-
-    <script>
+        <script>
        document.addEventListener('DOMContentLoaded', function() {
     const dropdownButton = document.getElementById("dropdownButton");
     const dropdownMenu = document.getElementById("dropdownMenu");

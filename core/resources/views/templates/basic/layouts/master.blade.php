@@ -60,11 +60,12 @@
             <div class="dashboard__right">
 
                 @include($activeTemplate . 'partials.topbar')
-
                 <div class="dashboard-body">
                     <div class="dashboard-top">
                         <span class="title-style">{{ __($pageTitle) }}</span>
                     </div>
+
+                   
 
                     @yield('content')
                 </div>

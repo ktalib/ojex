@@ -30,11 +30,11 @@
                                             // Fetch the current price of the asset in USD
                                             $price = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=' . strtoupper($wallet->currency) . '&tsyms=USD');
                                             $price = json_decode($price, true)['USD'];
-                                            $cryptoBalance = $wallet->balance / $price;
+                                            $usdBalance = $wallet->balance * $price;
                                         @endphp
                                         <td class="border px-4 py-2">
-                                           $ {{ number_format($wallet->balance, 2) }} <br>
-                                            {{ number_format($cryptoBalance, 8) }} {{ $wallet->currency }}</td>
+                                            {{ number_format($wallet->balance, 4) }} {{ $wallet->currency }} <br>
+                                            $ {{ number_format($usdBalance, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

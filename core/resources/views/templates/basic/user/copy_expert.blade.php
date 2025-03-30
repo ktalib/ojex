@@ -8,12 +8,7 @@
 
 @section('content')
 <main class="p-2 sm:px-4 flex-1 overflow-auto">
-  
-
-    <div class="grid blued grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 @if($getCopyExpertFee->first()->type != 'expert_fee')
-    blurred
-     @else   
-     @endif">
+    <div class="grid blued grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 @if(optional($getCopyExpertFee->first())->type != 'expert_fee') blurred @endif">
         @foreach($copy_experts as $expert)
             <div class="flex justify-center">
                 <div class="w-full max-w-sm bg-dark rounded-xl shadow-lg shadow-gray-800 p-6 sm:flex sm:items-center sm:space-x-6">
@@ -50,9 +45,8 @@
         @endforeach
     </div>
 
-     
-        <div id="depositModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div class="bg-gray-800 rounded-lg max-w-md w-full p-6">
+    <div id="depositModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-gray-800 rounded-lg max-w-md w-full p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-white">Deposit</h2>
                 <a href="{{ route('user.home') }}" class="text-gray-400 hover:text-white">
@@ -110,31 +104,29 @@
                 Deposit
                 </button>
             </form>
-            </div>
         </div>
+    </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const depositModal = document.getElementById('depositModal');
-                const closeModalButton = document.getElementById('closeModalButton');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const depositModal = document.getElementById('depositModal');
+            const closeModalButton = document.getElementById('closeModalButton');
 
-                @if($getCopyExpertFee->first()->type != 'expert_fee')
-                    // Show the modal automatically
-                    depositModal.style.display = 'flex';
-                @else
-                    // Hide the modal
-                    depositModal.style.display = 'none';
-                @endif
+            @if(optional($getCopyExpertFee->first())->type != 'expert_fee')
+                // Show the modal automatically
+                depositModal.style.display = 'flex';
+            @else
+                // Hide the modal
+                depositModal.style.display = 'none';
+            @endif
 
-                // Close the modal when the close button is clicked
-                closeModalButton.addEventListener('click', function() {
-                    depositModal.style.display = 'none';
-                });
+            // Close the modal when the close button is clicked
+            closeModalButton.addEventListener('click', function() {
+                depositModal.style.display = 'none';
             });
-        </script>
-    
+        });
+    </script>
 </main>
- 
 
 @push('style')
 <style>

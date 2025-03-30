@@ -69,7 +69,16 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
         <!-- Header -->
-        <header class="flex  items-center justify-between p-4 border-b border-gray-800 bg-black">
+    <header class="flex  items-center justify-between p-4 border-b border-gray-800 bg-black">
+
+            <div id="google_translate_element"></div>
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                }
+            </script>
+            <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+            
             <h1 class="text-lg md:text-xl font-semibold">{{ __($pageTitle) }}</h1>
             <div class="flex items-center gap-4">
                 <button class="relative">
@@ -90,7 +99,7 @@
 
 
         <!-- add fix footer with 5 icons  -->
-          <footer class="bg-gray-900 p-4 border-t border-gray-800 fixed bottom-0 w-full">
+          <footer class="bg-gray-900 p-4 border-t border-gray-800 fixed bottom-0 w-full" style="display: none;">
             <div class="flex justify-between items-center">
             <a href="#" class="text-gray-400 hover:text-gray-100 flex flex-col items-center">
                 <i class="ri-home-4-line text-2xl"></i>
@@ -116,7 +125,7 @@
         </footer> 
     
          
-        </body>
+        </body> 
         @stack('script-lib')
 
         @php echo loadExtension('tawk-chat') @endphp

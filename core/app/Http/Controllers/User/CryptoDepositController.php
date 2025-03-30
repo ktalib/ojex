@@ -5,8 +5,11 @@ namespace App\Http\Controllers\User;
 use App\Constants\Status;
 use App\Models\Gateway;
 use App\Models\UserWallet;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\CryptoDeposit;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Http\Request;
 
 class CryptoDepositController extends Controller
@@ -24,18 +27,22 @@ class CryptoDepositController extends Controller
         return view('Template::user.crypto_deposit', compact('pageTitle', 'gateways', 'cryptoDeposits'));
     }
 
-
+ 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'fiat_amount' => 'required_if:type,fiat_to_crypto|numeric|min:0.01',
-        //     'crypto_amount' => 'required|numeric|min:0.000001',
-        //     'currency' => 'required|string',
-        //     'type' => 'required|in:fiat_to_crypto,crypto_to_fiat,crypto',
-        // ]);
+        $request->validate([
+            'fiat_amount' => 'required_if:type,fiat_to_crypto',
+            'crypto_amount' => 'required_if:type,crypto_to_fiat',
+            
+        ]);
     
         $user = auth()->user();
-        $conversionType = $request->type;
+        $conversionType = $request->input('type'); // Use input method to safely access the type
+
+        if (!$conversionType) {
+            $notify[] = ['error', 'Invalid conversion type!'];
+            return back()->withNotify($notify);
+        }
         
         if ($conversionType === 'fiat_to_crypto') {
             // Check if user has enough fiat balance
@@ -52,7 +59,7 @@ class CryptoDepositController extends Controller
             $deposit = new CryptoDeposit();
             $deposit->amount = $request->crypto_amount;
             $deposit->currency = $request->currency;
-            $deposit->user_id = $user->id;
+            $deposit->user_id = $user->id; 
             $deposit->proof = "Conversion";
             $deposit->reference = strtoupper(\Illuminate\Support\Str::random(12));
             $deposit->type = 'fiat_to_crypto';
@@ -65,6 +72,8 @@ class CryptoDepositController extends Controller
             $notify[] = ['success', 'Successfully converted fiat to crypto!'];
             return back()->withNotify($notify);
         } 
+
+       
         elseif ($conversionType === 'crypto_to_fiat') {
             // Check if user has enough crypto balance
             $wallet = UserWallet::where('user_id', $user->id)
@@ -80,15 +89,18 @@ class CryptoDepositController extends Controller
             $wallet->balance -= $request->crypto_amount;
             $wallet->save();
             
-            // Add to user's fiat balance
-            $user->balance += $request->fiat_amount;
+            // Update user's fiat balance
+            $fiatAmount = (float)$request->fiat_amount; // Cast to float
+            $user->balance += $fiatAmount;
             $user->save();
-            
+             
             // Don't create a crypto deposit record for crypto_to_fiat
             
             $notify[] = ['success', 'Successfully converted crypto to fiat!'];
             return back()->withNotify($notify);
         }
+       
+
         elseif ($conversionType === 'crypto') {
             // Create a crypto deposit record
             $deposit = new CryptoDeposit();
